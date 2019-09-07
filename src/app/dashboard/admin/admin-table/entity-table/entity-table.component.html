@@ -53,18 +53,17 @@
           <!-- actions -->
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef="let row; let i=index;">
-              <button mat-icon-button color="accent" (click)="addNew(row)">
+              <button mat-icon-button color="accent" [disabled]="newEntryFlag" (click)="addNew(row)">
                 <mat-icon>add_circle</mat-icon>
               </button>
             </mat-header-cell>
 
             <mat-cell *matCellDef="let row; let i=index;">
-              <button mat-icon-button color="primary" (click)="startEdit(i+1, row)">
+              <button mat-icon-button color="primary" (click)="startEdit(i+1, row)" [disabled]="newEntryFlag">
                 <mat-icon aria-label="Edit">edit</mat-icon>
               </button>
 
-              <button mat-icon-button color="warn"
-                      (click)="deleteItem(i, row)">
+              <button mat-icon-button color="warn" [disabled]="newEntryFlag" (click)="deleteItem(i, row)">
                 <mat-icon aria-label="Delete">delete</mat-icon>
               </button>
             </mat-cell>
