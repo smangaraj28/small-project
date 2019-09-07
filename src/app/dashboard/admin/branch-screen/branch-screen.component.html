@@ -1,0 +1,25 @@
+<mat-card>
+  <mat-card-title fxLayoutAlign="center" style="color: blue">
+    Welcome To {{hotelName}}
+  </mat-card-title>
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between" fxLayoutGap.xs="0">
+      <label style="color: magenta"><b>Hotel ID : </b>{{hotelId}}</label>
+      <label style="color: magenta"><b>Hotel Registration No: </b>{{hotelRegisterNo}}</label>
+    </div>
+    <div style="overflow: auto;overflow-x:hidden;height: 373px;">
+      <h2 style="text-align: center; color: #337ab7">Branch Details</h2>
+      <app-person-list></app-person-list>
+    </div>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+    <button fxFlex="50%" mat-raised-button color="primary" (click)="onSave()">
+      <mat-icon>save</mat-icon>
+      Save Branches
+    </button>
+    <button fxFlex="50%" mat-raised-button color="warn">
+      <mat-icon>cancel</mat-icon>
+      Cancel
+    </button>
+  </mat-card-actions>
+</mat-card>

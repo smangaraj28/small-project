@@ -1,0 +1,77 @@
+<div class="container">
+  <h3 mat-dialog-title style="text-align: center"><b>Hotel id:</b> {{data.entityId}} <b>Hotel Name:</b> {{data.entityName}}</h3>
+
+  <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+
+    <div class="form">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Hotel ID</mat-label>
+        <input matInput [formControl]="pIdFormControl"
+               type="text" placeholder="Hotel Id" [(ngModel)]="data.entityId" name="id" required>
+        <mat-error *ngIf="!pIdFormControl.hasError('required')">
+          Hotel ID is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Hotel Category</mat-label>
+        <input matInput [formControl]="pCategoryFormControl"
+               type="text" placeholder="Hotel Category" [(ngModel)]="data.entityCategory" name="pcategory" required>
+        <mat-error *ngIf="!pCategoryFormControl.hasError('required')">
+          Hotel Category is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Hotel Name</mat-label>
+        <input matInput [formControl]="pNameFormControl"
+               type="text" placeholder="Hotel Name" [(ngModel)]="data.entityName" name="pname" required>
+        <mat-error *ngIf="!pNameFormControl.hasError('required')">
+          Hotel Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Status</mat-label>
+        <input matInput [formControl]="pPriceFormControl"
+               type="text" placeholder="Status" [(ngModel)]="data.entityStatus" name="pprice" required>
+        <mat-error *ngIf="!pPriceFormControl.hasError('required')">
+          Status is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Description</mat-label>
+        <input matInput [formControl]="deptIdFormControl"
+               type="text" placeholder="Department Id" [(ngModel)]="data.entityDescription" name="did" required>
+        <mat-error *ngIf="!deptIdFormControl.hasError('required')">
+          Hotel Description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form">
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Image URL</mat-label>
+        <input matInput [formControl]="pQuantityFormControl"
+               type="text" placeholder="Image URL" [(ngModel)]="data.entityImageUrl" name="ptotal" required>
+        <mat-error *ngIf="!pQuantityFormControl.hasError('required')">
+          Product Image URL is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="stopEdit()">Save</button>
+      <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+    </div>
+  </form>
+</div>

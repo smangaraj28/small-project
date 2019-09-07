@@ -1,0 +1,89 @@
+<mat-table class="table-margin-bottom" #table [dataSource]="dataSource">
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> Branch ID</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+        <input matInput [formControl]="row.validator.controls['id']" [readonly]="!row.editing" placeholder="ID"
+               [(ngModel)]="row.currentData.branchId">
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Branch Name</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+        <input matInput [formControl]="row.validator.controls['name']" [readonly]="!row.editing" placeholder="Name"
+               [(ngModel)]="row.currentData.branchName">
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="address">
+    <mat-header-cell *matHeaderCellDef>Branch Address</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+        <input matInput [formControl]="row.validator.controls['address']" [readonly]="!row.editing"
+               placeholder="Address" [(ngModel)]="row.currentData.branchAddress">
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef> Branch Email</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+        <input matInput [formControl]="row.validator.controls['email']" [readonly]="!row.editing" placeholder="Email"
+               [(ngModel)]="row.currentData.branchEmail">
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="contact">
+    <mat-header-cell *matHeaderCellDef> Branch Contact</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+        <input matInput [formControl]="row.validator.controls['contact']" [readonly]="!row.editing"
+               placeholder="Contact" [(ngModel)]="row.currentData.branchTelephone">
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="registerno">
+    <mat-header-cell *matHeaderCellDef> Branch Register No</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+        <input matInput [formControl]="row.validator.controls['registerno']" [readonly]="!row.editing"
+               placeholder="Registerno" [(ngModel)]="row.currentData.branchRegisterNo">
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Branch Status</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-form-field floatLabel="{{ row.editing ? 'float' : 'never'}}">
+        <mat-select [formControl]="row.validator.controls['status']" placeholder="Status"
+                    [(value)]="row.currentData.branchStatus">
+          <mat-option value="Yes">Active</mat-option>
+          <mat-option value="No">Not Active</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="actionsColumn">
+    <mat-header-cell *matHeaderCellDef>
+      <button mat-icon-button color="accent" (click)="dataSource.createNew()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <button *ngIf="!row.editing" mat-icon-button color="primary" focusable="false" (click)="row.startEdit()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button *ngIf="row.editing" mat-icon-button color="primary" focusable="false" (click)="row.confirmEditCreate()">
+        <mat-icon>check_circle</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" focusable="false" (click)="row.cancelOrDelete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

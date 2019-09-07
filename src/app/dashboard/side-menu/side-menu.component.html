@@ -1,0 +1,9 @@
+<div fxLayout="column">
+    <!--<div *ngIf="!iconOnly" fxLayoutAlign="space-around center" [style.margin]="'10px 0px'" >-->
+      <!--&lt;!&ndash;<img width="100" [style.borderRadius]="'50%'" [src] ="userdetails.photoURL">&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div *ngIf="iconOnly" style="height: 100px;" fxLayoutAlign="space-around center"  >-->
+        <!--&lt;!&ndash;<img width="50" [style.borderRadius]="'50%'" [src] ="">&ndash;&gt;-->
+    <!--</div>-->
+    <app-side-menu-items *ngFor="let menu of menus" [menu]="menu" [iconOnly]="iconOnly"> </app-side-menu-items>
+</div>
