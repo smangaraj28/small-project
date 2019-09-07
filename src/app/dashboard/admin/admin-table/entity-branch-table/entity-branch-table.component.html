@@ -1,7 +1,7 @@
 <div>
   <mat-card>
     <mat-card-title fxLayoutAlign="center" style="color: blue">
-      Hotel Table ({{dataSource.renderedData.length}})
+      Branch Table ({{dataSource.renderedData.length}})
     </mat-card-title>
     <mat-card-content>
       <div fxLayout="row wrap">
@@ -24,31 +24,31 @@
 
           <ng-container matColumnDef="entityId">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Department ID</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityId}}</mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityBranchId}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="entityCategory">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityCategory}}</mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityBranchCategory}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="entityName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityName}}</mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityBranchName}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="entityDescription">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityDescription}}</mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityBranchDescription}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="entityImageUrl">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Image URL</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityImageUrl}}</mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityBranchImageUrl}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="entityStatus">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityStatus}}</mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityBranchStatus}}</mat-cell>
           </ng-container>
           <!-- actions -->
           <ng-container matColumnDef="actions">
@@ -73,7 +73,7 @@
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
         <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
-          No Hotel
+          No Branch
         </div>
       </div>
     </mat-card-content>
@@ -94,19 +94,21 @@
              fxLayoutGap.lt-md="0px">
           <mat-form-field fxFlex="30%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Hotel Name" [(ngModel)]="entityData.entityName" name="id" required>
+                   type="text" placeholder="Hotel Name" [(ngModel)]="entityBranchData.entityBranchName" name="id"
+                   required>
             <mat-error *ngIf="!pIdFormControl.hasError('required')">
               Hotel Name is <strong>required</strong>
             </mat-error>
           </mat-form-field>
           <mat-form-field fxFlex="30%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Hotel Short Name" [(ngModel)]="entityData.entityShortName" name="id"
-                   required>
+                   type="text" placeholder="Hotel Short Name" [(ngModel)]="entityBranchData.entityBranchShortName"
+                   name="id" required>
           </mat-form-field>
           <mat-form-field fxFlex="30%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Hotel Description" [(ngModel)]="entityData.entityDescription" name="desc"
+                   type="text" placeholder="Hotel Description" [(ngModel)]="entityBranchData.entityBranchDescription"
+                   name="desc"
                    required>
           </mat-form-field>
         </div>
@@ -114,89 +116,81 @@
              fxLayoutGap.lt-md="0px">
           <mat-form-field fxFlex="30%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Industry" [(ngModel)]="entityData.entityIndustry" name="id" required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Tax ID" [(ngModel)]="entityData.entityTaxID" name="id" required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Status" [(ngModel)]="entityData.entityStatus" name="status" required>
+                   type="text" placeholder="Status" [(ngModel)]="entityBranchData.entityBranchStatus" name="status"
+                   required>
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
              fxLayoutGap.lt-md="0px">
           <mat-form-field fxFlex="50%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Address Line 1" [(ngModel)]="entityData.entityAddLine1" name="id" required>
+                   type="text" placeholder="Address Line 1" [(ngModel)]="entityBranchData.entityBranchAddLine1"
+                   name="id"
+                   required>
           </mat-form-field>
           <mat-form-field fxFlex="50%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Address Line 2" [(ngModel)]="entityData.entityAddLine2" name="id" required>
+                   type="text" placeholder="Address Line 2" [(ngModel)]="entityBranchData.entityBranchAddLine2"
+                   name="id"
+                   required>
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
              fxLayoutGap.lt-md="0px">
           <mat-form-field fxFlex="30%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="City" [(ngModel)]="entityData.entityCity" name="id" required>
+                   type="text" placeholder="City" [(ngModel)]="entityBranchData.entityBranchCity" name="id" required>
           </mat-form-field>
           <mat-form-field fxFlex="30%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="State" [(ngModel)]="entityData.entityState" name="id" required>
+                   type="text" placeholder="State" [(ngModel)]="entityBranchData.entityBranchState" name="id" required>
           </mat-form-field>
           <mat-form-field fxFlex="30%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Country" [(ngModel)]="entityData.entityCountry" name="id" required>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
-             fxLayoutGap.lt-md="0px">
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Pin Code" [(ngModel)]="entityData.entityPinCode" name="id" required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Phone" [(ngModel)]="entityData.entityPhone" name="id" required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Fax" [(ngModel)]="entityData.entityFax" name="id" required>
+                   type="text" placeholder="Country" [(ngModel)]="entityBranchData.entityBranchCountry" name="id"
+                   required>
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
              fxLayoutGap.lt-md="0px">
           <mat-form-field fxFlex="30%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Website" [(ngModel)]="entityData.entityWebsite" name="id" required>
+                   type="text" placeholder="Pin Code" [(ngModel)]="entityBranchData.entityBranchPinCode" name="id"
+                   required>
           </mat-form-field>
           <mat-form-field fxFlex="30%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Email" [(ngModel)]="entityData.entityEmail" name="id" required>
+                   type="text" placeholder="Phone" [(ngModel)]="entityBranchData.entityBranchPhone" name="id" required>
           </mat-form-field>
           <mat-form-field fxFlex="30%">
             <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Mobile" [(ngModel)]="entityData.entityMobile" name="id" required>
+                   type="text" placeholder="Fax" [(ngModel)]="entityBranchData.entityBranchFax" name="id" required>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
+             fxLayoutGap.lt-md="0px">
+          <mat-form-field fxFlex="30%">
+            <input matInput [formControl]="pIdFormControl"
+                   type="text" placeholder="Website" [(ngModel)]="entityBranchData.entityBranchWebsite" name="id"
+                   required>
+          </mat-form-field>
+          <mat-form-field fxFlex="30%">
+            <input matInput [formControl]="pIdFormControl"
+                   type="text" placeholder="Email" [(ngModel)]="entityBranchData.entityBranchEmail" name="id" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="30%">
+            <input matInput [formControl]="pIdFormControl"
+                   type="text" placeholder="Mobile" [(ngModel)]="entityBranchData.entityBranchMobile" name="id"
+                   required>
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
              fxLayoutGap.lt-md="0px">
           <mat-form-field fxFlex="30%">
             <mat-label>Start Date</mat-label>
-            <input matInput type="date" placeholder="Start Date" [(ngModel)]="entityData.entityStartDate" name="sdate"
+            <input matInput type="date" placeholder="Start Date" [(ngModel)]="entityBranchData.entityBranchStartDate"
+                   name="sdate"
                    required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <mat-label>Fiscal Year</mat-label>
-            <input matInput type="number" placeholder="Fiscal Year" [(ngModel)]="entityData.entityFiscalYear"
-                   name="fyear"
-                   required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <mat-label>Time Zone</mat-label>
-            <input matInput type="text" placeholder="Time Zone" [(ngModel)]="entityData.entityTimeZone" name="tzone">
           </mat-form-field>
         </div>
       </div>

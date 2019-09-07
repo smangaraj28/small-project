@@ -15,9 +15,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {RoleTableComponent} from './admin-table/role-table/role-table.component';
 import {EntityTableComponent} from './admin-table/entity-table/entity-table.component';
 import {EntityTableDeleteDialogComponent} from './admin-table/entity-table/dialogs/delete/entity-table-delete-dialog.component';
-import {EntityBranchTableComponent} from './admin-table/branch-table/entity-branch-table.component';
-import {EntityBranchTableDeleteDialogComponent} from './admin-table/branch-table/dialogs/delete/entity-branch-table-delete-dialog.component';
-
+import {EntityBranchTableComponent} from './admin-table/entity-branch-table/entity-branch-table.component';
+import {EntityBranchTableDeleteDialogComponent} from './admin-table/entity-branch-table/dialogs/delete/entity-branch-table-delete-dialog.component';
 
 export const DASHBOARD_ROUTES: Routes = [
   {path: '', redirectTo: 'branch', pathMatch: 'full'},
