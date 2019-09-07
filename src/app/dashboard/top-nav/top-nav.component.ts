@@ -175,7 +175,7 @@ export class TopNavComponent implements OnInit {
     const mydialog  = this.dialog.showalert('Title', 'We are working on your request, please wait');
     // serverside cleanups
     const user = this.auth.firebase_user;
-    const data = {
+    const entityData = {
       'uid': user.uid
     };
     console.log('logout handler');

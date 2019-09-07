@@ -1,23 +1,23 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
+import {Entity} from '../models/entity';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {EntityBranch} from '../models/entity-branch';
-
 // import { environment } from '../../../../environments/environment';
+// import { Entity } from '../../product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   // private productsUrl = environment.server_url + '/products';
-  dataChange: BehaviorSubject<EntityBranch[]> = new BehaviorSubject<EntityBranch[]>([]);
+  dataChange: BehaviorSubject<Entity[]> = new BehaviorSubject<Entity[]>([]);
   // Temporarily stores entityData from dialogs
   dialogData: any;
 
   constructor(private httpClient: HttpClient) {
   }
 
-  get data(): EntityBranch[] {
+  get data(): Entity[] {
     return this.dataChange.value;
   }
 
@@ -27,7 +27,7 @@ export class DataService {
 
   /** CRUD METHODS */
   getAllIssues(): void {
-    this.httpClient.get<EntityBranch[]>('/assets/entity-branch.json').subscribe(data => {
+    this.httpClient.get<Entity[]>('/assets/entity.json').subscribe(data => {
         console.log('data', data);
         this.dataChange.next(data);
       },
@@ -37,11 +37,11 @@ export class DataService {
   }
 
   // DEMO ONLY, you can find working methods below
-  addIssue(issue: EntityBranch): void {
+  addIssue(issue: Entity): void {
     this.dialogData = issue;
   }
 
-  updateIssue(issue: EntityBranch): void {
+  updateIssue(issue: Entity): void {
     this.dialogData = issue;
   }
 

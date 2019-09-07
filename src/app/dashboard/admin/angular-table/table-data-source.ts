@@ -18,9 +18,9 @@ export class TableDataSource<T> extends DataSource<TableElement<T>> {
   protected currentData: any;
 
   /**
-   * Creates a new TableDataSource instance, that can be used as datasource of `@angular/cdk` data-table.
+   * Creates a new TableDataSource instance, that can be used as datasource of `@angular/cdk` entityData-table.
    * @param data Array containing the initial values for the TableDataSource. If not specified, then `dataType` must be specified.
-   * @param dataType Type of data contained by the Table. If not specified, then `data` with at least one element must be specified.
+   * @param dataType Type of entityData contained by the Table. If not specified, then `entityData` with at least one element must be specified.
    * @param validatorService Service that create instances of the FormGroup used to validate row fields.
    * @param config Additional configuration for table.
    */
@@ -70,7 +70,7 @@ export class TableDataSource<T> extends DataSource<TableElement<T>> {
   }
 
   /**
-   * Start the creation of a new element, pushing an empty-data row in the table.
+   * Start the creation of a new element, pushing an empty-entityData row in the table.
    */
   createNew(): void {
     const source = this.rowsSubject.getValue();
@@ -96,7 +96,7 @@ export class TableDataSource<T> extends DataSource<TableElement<T>> {
 
   /**
    * Confirm creation of the row. Save changes and disable editing.
-   * If validation active and row data is invalid, it doesn't confirm creation neither disable editing.
+   * If validation active and row entityData is invalid, it doesn't confirm creation neither disable editing.
    * @param row Row to be confirmed.
    */
   confirmCreate(row: TableElement<T>): boolean {
@@ -116,7 +116,7 @@ export class TableDataSource<T> extends DataSource<TableElement<T>> {
 
   /**
    * Confirm edition of the row. Save changes and disable editing.
-   * If validation active and row data is invalid, it doesn't confirm editing neither disable editing.
+   * If validation active and row entityData is invalid, it doesn't confirm editing neither disable editing.
    * @param row Row to be edited.
    */
   confirmEdit(row: TableElement<T>): boolean {
@@ -166,12 +166,12 @@ export class TableDataSource<T> extends DataSource<TableElement<T>> {
   }
 
   /**
-   * Update the datasource with a new array of data. If the array reference
+   * Update the datasource with a new array of entityData. If the array reference
    * is the same as the previous one, it doesn't trigger an update.
    * @param data Data to update the table datasource.
    * @param options Specify options to update the datasource.
    * If emitEvent is true and the datasource is updated, it emits an event
-   * from 'datasourceSubject' with the updated data. If false, it doesn't
+   * from 'datasourceSubject' with the updated entityData. If false, it doesn't
    * emit an event. True by default.
    */
   updateDatasource(data: T[], options = {emitEvent: true}): void {
@@ -255,8 +255,8 @@ export class TableDataSource<T> extends DataSource<TableElement<T>> {
   }
 
   /**
-   * Get the data from the rows.
-   * @param rows Rows to extract the data.
+   * Get the entityData from the rows.
+   * @param rows Rows to extract the entityData.
    */
   protected getDataFromRows(rows: TableElement<T>[]): T[] {
     return rows
@@ -267,8 +267,8 @@ export class TableDataSource<T> extends DataSource<TableElement<T>> {
   }
 
   /**
-   * Update the datasource with the data contained in the specified rows.
-   * @param rows Rows that contains the datasource's new data.
+   * Update the datasource with the entityData contained in the specified rows.
+   * @param rows Rows that contains the datasource's new entityData.
    */
   protected updateDatasourceFromRows(rows: TableElement<T>[]): void {
     this.currentData = this.getDataFromRows(rows);
@@ -276,7 +276,7 @@ export class TableDataSource<T> extends DataSource<TableElement<T>> {
   }
 
   /**
-   * From an array of data, it returns rows containing the original data.
+   * From an array of entityData, it returns rows containing the original entityData.
    * @param arrayData Data from which create the rows.
    */
   protected getRowsFromData(arrayData: T[]): TableElement<T>[] {
@@ -293,7 +293,7 @@ export class TableDataSource<T> extends DataSource<TableElement<T>> {
   }
 
   /**
-   * Create a new object with identical structure than the table source data.
+   * Create a new object with identical structure than the table source entityData.
    * It uses the object's type contructor if available, otherwise it creates
    * an object with the same keys of the first element contained in the original
    * datasource (used in the constructor).
@@ -310,7 +310,7 @@ export class TableDataSource<T> extends DataSource<TableElement<T>> {
 
   }
 
-  /** Connect function called by the table to retrieve one stream containing the data to render. */
+  /** Connect function called by the table to retrieve one stream containing the entityData to render. */
   connect(): Observable<TableElement<T>[]> {
     return this.rowsSubject.asObservable();
   }
