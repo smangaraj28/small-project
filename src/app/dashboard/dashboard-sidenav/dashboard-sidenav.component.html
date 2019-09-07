@@ -27,9 +27,10 @@
         <app-tool-bar [hasSidenav]="hasSidenav" [sidenav]="sidenav1" [drawer]="drawer" [hasSidebar]="hasSidebar"
                       [sidebar]="sidenav2" [matDrawerShow]="matDrawerShow" style="z-index: 500"></app-tool-bar>
         <!--perfect-scrollbar  style="height: calc(100% - 33px);" -->
-        <!--<router-outlet></router-outlet>-->
-        <!--/perfect-scrollbar-->
-
+        <div class="content-scrollbar">
+          <router-outlet></router-outlet>
+          <!--/perfect-scrollbar-->
+        </div>
       </mat-drawer-content>
     </mat-drawer-container>
 

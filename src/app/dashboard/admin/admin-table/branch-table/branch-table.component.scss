@@ -81,11 +81,6 @@
   margin: 20px;
   /*text-align: center;*/
 }
-.table-style {
-  //height: 100px;
-  //overflow: auto;
-  //overflow-x: hidden;
-}
 .example-small-box {
   //display: flex;
   //align-items: center;
@@ -97,4 +92,21 @@
   width: 100px;
   margin-left: 45%;
   margin-bottom: 2%;
+}
+.mat-table {
+  display: table;
+  width: 100%;
+}
+.mat-table > .mat-header-row, .mat-table > .mat-row {
+  display: table-row;
+  padding: 0;
+  border: none;
+}
+.mat-table > .mat-header-row > .mat-header-cell,
+.mat-table > .mat-row > .mat-cell {
+  display: table-cell;
+  height: 48px;
+  vertical-align: middle;
+  padding: 0 0.5em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }

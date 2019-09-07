@@ -47,6 +47,7 @@ export class BranchTableComponent implements OnInit, AfterViewInit, OnDestroy {
   pNameFormControl = new FormControl('', [
     Validators.required
   ]);
+  newEntryFlag = false;
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
@@ -74,7 +75,11 @@ export class BranchTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addNew(issue: Entity) {
+    this.newEntryFlag = true;
     console.log(issue);
+    // this.dataService.addIssue(data);
+    // this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+    // this.refreshTable();
     const dialogRef = this.dialog.open(BranchTableAddDialogComponent, {
       data: {issue: issue}
     });
