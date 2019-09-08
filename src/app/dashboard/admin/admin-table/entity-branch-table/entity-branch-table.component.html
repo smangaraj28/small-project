@@ -1,17 +1,28 @@
 <div>
   <mat-card>
-    <mat-card-title style="color: blue">
-      <label fxFlex="60%">Branch Table ({{dataSource.renderedData.length}})</label>
-      <mat-form-field fxFlex="40%">
-        <mat-label>Entity Selection</mat-label>
-        <select matNativeControl [(ngModel)]="selectedEntity" name="entity">
-          <option value="" selected></option>
-          <option *ngFor="let entity of entityLists" [value]="entity.value">
-            {{entity.viewValue}}
-          </option>
-        </select>
-      </mat-form-field>
-    </mat-card-title>
+    <mat-toolbar style="position: sticky;top: 0;z-index: 1000;position: -webkit-sticky;" fxLayout="row"
+                 fxLayoutAlign="start center">
+      <div fxFlex="60%" fxFlex.lt-md="70%">
+        Branch Maintenance
+      </div>
+      <div fxFlex="20%">
+        <mat-form-field fxFlex="40%">
+          <mat-label>Entity Selection</mat-label>
+          <select matNativeControl [(ngModel)]="selectedEntity" name="entity">
+            <option value="" selected></option>
+            <option *ngFor="let entity of entityLists" [value]="entity.value">
+              {{entity.viewValue}}
+            </option>
+          </select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="10%" fxFlex.lt-md="10%">
+        <button mat-icon-button color="primary" [disabled]="newEntryFlag" (click)="addNew()">
+          Add Branch
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
     <mat-card-content>
       <div fxLayout="row wrap">
         <mat-form-field>
@@ -56,9 +67,6 @@
           <!-- actions -->
           <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef="let row; let i=index;">
-              <button mat-icon-button color="accent" [disabled]="newEntryFlag" (click)="addNew(row)">
-                <mat-icon>add_circle</mat-icon>
-              </button>
             </mat-header-cell>
 
             <mat-cell *matCellDef="let row; let i=index;">
@@ -79,134 +87,144 @@
           No Branch
         </div>
       </div>
-    </mat-card-content>
-  </mat-card>
-  <mat-divider></mat-divider>
-</div>
-<div *ngIf="newEntryFlag">
-  <mat-card>
-    <mat-card-content>
-      <div fxLayout="column">
-        <div fxLayout=“row” fxLayoutAlign="center center" class="example-small-box mat-elevation-z4">
-          <input style="display: none"
-                 type="file" (change)="onFileChanged($event)"
-                 #fileInput>
-          <button (click)="fileInput.click()">Select File</button>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
-             fxLayoutGap.lt-md="0px">
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Hotel Name" [(ngModel)]="entityBranchData.entityBranchName" name="id"
-                   required>
-            <mat-error *ngIf="!pIdFormControl.hasError('required')">
-              Hotel Name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Hotel Short Name" [(ngModel)]="entityBranchData.entityBranchShortName"
-                   name="id" required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Hotel Description" [(ngModel)]="entityBranchData.entityBranchDescription"
-                   name="desc"
-                   required>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
-             fxLayoutGap.lt-md="0px">
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Status" [(ngModel)]="entityBranchData.entityBranchStatus" name="status"
-                   required>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
-             fxLayoutGap.lt-md="0px">
-          <mat-form-field fxFlex="50%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Address Line 1" [(ngModel)]="entityBranchData.entityBranchAddLine1"
-                   name="id"
-                   required>
-          </mat-form-field>
-          <mat-form-field fxFlex="50%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Address Line 2" [(ngModel)]="entityBranchData.entityBranchAddLine2"
-                   name="id"
-                   required>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
-             fxLayoutGap.lt-md="0px">
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="City" [(ngModel)]="entityBranchData.entityBranchCity" name="id" required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="State" [(ngModel)]="entityBranchData.entityBranchState" name="id" required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Country" [(ngModel)]="entityBranchData.entityBranchCountry" name="id"
-                   required>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
-             fxLayoutGap.lt-md="0px">
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Pin Code" [(ngModel)]="entityBranchData.entityBranchPinCode" name="id"
-                   required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Phone" [(ngModel)]="entityBranchData.entityBranchPhone" name="id" required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Fax" [(ngModel)]="entityBranchData.entityBranchFax" name="id" required>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
-             fxLayoutGap.lt-md="0px">
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Website" [(ngModel)]="entityBranchData.entityBranchWebsite" name="id"
-                   required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Email" [(ngModel)]="entityBranchData.entityBranchEmail" name="id" required>
-          </mat-form-field>
-          <mat-form-field fxFlex="30%">
-            <input matInput [formControl]="pIdFormControl"
-                   type="text" placeholder="Mobile" [(ngModel)]="entityBranchData.entityBranchMobile" name="id"
-                   required>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
-             fxLayoutGap.lt-md="0px">
-          <mat-form-field fxFlex="30%">
-            <mat-label>Start Date</mat-label>
-            <input matInput type="date" placeholder="Start Date" [(ngModel)]="entityBranchData.entityBranchStartDate"
-                   name="sdate"
-                   required>
-          </mat-form-field>
-        </div>
+      <div style="margin-top: 20px" *ngIf="newEntryFlag">
+        <mat-card
+          style="box-shadow: 0 -4px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);">
+          <mat-card-content>
+            <div fxLayout="column">
+              <div fxLayout=“row” fxLayoutAlign="start center">
+                <b>Branch Details:</b>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
+                   fxLayoutGap.lt-md="0px">
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Hotel Name" [(ngModel)]="entityBranchData.entityBranchName" name="id"
+                         required>
+                  <mat-error *ngIf="!pIdFormControl.hasError('required')">
+                    Hotel Name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Hotel Short Name" [(ngModel)]="entityBranchData.entityBranchShortName"
+                         name="id" required>
+                </mat-form-field>
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Hotel Description"
+                         [(ngModel)]="entityBranchData.entityBranchDescription"
+                         name="desc"
+                         required>
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
+                   fxLayoutGap.lt-md="0px">
+                <mat-form-field fxFlex="50%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Status" [(ngModel)]="entityBranchData.entityBranchStatus"
+                         name="status"
+                         required>
+                </mat-form-field>
+                <mat-form-field fxFlex="50%">
+                  <mat-label>Start Date</mat-label>
+                  <input matInput type="date" placeholder="Start Date"
+                         [(ngModel)]="entityBranchData.entityBranchStartDate"
+                         name="sdate"
+                         required>
+                </mat-form-field>
+              </div>
+              <div fxLayout=“row” fxLayoutAlign="start center">
+                <b>Address Details:</b>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
+                   fxLayoutGap.lt-md="0px">
+                <mat-form-field fxFlex="50%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Address Line 1" [(ngModel)]="entityBranchData.entityBranchAddLine1"
+                         name="id"
+                         required>
+                </mat-form-field>
+                <mat-form-field fxFlex="50%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Address Line 2" [(ngModel)]="entityBranchData.entityBranchAddLine2"
+                         name="id"
+                         required>
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
+                   fxLayoutGap.lt-md="0px">
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="City" [(ngModel)]="entityBranchData.entityBranchCity" name="id"
+                         required>
+                </mat-form-field>
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="State" [(ngModel)]="entityBranchData.entityBranchState" name="id"
+                         required>
+                </mat-form-field>
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Country" [(ngModel)]="entityBranchData.entityBranchCountry" name="id"
+                         required>
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
+                   fxLayoutGap.lt-md="0px">
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Pin Code" [(ngModel)]="entityBranchData.entityBranchPinCode" name="id"
+                         required>
+                </mat-form-field>
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Phone" [(ngModel)]="entityBranchData.entityBranchPhone" name="id"
+                         required>
+                </mat-form-field>
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Fax" [(ngModel)]="entityBranchData.entityBranchFax" name="id"
+                         required>
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
+                   fxLayoutGap.lt-md="0px">
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Website" [(ngModel)]="entityBranchData.entityBranchWebsite" name="id"
+                         required>
+                </mat-form-field>
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Email" [(ngModel)]="entityBranchData.entityBranchEmail" name="id"
+                         required>
+                </mat-form-field>
+                <mat-form-field fxFlex="30%">
+                  <input matInput [formControl]="pIdFormControl"
+                         type="text" placeholder="Mobile" [(ngModel)]="entityBranchData.entityBranchMobile" name="id"
+                         required>
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
+                   fxLayoutGap.lt-md="0px">
+
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+            <button fxFlex="50%" mat-raised-button color="primary" (click)="onSave()">
+              <mat-icon>save</mat-icon>
+              Save Hotels
+            </button>
+            <button fxFlex="50%" mat-raised-button color="warn" (click)="onCancel()">
+              <mat-icon>cancel</mat-icon>
+              Cancel
+            </button>
+          </mat-card-actions>
+        </mat-card>
       </div>
     </mat-card-content>
-    <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
-      <button fxFlex="50%" mat-raised-button color="primary" (click)="onSave()">
-        <mat-icon>save</mat-icon>
-        Save Hotels
-      </button>
-      <button fxFlex="50%" mat-raised-button color="warn" (click)="onCancel()">
-        <mat-icon>cancel</mat-icon>
-        Cancel
-      </button>
-    </mat-card-actions>
   </mat-card>
 </div>
+
