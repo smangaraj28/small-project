@@ -1,31 +1,31 @@
-<mat-toolbar   class="mat-elevation-z4">  
-    <div *ngIf= "hasSidenav">
-        <button mat-icon-button (click)="sidenav.toggle();drawer.toggle();" *ngIf="matDrawerShow">
-            <i class="material-icons app-toolbar-menu">menu </i>
-        </button> 
-        <button mat-icon-button (click)="sidenav.toggle();" *ngIf="!matDrawerShow">
-            <i class="material-icons app-toolbar-menu">menu </i>
-        </button>
-    </div>
-    <span class="spacer"></span>
-
-    <button  mat-icon-button (click)="searchOpen = !searchOpen" fxHide="true" [fxHide.gt-xs]="false">
-        <i class="material-icons">search</i>
+<mat-toolbar color="primary" class="mat-elevation-z4">
+  <div *ngIf="hasSidenav">
+    <button mat-icon-button (click)="sidenav.toggle();drawer.toggle();" *ngIf="matDrawerShow">
+      <i class="material-icons app-toolbar-menu">menu </i>
     </button>
-    <!--cdk-search-bar [open]="searchOpen"></cdk-search-bar-->
+    <button mat-icon-button (click)="sidenav.toggle();" *ngIf="!matDrawerShow">
+      <i class="material-icons app-toolbar-menu">menu </i>
+    </button>
+  </div>
+  <span class="spacer"></span>
 
-    <!--cdk-fullscreen></cdk-fullscreen-->
+  <button mat-icon-button (click)="searchOpen = !searchOpen" fxHide="true" [fxHide.gt-xs]="false">
+    <i class="material-icons">search</i>
+  </button>
+  <!--cdk-search-bar [open]="searchOpen"></cdk-search-bar-->
 
-    <!--cdk-toolbar-notification [notifications]="toolbarHelpers?.notifications"></cdk-toolbar-notification-->
+  <!--cdk-fullscreen></cdk-fullscreen-->
 
-    <!--cdk-user-menu [currentUser]="toolbarHelpers?.currentUser"></cdk-user-menu-->
-    <!--app-user-menu  *ngIf="(user$ | async) as userdetail" [currentUser]="userdetail"></app-user-menu-->
-    <!--app-user-menu *ngIf="userdetails" [currentUser]="userdetails"></app-user-menu-->
-    <div *ngIf= "hasSidebar">
-        <button mat-icon-button (click)="sidebar.toggle();">
-            <i class="material-icons app-toolbar-menu">menu </i>
-        </button>
-    </div>
+  <!--cdk-toolbar-notification [notifications]="toolbarHelpers?.notifications"></cdk-toolbar-notification-->
+
+  <!--cdk-user-menu [currentUser]="toolbarHelpers?.currentUser"></cdk-user-menu-->
+  <!--app-user-menu  *ngIf="(user$ | async) as userdetail" [currentUser]="userdetail"></app-user-menu-->
+  <!--app-user-menu *ngIf="userdetails" [currentUser]="userdetails"></app-user-menu-->
+  <div *ngIf="hasSidebar">
+    <button mat-icon-button (click)="sidebar.toggle();">
+      <i class="material-icons app-toolbar-menu">menu </i>
+    </button>
+  </div>
 </mat-toolbar>
 <!--<router-outlet></router-outlet>-->
 <!--<app-xyx></app-xyx>-->
