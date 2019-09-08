@@ -9,7 +9,7 @@ import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject, fromEvent, merge, Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {EntityBranchTableDeleteDialogComponent} from './dialogs/delete/entity-branch-table-delete-dialog.component';
-import {EntityBranch} from './models/entity-branch';
+import {EntityList, EntityBranch} from './models/entity-branch';
 import {FormControl, Validators} from '@angular/forms';
 
 @Component({
@@ -25,6 +25,11 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
               public dataService: DataService) {
   }
 
+  entityLists: EntityList[] = [
+    {value: 'volvo', viewValue: 'Volvo'},
+    {value: 'saab', viewValue: 'Saab'},
+    {value: 'mercedes', viewValue: 'Mercedes'}
+  ];
   @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
   private onDestroySubject = new Subject<void>();
   displayedColumns = ['id', 'entityBranchName', 'entityBranchCity', 'entityBranchMobile', 'entityBranchStartDate',
@@ -42,6 +47,7 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild('filter', {static: true}) filter: ElementRef;
+  selectedEntity: any;
 
   static initializeData() {
     return {

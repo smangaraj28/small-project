@@ -1,7 +1,16 @@
 <div>
   <mat-card>
-    <mat-card-title fxLayoutAlign="center" style="color: blue">
-      Branch Table ({{dataSource.renderedData.length}})
+    <mat-card-title style="color: blue">
+      <label fxFlex="60%">Branch Table ({{dataSource.renderedData.length}})</label>
+      <mat-form-field fxFlex="40%">
+        <mat-label>Entity Selection</mat-label>
+        <select matNativeControl [(ngModel)]="selectedEntity" name="entity">
+          <option value="" selected></option>
+          <option *ngFor="let entity of entityLists" [value]="entity.value">
+            {{entity.viewValue}}
+          </option>
+        </select>
+      </mat-form-field>
     </mat-card-title>
     <mat-card-content>
       <div fxLayout="row wrap">
