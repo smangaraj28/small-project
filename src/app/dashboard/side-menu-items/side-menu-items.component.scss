@@ -50,7 +50,12 @@
   font-weight: bold;
 }
 
+.active {
+  background-color: grey;
+}
+
 @include sidemenu-item(20px)
 //side-menu-items{
 //    @include sidemenu-item(20px)
 //}
+

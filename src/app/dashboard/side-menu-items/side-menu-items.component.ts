@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-menu-items',
@@ -13,7 +13,7 @@ export class SideMenuItemsComponent implements OnInit {
   @Input() secondaryMenu = false;
 
 
-  constructor() {
+  constructor(public router: Router) {
   }
 
   ngOnInit() {
