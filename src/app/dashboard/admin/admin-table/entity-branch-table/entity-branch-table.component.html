@@ -8,12 +8,12 @@
       <div fxFlex="20%">
         <mat-form-field>
           <mat-label>Entity Selection</mat-label>
-          <select matNativeControl [(ngModel)]="selectedEntity" name="entity">
-            <option value="" selected></option>
-            <option *ngFor="let entity of entityLists" [value]="entity.value">
+          <mat-select [(ngModel)]="selectedEntity" name="entity">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let entity of entityLists" [value]="entity.value">
               {{entity.viewValue}}
-            </option>
-          </select>
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div fxFlex="10%" fxFlex.lt-md="10%">
