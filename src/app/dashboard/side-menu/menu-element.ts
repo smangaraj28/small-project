@@ -1,43 +1,34 @@
 export const Menus = [
   {
-    'name': 'Dashboard',
+    'name': 'Entity',
+    'link': '/admin/hotel-table',
     'icon': 'dashboard',
-    'link': false,
-    'open': false,
-    'chip': {'value': 1, 'color': 'accent'},
-    'sub': [
-      {
-        'name': 'Hotel Table',
-        'link': '/dashboard/hotel-table',
-        'icon': 'dashboard',
-        'chip': false,
-        'open': true,
-      },
-      {
-        'name': 'Branch Table',
-        'link': '/dashboard/branch-table',
-        'icon': 'dashboard',
-        'chip': false,
-        'open': true,
-      },
-      {
-        'name': 'Role Table',
-        'link': '/dashboard/role-table',
-        'icon': 'dashboard',
-        'chip': false,
-        'open': true,
-      },
-      {
-        'name': 'User Table',
-        'link': '/dashboard/user-table',
-        'icon': 'dashboard',
-        'chip': false,
-        'open': true,
-      }
-    ]
+    'chip': false,
+    'open': true,
   },
   {
-    'name': 'Admin',
+    'name': 'Branch',
+    'link': '/admin/branch-table',
+    'icon': 'dashboard',
+    'chip': false,
+    'open': true,
+  },
+  {
+    'name': 'Roles',
+    'link': '/admin/role-table',
+    'icon': 'dashboard',
+    'chip': false,
+    'open': true,
+  },
+  {
+    'name': 'Users',
+    'link': '/admin/user-table',
+    'icon': 'dashboard',
+    'chip': false,
+    'open': true,
+  },
+  {
+    'name': 'Billing',
     'icon': 'widgets',
     'link': false,
     'open': false,
@@ -45,21 +36,21 @@ export const Menus = [
     'sub': [
       {
         'name': 'Branch',
-        'link': '/dashboard/branch',
+        'link': '/admin/branch',
         'icon': 'indeterminate_check_box',
         'chip': false,
         'open': false,
       },
       {
         'name': 'Role',
-        'link': '/dashboard/role',
+        'link': '/admin/role',
         'icon': 'list',
         'chip': false,
         'open': false,
       },
       {
         'name': 'User',
-        'link': '/dashboard/user',
+        'link': '/admin/user',
         'icon': 'view_week',
         'chip': false,
         'open': false,

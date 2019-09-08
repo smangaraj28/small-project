@@ -18,11 +18,11 @@ export const DASHBOARD_ROUTES: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'admin',
         pathMatch: 'full'
       },
       {
-        path: 'dashboard',
+        path: 'admin',
         loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
       }
     ]
