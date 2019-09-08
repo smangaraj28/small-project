@@ -27,7 +27,7 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
   private onDestroySubject = new Subject<void>();
-  displayedColumns = ['id', 'entityId', 'entityName', 'entityCategory', 'entityDescription', 'entityImageUrl', 'entityStatus', 'actions'];
+  displayedColumns = ['id', 'entityName', 'entityCity', 'entityMobile', 'entityStartDate', 'entityStatus', 'actions'];
   exampleDatabase: DataService | null;
   dataSource: ExampleDataSource | null;
   index: number;

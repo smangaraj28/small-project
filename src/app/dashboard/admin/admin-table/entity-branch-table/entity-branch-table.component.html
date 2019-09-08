@@ -22,31 +22,25 @@
             <mat-cell *matCellDef="let row; let i=index;">{{i + 1}}</mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="entityId">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Department ID</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityBranchId}}</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="entityCategory">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityBranchCategory}}</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="entityName">
+          <ng-container matColumnDef="entityBranchName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.entityBranchName}}</mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="entityDescription">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityBranchDescription}}</mat-cell>
+          <ng-container matColumnDef="entityBranchCity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>City</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityBranchCity}}</mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="entityImageUrl">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Image URL</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityBranchImageUrl}}</mat-cell>
+          <ng-container matColumnDef="entityBranchMobile">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Contact</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityBranchMobile}}</mat-cell>
           </ng-container>
-          <ng-container matColumnDef="entityStatus">
+          <ng-container matColumnDef="entityBranchStartDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Opening Date</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityBranchStartDate}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="entityBranchStatus">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.entityBranchStatus}}</mat-cell>
           </ng-container>

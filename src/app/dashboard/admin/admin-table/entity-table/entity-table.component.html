@@ -21,30 +21,21 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>Serial No</mat-header-cell>
             <mat-cell *matCellDef="let row; let i=index;">{{i + 1}}</mat-cell>
           </ng-container>
-
-          <ng-container matColumnDef="entityId">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Department ID</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityId}}</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="entityCategory">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityCategory}}</mat-cell>
-          </ng-container>
-
           <ng-container matColumnDef="entityName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.entityName}}</mat-cell>
           </ng-container>
-
-          <ng-container matColumnDef="entityDescription">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityDescription}}</mat-cell>
+          <ng-container matColumnDef="entityCity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>City</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityCity}}</mat-cell>
           </ng-container>
-
-          <ng-container matColumnDef="entityImageUrl">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Image URL</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.entityImageUrl}}</mat-cell>
+          <ng-container matColumnDef="entityMobile">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Contacts</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityMobile}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="entityStartDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Opening Date</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.entityStartDate}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="entityStatus">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>

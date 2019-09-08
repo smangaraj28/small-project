@@ -27,7 +27,8 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
 
   @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
   private onDestroySubject = new Subject<void>();
-  displayedColumns = ['id', 'entityId', 'entityName', 'entityCategory', 'entityDescription', 'entityImageUrl', 'entityStatus', 'actions'];
+  displayedColumns = ['id', 'entityBranchName', 'entityBranchCity', 'entityBranchMobile', 'entityBranchStartDate',
+    'entityBranchStatus', 'actions'];
   exampleDatabase: DataService | null;
   dataSource: ExampleDataSource | null;
   index: number;
@@ -215,7 +216,6 @@ export class ExampleDataSource extends DataSource<EntityBranch> {
   disconnect() {
   }
 
-  /** Returns a sorted copy of the database entityBranchData. */
   sortData(data: EntityBranch[]): EntityBranch[] {
     if (!this.mSort.active || this.mSort.direction === '') {
       return data;
