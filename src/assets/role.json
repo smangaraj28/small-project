@@ -1,0 +1,32 @@
+[
+  {
+    "roleId": 12,
+    "roleName": "Inventory Manager",
+    "hotelPOSModule": false,
+    "inventoryModule": true,
+    "roomBookModule": true,
+    "SuperMarketPOSModule": false,
+    "reportsModule": true,
+    "accountingModule": true
+  },
+  {
+    "roleId": 9,
+    "roleName": "Store Manager",
+    "hotelPOSModule": false,
+    "inventoryModule": true,
+    "roomBookModule": true,
+    "SuperMarketPOSModule": true,
+    "reportsModule": false,
+    "accountingModule": false
+  },
+  {
+    "roleId": 23,
+    "roleName": "Billing Person",
+    "hotelPOSModule": true,
+    "inventoryModule": false,
+    "roomBookModule": false,
+    "SuperMarketPOSModule": true,
+    "reportsModule": false,
+    "accountingModule": false
+  }
+]
