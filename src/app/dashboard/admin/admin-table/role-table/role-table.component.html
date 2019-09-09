@@ -1,0 +1,124 @@
+<div>
+  <mat-card>
+    <mat-toolbar color="primary" style="position: sticky;top: 0;z-index: 1000;position: -webkit-sticky;" fxLayout="row"
+                 fxLayoutAlign="start center">
+      <div fxFlex="70%" fxFlex.lt-md="70%">
+        Role Maintenance
+      </div>
+      <div fxFlex="20%">
+      </div>
+      <div fxFlex="10%" fxFlex.lt-md="10%">
+        <button mat-icon-button [disabled]="newEntryFlag" (click)="addNew()">
+          Add Role
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+    <mat-card-content>
+      <div fxLayout="row wrap">
+        <mat-form-field>
+          <mat-label>Filter By Anything</mat-label>
+          <input matInput #filter placeholder="Filter issues">
+        </mat-form-field>
+        <mat-paginator #paginator
+                       [length]="dataSource.filteredData.length"
+                       [pageIndex]="0" [pageSize]="10" showFirstLastButtons
+                       [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+      </div>
+      <div>
+        <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Serial No</mat-header-cell>
+            <mat-cell *matCellDef="let row; let i=index;">{{i + 1}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="roleName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.roleName}}</mat-cell>
+          </ng-container>
+          <!-- actions -->
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef="let row; let i=index;">
+            </mat-header-cell>
+
+            <mat-cell *matCellDef="let row; let i=index;">
+              <button mat-icon-button color="primary" (click)="startEdit(i+1, row)" [disabled]="newEntryFlag">
+                <mat-icon aria-label="Edit">edit</mat-icon>
+              </button>
+
+              <button mat-icon-button color="warn" [disabled]="newEntryFlag" (click)="deleteItem(i, row)">
+                <mat-icon aria-label="Delete">delete</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+          No Branch
+        </div>
+      </div>
+      <div style="margin-top: 20px" *ngIf="newEntryFlag">
+        <mat-card
+          style="box-shadow: 0 -4px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);">
+          <mat-card-content>
+            <div fxLayout=“row” fxLayoutAlign="space-between center">
+              <div fxFlex="23%"><b>Role Details:</b></div>
+              <div fxFlex="23%">
+                <mat-form-field>
+                  <mat-label>Role Name</mat-label>
+                  <input matInput placeholder="Role Name">
+                </mat-form-field>
+              </div>
+              <div fxFlex="23%">
+                <mat-form-field>
+                  <mat-select placeholder="Select User/Role" name="userorrole"
+                              (selectionChange)="UserOrRoleChangeAction(selectedUserOrRole)"
+                              [(ngModel)]="selectedUserOrRole">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let i of selectUserOrRoleDetails"
+                                [value]="i.name">{{ i.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="23%">
+                <mat-form-field *ngIf="selectedUserOrRole">
+                  <mat-select placeholder="Select User/Role Name" name="userroledetails"
+                              [(ngModel)]="selectedUserOrRoleName">
+                    <mat-option *ngFor="let i of userOrRoleNameList"
+                                [value]="i">{{ i }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start">
+              <div fxFlex="45%">
+                <app-drag-drop-dual-list></app-drag-drop-dual-list>
+              </div>
+              <div fxFlex="10%" fxLayoutAlign="center center">
+                <button *ngIf="!proceedClickFlag" mat-raised-button (click)="proceed()">Proceed ></button>
+                <button *ngIf="proceedClickFlag" mat-raised-button (click)="reset()">< Reset</button>
+              </div>
+              <div fxFlex="45%">
+                <app-table-expandable-rows></app-table-expandable-rows>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+            <button fxFlex="50%" mat-raised-button color="primary" (click)="onSave()">
+              <mat-icon>save</mat-icon>
+              Save Hotels
+            </button>
+            <button fxFlex="50%" mat-raised-button color="warn" (click)="onCancel()">
+              <mat-icon>cancel</mat-icon>
+              Cancel
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+

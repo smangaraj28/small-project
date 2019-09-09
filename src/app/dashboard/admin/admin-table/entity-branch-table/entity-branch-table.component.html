@@ -1,6 +1,6 @@
 <div>
   <mat-card>
-    <mat-toolbar style="position: sticky;top: 0;z-index: 1000;position: -webkit-sticky;" fxLayout="row"
+    <mat-toolbar color="primary" style="position: sticky;top: 0;z-index: 1000;position: -webkit-sticky;" fxLayout="row"
                  fxLayoutAlign="start center">
       <div fxFlex="70%" fxFlex.lt-md="70%">
         Branch Maintenance
@@ -17,7 +17,7 @@
         </mat-form-field>
       </div>
       <div fxFlex="10%" fxFlex.lt-md="10%">
-        <button mat-icon-button color="primary" [disabled]="newEntryFlag" (click)="addNew()">
+        <button mat-icon-button [disabled]="newEntryFlag" (click)="addNew()">
           Add Branch
           <mat-icon>add_circle</mat-icon>
         </button>
