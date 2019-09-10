@@ -94,16 +94,16 @@
               </div>
             </div>
             <div fxLayout="row" fxLayoutAlign="start">
-              <div fxFlex="45%">
-                <app-drag-drop-dual-list></app-drag-drop-dual-list>
+              <div fxFlex="45%" [class.disabled-content]="roleTableFlag" >
+                <app-drag-drop-dual-list [modulesName]="modulesName"></app-drag-drop-dual-list>
               </div>
               <div fxFlex="10%" fxLayoutAlign="center center">
                 <button *ngIf="!proceedClickFlag" mat-raised-button (click)="proceed()">Proceed ></button>
                 <button *ngIf="proceedClickFlag" mat-raised-button (click)="reset()">< Reset</button>
               </div>
-              <div fxFlex="45%">
+              <div *ngIf="roleTableFlag" fxFlex="45%">
                 <h2>Select SubModules</h2>
-                <app-table-expandable-rows></app-table-expandable-rows>
+                <app-table-expandable-rows [moduleData]="selectedModuleDetails"></app-table-expandable-rows>
               </div>
             </div>
           </mat-card-content>

@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Modules} from './modules';
+import {MatCheckboxChange} from '@angular/material';
 
 @Component({
   selector: 'app-table-expandable-rows',
@@ -15,41 +16,33 @@ import {Modules} from './modules';
   ],
 })
 
-export class TableExpandableRowsComponent implements OnInit {
-  moduleDetails: Modules[];
-  displayedModules: string[] = ['moduleId', 'moduleName'];
-  displayedSubModules: string[] = ['subModuleId', 'subModuleName'];
+export class TableExpandableRowsComponent {
+  @Input() moduleData: Modules[];
+  displayedModules: string[] = ['moduleId', 'moduleName', 'readAllFlag', 'writeAllFlag'];
+  displayedSubModules: string[] = ['subModuleId', 'subModuleName', 'read', 'write'];
   expandedElement: Modules | null;
-  private dataSourceModule: Modules[];
 
-  ngOnInit(): void {
-    this.moduleDetails = [
-      {
-        moduleId: 1,
-        moduleName: 'POS',
-        moduleDescription: [
-          {subModuleId: 1, subModuleName: 'AVX'},
-          {subModuleId: 2, subModuleName: 'POP'}
-        ]
-      },
-      {
-        moduleId: 2,
-        moduleName: 'Admin',
-        moduleDescription: [
-          {subModuleId: 1, subModuleName: 'Role'},
-          {subModuleId: 2, subModuleName: 'Branch'}
-        ]
-      },
-      {
-        moduleId: 3,
-        moduleName: 'Booking',
-        moduleDescription: [
-          {subModuleId: 1, subModuleName: 'Room'},
-          {subModuleId: 2, subModuleName: 'Rest'}
-        ]
-      },
-    ];
-    this.dataSourceModule = this.moduleDetails;
+  onReadChange(event: MatCheckboxChange, element: any) {
+    if (element.readAllFlag === true) {
+      element.moduleDescription.forEach(value => {
+        value.readFlag = true;
+      });
+    } else {
+      element.moduleDescription.forEach(value => {
+        value.readFlag = false;
+      });
+    }
   }
 
+  onWriteChange(event: MatCheckboxChange, element: any) {
+    if (element.writeAllFlag === true) {
+      element.moduleDescription.forEach(value => {
+        value.writeFlag = true;
+      });
+    } else {
+      element.moduleDescription.forEach(value => {
+        value.writeFlag = false;
+      });
+    }
+  }
 }

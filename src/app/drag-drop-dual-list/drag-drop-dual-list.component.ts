@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 @Component({
@@ -7,14 +7,7 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
   styleUrls: ['./drag-drop-dual-list.component.scss']
 })
 export class DragDropDualListComponent {
-  todo = [
-    'Room Book Module',
-    'Inventory Module',
-    'Hotel POS Module',
-    'Super Market POS Module',
-    'Reports Module',
-    'Accounting Module'
-  ];
+  @Input() modulesName;
   done = [];
 
   drop(event: CdkDragDrop<string[]>) {

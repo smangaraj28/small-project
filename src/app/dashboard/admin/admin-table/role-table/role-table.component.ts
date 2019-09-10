@@ -11,6 +11,8 @@ import {map} from 'rxjs/operators';
 import {FormControl, Validators} from '@angular/forms';
 import {Role} from './models/role';
 import {EntityBranchTableDeleteDialogComponent} from '../entity-branch-table/dialogs/delete/entity-branch-table-delete-dialog.component';
+import {DragDropDualListComponent} from '../../../../drag-drop-dual-list/drag-drop-dual-list.component';
+import {Modules} from '../../../../table-expandable-rows/modules';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,7 +21,12 @@ import {EntityBranchTableDeleteDialogComponent} from '../entity-branch-table/dia
   styleUrls: ['./role-table.component.scss']
 })
 export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
-  private proceedClickFlag = false;
+  @ViewChild(DragDropDualListComponent, {static: false})
+  private dragDropDualListComponent: DragDropDualListComponent;
+  public proceedClickFlag = false;
+  private clonedModuleDetails: Modules[];
+  public selectedModuleDetails: Modules[];
+  public modulesName: any[];
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
@@ -38,7 +45,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     Validators.required
   ]);
   newEntryFlag = false;
-
+  moduleDetails: Modules[];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild('filter', {static: true}) filter: ElementRef;
@@ -47,6 +54,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedUserOrRoleName: any;
   userOrRoleNameList = [];
   selectUserOrRoleDetails = [];
+  roleTableFlag = false;
 
   static initializeData() {
     return {
@@ -62,6 +70,83 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.moduleDetails = [
+      {
+        moduleId: 1,
+        moduleName: 'Hotel POS Module',
+        selected: false,
+        readAllFlag: false,
+        writeAllFlag: false,
+        moduleDescription: [
+          {subModuleId: 1, subModuleName: 'AVX', readFlag: false, writeFlag: false},
+          {subModuleId: 2, subModuleName: 'POP', readFlag: false, writeFlag: false}
+        ]
+      },
+      {
+        moduleId: 2,
+        moduleName: 'Accounting Module',
+        selected: false,
+        readAllFlag: false,
+        writeAllFlag: false,
+        moduleDescription: [
+          {subModuleId: 1, subModuleName: 'Role', readFlag: false, writeFlag: false},
+          {subModuleId: 2, subModuleName: 'Branch', readFlag: false, writeFlag: false}
+        ]
+      },
+      {
+        moduleId: 3,
+        moduleName: 'Room Book Module',
+        selected: false,
+        readAllFlag: false,
+        writeAllFlag: false,
+        moduleDescription: [
+          {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+          {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+        ]
+      },
+      {
+        moduleId: 4,
+        moduleName: 'Super Market POS Module',
+        selected: false,
+        readAllFlag: false,
+        writeAllFlag: false,
+        moduleDescription: [
+          {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+          {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+        ]
+      },
+      {
+        moduleId: 5,
+        moduleName: 'Inventory Module',
+        selected: false,
+        readAllFlag: false,
+        writeAllFlag: false,
+        moduleDescription: [
+          {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+          {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+        ]
+      },
+      {
+        moduleId: 6,
+        moduleName: 'Reports Module',
+        selected: false,
+        readAllFlag: false,
+        writeAllFlag: false,
+        moduleDescription: [
+          {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+          {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+        ]
+      }
+    ];
+    this.modulesName = [
+      'Room Book Module',
+      'Inventory Module',
+      'Hotel POS Module',
+      'Super Market POS Module',
+      'Reports Module',
+      'Accounting Module'
+    ];
+    this.clonedModuleDetails = this.moduleDetails;
     this.selectUserOrRoleDetails = [
       {
         name: 'User',
@@ -178,29 +263,32 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   proceed() {
     this.proceedClickFlag = true;
-    // this.selectedModules = [];
-    // this.clonedModules.forEach(event => {
-    //   event.selected = false;
-    // });
-    // if (typeof this.timerComponent.confirmedTube !== 'undefined' && this.timerComponent.confirmedTube.length > 0) {
-    //   this.timerComponent.confirmedTube.forEach((value) => {
-    //     this.clonedModules.forEach((event) => {
-    //       if (event.name === value) {
-    //         event.selected = true;
-    //       }
-    //     });
-    //   });
-    //   this.selectedModules = this.clonedModules.filter(event => {
-    //     return event.selected === true;
-    //   });
-    //   this.roleTableFlag = true;
-    // } else {
-    //   this.roleTableFlag = false;
-    // }
+    console.log(this.dragDropDualListComponent.done);
+    this.selectedModuleDetails = [];
+    this.clonedModuleDetails.forEach(event => {
+      event.selected = false;
+    });
+    if (typeof this.dragDropDualListComponent.done !== 'undefined' && this.dragDropDualListComponent.done.length > 0) {
+      this.dragDropDualListComponent.done.forEach(value => {
+        this.clonedModuleDetails.forEach(value1 => {
+          if (value1.moduleName === value) {
+            value1.selected = true;
+          }
+        });
+      });
+      this.selectedModuleDetails = this.clonedModuleDetails.filter(event => {
+        return event.selected === true;
+      });
+      this.roleTableFlag = true;
+    } else {
+      this.roleTableFlag = false;
+    }
+    console.log(this.selectedModuleDetails);
   }
 
   reset() {
     this.proceedClickFlag = false;
+    this.roleTableFlag = false;
   }
 }
 
