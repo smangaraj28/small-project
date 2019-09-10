@@ -9,8 +9,8 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 export class DragDropDualListComponent {
   @Input() leftTitle;
   @Input() rightTitle;
-  @Input() modulesName;
-  done = [];
+  @Input() availableModuleName;
+  @Input() selectedModuleName;
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {

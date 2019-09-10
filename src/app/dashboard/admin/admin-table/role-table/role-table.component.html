@@ -15,12 +15,12 @@
       </div>
     </mat-toolbar>
     <mat-card-content>
-      <div fxLayout="row wrap">
-        <mat-form-field>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between">
+        <mat-form-field fxFlex="25%">
           <mat-label>Filter By Anything</mat-label>
           <input matInput #filter placeholder="Filter issues">
         </mat-form-field>
-        <mat-paginator #paginator
+        <mat-paginator fxFlex="40%" #paginator
                        [length]="dataSource.filteredData.length"
                        [pageIndex]="0" [pageSize]="10" showFirstLastButtons
                        [pageSizeOptions]="[5, 10, 25, 100]">
@@ -69,7 +69,7 @@
               <div fxFlex="23%">
                 <mat-form-field>
                   <mat-label>Role Name</mat-label>
-                  <input matInput placeholder="Role Name" [(ngModel)]="roleName" >
+                  <input matInput placeholder="Role Name" [(ngModel)]="roleName">
                 </mat-form-field>
               </div>
               <div fxFlex="23%">
@@ -94,8 +94,9 @@
               </div>
             </div>
             <div fxLayout="row" fxLayoutAlign="start">
-              <div fxFlex="45%" [class.disabled-content]="roleTableFlag" >
-                <app-drag-drop-dual-list [leftTitle]="leftTitleDragDrop" [rightTitle]="rightTitleDragDrop" [modulesName]="modulesName"></app-drag-drop-dual-list>
+              <div fxFlex="45%" [class.disabled-content]="roleTableFlag">
+                <app-drag-drop-dual-list [leftTitle]="leftTitleDragDrop" [rightTitle]="rightTitleDragDrop"
+                                         [selectedModuleName]="selectedModuleName" [availableModuleName]="moduleName"></app-drag-drop-dual-list>
               </div>
               <div fxFlex="10%" fxLayoutAlign="center center">
                 <button *ngIf="!proceedClickFlag" mat-raised-button (click)="proceed()">Proceed ></button>
@@ -103,16 +104,19 @@
               </div>
               <div *ngIf="roleTableFlag" fxFlex="45%">
                 <h2>Select SubModules</h2>
-                <app-module-table-expandable-rows [moduleData]="selectedModuleDetails"></app-module-table-expandable-rows>
+                <div style="height: 360px; overflow: auto;">
+                  <app-module-table-expandable-rows
+                    [moduleData]="selectedModuleDetails"></app-module-table-expandable-rows>
+                </div>
               </div>
             </div>
           </mat-card-content>
           <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
-            <button fxFlex="50%" mat-raised-button color="primary" (click)="onSave()">
+            <button fxFlex="15%" mat-raised-button color="primary" (click)="onSave()">
               <mat-icon>save</mat-icon>
               Save Hotels
             </button>
-            <button fxFlex="50%" mat-raised-button color="warn" (click)="onCancel()">
+            <button fxFlex="15%" mat-raised-button color="warn" (click)="onCancel()">
               <mat-icon>cancel</mat-icon>
               Cancel
             </button>

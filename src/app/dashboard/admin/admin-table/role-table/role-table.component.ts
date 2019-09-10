@@ -26,7 +26,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   public proceedClickFlag = false;
   private clonedModuleDetails: Modules[];
   public selectedModuleDetails: Modules[];
-  public modulesName: any[];
+  public moduleName: any[];
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
@@ -58,6 +58,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   roleName: any;
   leftTitleDragDrop = 'Available Modules';
   rightTitleDragDrop = 'Selected Modules';
+  selectedModuleName = [];
 
   static initializeData() {
     return {
@@ -72,8 +73,18 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     };
   }
 
-  ngOnInit() {
-    this.moduleDetails = [
+  static initilizeModulesName() {
+    return [
+      'Room Book Module',
+      'Inventory Module',
+      'Hotel POS Module',
+      'Super Market POS Module',
+      'Reports Module',
+      'Accounting Module'];
+  }
+
+  static initilizeModuleDetails() {
+    return [
       {
         moduleId: 1,
         moduleName: 'Hotel POS Module',
@@ -141,14 +152,11 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
         ]
       }
     ];
-    this.modulesName = [
-      'Room Book Module',
-      'Inventory Module',
-      'Hotel POS Module',
-      'Super Market POS Module',
-      'Reports Module',
-      'Accounting Module'
-    ];
+  }
+
+  ngOnInit() {
+    this.moduleDetails = RoleTableComponent.initilizeModuleDetails();
+    this.moduleName = RoleTableComponent.initilizeModulesName();
     this.clonedModuleDetails = this.moduleDetails;
     this.selectUserOrRoleDetails = [
       {
@@ -185,6 +193,12 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.newEntryFlag = true;
     this.entityBranchData = RoleTableComponent.initializeData();
     this.roleName = null;
+    this.selectedUserOrRole = null;
+    this.selectedUserOrRoleName = null;
+    this.moduleName = RoleTableComponent.initilizeModulesName();
+    this.moduleDetails = RoleTableComponent.initilizeModuleDetails();
+    this.selectedModuleDetails = [];
+    this.roleTableFlag = false;
   }
 
   startEdit(i: number, row) {
@@ -269,13 +283,13 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   proceed() {
     this.proceedClickFlag = true;
-    console.log(this.dragDropDualListComponent.done);
+    console.log(this.dragDropDualListComponent.selectedModuleName);
     this.selectedModuleDetails = [];
     this.clonedModuleDetails.forEach(event => {
       event.selected = false;
     });
-    if (typeof this.dragDropDualListComponent.done !== 'undefined' && this.dragDropDualListComponent.done.length > 0) {
-      this.dragDropDualListComponent.done.forEach(value => {
+    if (typeof this.dragDropDualListComponent.selectedModuleName !== 'undefined' && this.dragDropDualListComponent.selectedModuleName.length > 0) {
+      this.dragDropDualListComponent.selectedModuleName.forEach(value => {
         this.clonedModuleDetails.forEach(value1 => {
           if (value1.moduleName === value) {
             value1.selected = true;

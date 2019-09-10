@@ -18,7 +18,7 @@ import {MatCheckboxChange} from '@angular/material';
 
 export class ModuleTableExpandableRowsComponent {
   @Input() moduleData: Modules[];
-  displayedModules: string[] = ['moduleId', 'moduleName', 'readAllFlag', 'writeAllFlag'];
+  displayedModules: string[] = ['moduleName', 'readAllFlag', 'writeAllFlag'];
   displayedSubModules: string[] = ['subModuleId', 'subModuleName', 'read', 'write'];
   expandedElement: Modules | null;
 
@@ -30,6 +30,8 @@ export class ModuleTableExpandableRowsComponent {
     } else {
       element.moduleDescription.forEach(value => {
         value.readFlag = false;
+        value.writeFlag = false;
+        element.writeAllFlag = false;
       });
     }
   }
@@ -38,11 +40,22 @@ export class ModuleTableExpandableRowsComponent {
     if (element.writeAllFlag === true) {
       element.moduleDescription.forEach(value => {
         value.writeFlag = true;
+        value.readFlag = true;
+        element.readAllFlag = true;
       });
     } else {
       element.moduleDescription.forEach(value => {
         value.writeFlag = false;
+        value.readFlag = true;
+        element.readAllFlag = true;
       });
+    }
+  }
+
+  subReadChange($event: MatCheckboxChange, element) {
+    console.log(element);
+    if ($event.checked === false) {
+
     }
   }
 }
