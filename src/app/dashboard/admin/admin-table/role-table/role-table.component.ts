@@ -56,6 +56,8 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   selectUserOrRoleDetails = [];
   roleTableFlag = false;
   roleName: any;
+  leftTitleDragDrop = 'Available Modules';
+  rightTitleDragDrop = 'Selected Modules';
 
   static initializeData() {
     return {

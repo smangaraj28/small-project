@@ -95,7 +95,7 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="start">
               <div fxFlex="45%" [class.disabled-content]="roleTableFlag" >
-                <app-drag-drop-dual-list [modulesName]="modulesName"></app-drag-drop-dual-list>
+                <app-drag-drop-dual-list [leftTitle]="leftTitleDragDrop" [rightTitle]="rightTitleDragDrop" [modulesName]="modulesName"></app-drag-drop-dual-list>
               </div>
               <div fxFlex="10%" fxLayoutAlign="center center">
                 <button *ngIf="!proceedClickFlag" mat-raised-button (click)="proceed()">Proceed ></button>

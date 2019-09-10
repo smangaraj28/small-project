@@ -7,6 +7,8 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
   styleUrls: ['./drag-drop-dual-list.component.scss']
 })
 export class DragDropDualListComponent {
+  @Input() leftTitle;
+  @Input() rightTitle;
   @Input() modulesName;
   done = [];
 
