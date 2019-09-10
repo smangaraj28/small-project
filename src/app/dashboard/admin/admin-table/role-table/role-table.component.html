@@ -8,7 +8,7 @@
       <div fxFlex="20%">
       </div>
       <div fxFlex="10%" fxFlex.lt-md="10%">
-        <button mat-icon-button [disabled]="newEntryFlag" (click)="addNew()">
+        <button mat-button [disabled]="newEntryFlag" (click)="addNew()">
           Add Role
           <mat-icon>add_circle</mat-icon>
         </button>
@@ -69,7 +69,7 @@
               <div fxFlex="23%">
                 <mat-form-field>
                   <mat-label>Role Name</mat-label>
-                  <input matInput placeholder="Role Name">
+                  <input matInput placeholder="Role Name" [(ngModel)]="roleName" >
                 </mat-form-field>
               </div>
               <div fxFlex="23%">
@@ -103,7 +103,7 @@
               </div>
               <div *ngIf="roleTableFlag" fxFlex="45%">
                 <h2>Select SubModules</h2>
-                <app-table-expandable-rows [moduleData]="selectedModuleDetails"></app-table-expandable-rows>
+                <app-module-table-expandable-rows [moduleData]="selectedModuleDetails"></app-module-table-expandable-rows>
               </div>
             </div>
           </mat-card-content>

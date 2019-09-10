@@ -94,18 +94,18 @@
   margin-left: 45%;
   margin-bottom: 2%;
 }
-
+// For To avoid Horizontal Scroll
 .mat-table {
   display: table;
   width: 100%;
 }
-
+// For To avoid Horizontal Scroll
 .mat-table > .mat-header-row, .mat-table > .mat-row {
   display: table-row;
   padding: 0;
   border: none;
 }
-
+// For To avoid Horizontal Scroll
 .mat-table > .mat-header-row > .mat-header-cell,
 .mat-table > .mat-row > .mat-cell {
   display: table-cell;
@@ -114,7 +114,7 @@
   padding: 0 0.5em;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
-
+// To Disable Mat drag drop Dual List
 .disabled-content {
   pointer-events: none;
   opacity: 0.4;

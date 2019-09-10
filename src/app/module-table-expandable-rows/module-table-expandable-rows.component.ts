@@ -4,9 +4,9 @@ import {Modules} from './modules';
 import {MatCheckboxChange} from '@angular/material';
 
 @Component({
-  selector: 'app-table-expandable-rows',
-  templateUrl: './table-expandable-rows.component.html',
-  styleUrls: ['./table-expandable-rows.component.scss'],
+  selector: 'app-module-table-expandable-rows',
+  templateUrl: './module-table-expandable-rows.component.html',
+  styleUrls: ['./module-table-expandable-rows.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -16,7 +16,7 @@ import {MatCheckboxChange} from '@angular/material';
   ],
 })
 
-export class TableExpandableRowsComponent {
+export class ModuleTableExpandableRowsComponent {
   @Input() moduleData: Modules[];
   displayedModules: string[] = ['moduleId', 'moduleName', 'readAllFlag', 'writeAllFlag'];
   displayedSubModules: string[] = ['subModuleId', 'subModuleName', 'read', 'write'];

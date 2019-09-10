@@ -12,7 +12,7 @@ import {FormControl, Validators} from '@angular/forms';
 import {Role} from './models/role';
 import {EntityBranchTableDeleteDialogComponent} from '../entity-branch-table/dialogs/delete/entity-branch-table-delete-dialog.component';
 import {DragDropDualListComponent} from '../../../../drag-drop-dual-list/drag-drop-dual-list.component';
-import {Modules} from '../../../../table-expandable-rows/modules';
+import {Modules} from '../../../../module-table-expandable-rows/modules';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -55,6 +55,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   userOrRoleNameList = [];
   selectUserOrRoleDetails = [];
   roleTableFlag = false;
+  roleName: any;
 
   static initializeData() {
     return {
@@ -181,6 +182,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.id = undefined;
     this.newEntryFlag = true;
     this.entityBranchData = RoleTableComponent.initializeData();
+    this.roleName = null;
   }
 
   startEdit(i: number, row) {
@@ -188,6 +190,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.id = row.entityId;
     console.log(row);
     this.entityBranchData = row;
+    this.roleName = this.entityBranchData.roleName;
     this.index = i;
     console.log(this.index);
   }
@@ -231,6 +234,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   onSave() {
     console.log(typeof this.id === 'undefined');
     if (typeof this.id === 'undefined') {
+      this.entityBranchData.roleName = this.roleName;
       this.dataService.addIssue(this.entityBranchData);
       this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
     } else {
