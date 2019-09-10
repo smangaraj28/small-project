@@ -50,8 +50,6 @@ export class UserTableComponent implements OnInit {
   addNew() {
     this.newEntryFlag = true;
     this.subCardLabel = 'Add';
-    this.selectedBranchName = [];
-    this.availableBranchName = UserTableComponent.intializeBranchName();
   }
 
   ngOnInit(): void {
@@ -122,6 +120,8 @@ export class UserTableComponent implements OnInit {
 
   onCancel() {
     this.newEntryFlag = false;
+    this.availableBranchName = UserTableComponent.intializeBranchName();
+    this.selectedBranchName = [];
   }
 
   proceed() {
