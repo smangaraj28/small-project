@@ -9,14 +9,16 @@ import {User} from './models/user';
   styleUrls: ['./user-table.component.scss']
 })
 export class UserTableComponent implements OnInit {
-  newEntryFlag: any;
+  newEntryFlag = false;
   userDataSource: User[];
+  userName: any;
+  userPassword: any;
 
   constructor(public dialog: MatDialog) {
   }
 
   addNew() {
-
+    this.newEntryFlag = true;
   }
 
   ngOnInit(): void {
@@ -57,5 +59,18 @@ export class UserTableComponent implements OnInit {
         }]
       }
     ];
+  }
+
+  onStartEditClicked(event) {
+    console.log(event);
+    this.newEntryFlag = true;
+  }
+
+  onSave() {
+    this.newEntryFlag = false;
+  }
+
+  onCancel() {
+    this.newEntryFlag = false;
   }
 }

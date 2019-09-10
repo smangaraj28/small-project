@@ -16,7 +16,59 @@
     </mat-toolbar>
     <mat-card-content>
       <div>
-        <app-user-table-expandable-rows [moduleData]="userDataSource"></app-user-table-expandable-rows>
+        <app-user-table-expandable-rows (startEditEmitter)="onStartEditClicked($event)"
+                                        [moduleData]="userDataSource"></app-user-table-expandable-rows>
+      </div>
+      <div style="margin-top: 20px" *ngIf="newEntryFlag">
+        <mat-card
+          style="box-shadow: 0 -4px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);">
+          <mat-card-content>
+            <div fxLayout=“row” fxLayoutAlign="space-between center">
+              <div fxFlex="23%"><b>User Details:</b></div>
+              <div fxFlex="23%">
+                <mat-form-field>
+                  <mat-label>User Name</mat-label>
+                  <input matInput placeholder="Role Name" [(ngModel)]="userName" >
+                </mat-form-field>
+              </div>
+              <div fxFlex="23%">
+                <mat-form-field>
+                  <mat-label>First Time Password</mat-label>
+                  <input matInput placeholder="First Time Password" [(ngModel)]="userPassword" >
+                </mat-form-field>
+              </div>
+              <div fxFlex="23%">
+                <mat-form-field>
+                  <mat-label>Entity Name</mat-label>
+                  <input matInput placeholder="Entity" [(ngModel)]="userPassword" >
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start">
+              <!--<div fxFlex="45%" [class.disabled-content]="roleTableFlag" >-->
+                <!--<app-drag-drop-dual-list [modulesName]="modulesName"></app-drag-drop-dual-list>-->
+              <!--</div>-->
+              <!--<div fxFlex="10%" fxLayoutAlign="center center">-->
+                <!--<button *ngIf="!proceedClickFlag" mat-raised-button (click)="proceed()">Proceed ></button>-->
+                <!--<button *ngIf="proceedClickFlag" mat-raised-button (click)="reset()">< Reset</button>-->
+              <!--</div>-->
+              <!--<div *ngIf="roleTableFlag" fxFlex="45%">-->
+                <!--<h2>Select SubModules</h2>-->
+                <!--<app-module-table-expandable-rows [moduleData]="selectedModuleDetails"></app-module-table-expandable-rows>-->
+              <!--</div>-->
+            </div>
+          </mat-card-content>
+          <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+            <button fxFlex="50%" mat-raised-button color="primary" (click)="onSave()">
+              <mat-icon>save</mat-icon>
+              Save Users
+            </button>
+            <button fxFlex="50%" mat-raised-button color="warn" (click)="onCancel()">
+              <mat-icon>cancel</mat-icon>
+              Cancel
+            </button>
+          </mat-card-actions>
+        </mat-card>
       </div>
     </mat-card-content>
   </mat-card>

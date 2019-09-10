@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {User} from '../dashboard/admin/admin-table/user-table/models/user';
 
@@ -17,13 +17,18 @@ import {User} from '../dashboard/admin/admin-table/user-table/models/user';
 
 export class UserTableExpandableRowsComponent {
   @Input() moduleData: User[];
+  @Output() startEditEmitter = new EventEmitter<any>();
   displayedModules: string[] = ['userId', 'userName'];
   displayedSubModules: string[] = ['branchId', 'branchName', 'branchRole', 'actions'];
   expandedElement: User | null;
   newEntryFlag: any;
 
-  startEdit(param: any, row: any) {
-
+  startEdit(param: any, element: any, row: any) {
+    const obj = {
+      allRows: element,
+      selectedRow: row
+    };
+    this.startEditEmitter.emit(obj);
   }
 
   deleteItem(i: any, row: any) {
