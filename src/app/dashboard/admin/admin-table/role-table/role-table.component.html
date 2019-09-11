@@ -6,6 +6,15 @@
         Role Maintenance
       </div>
       <div fxFlex="20%">
+        <mat-form-field>
+          <mat-label>Entity Selection</mat-label>
+          <mat-select [(ngModel)]="selectedEntity" name="entity">
+            <mat-option>ALL</mat-option>
+            <mat-option *ngFor="let entity of entityLists" [value]="entity">
+              {{entity}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div fxFlex="10%" fxFlex.lt-md="10%">
         <button mat-button [disabled]="newEntryFlag" (click)="addNew()">
@@ -96,7 +105,8 @@
             <div fxLayout="row" fxLayoutAlign="start">
               <div fxFlex="45%" [class.disabled-content]="roleTableFlag">
                 <app-drag-drop-dual-list [leftTitle]="leftTitleDragDrop" [rightTitle]="rightTitleDragDrop"
-                                         [selectedModuleName]="selectedModuleName" [availableModuleName]="moduleName"></app-drag-drop-dual-list>
+                                         [selectedModuleName]="selectedModuleName"
+                                         [availableModuleName]="moduleName"></app-drag-drop-dual-list>
               </div>
               <div fxFlex="10%" fxLayoutAlign="center center">
                 <button *ngIf="!proceedClickFlag" mat-raised-button (click)="proceed()">Proceed ></button>

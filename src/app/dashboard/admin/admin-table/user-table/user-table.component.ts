@@ -35,6 +35,8 @@ export class UserTableComponent implements OnInit {
   subCardLabel: string;
   selectedBranchName = [];
   roleList = [];
+  entityLists = ['E1', 'E2'];
+  selectedEntity: any;
 
   constructor(public dialog: MatDialog) {
   }
