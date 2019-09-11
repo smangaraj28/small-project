@@ -288,7 +288,8 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.clonedModuleDetails.forEach(event => {
       event.selected = false;
     });
-    if (typeof this.dragDropDualListComponent.selectedModuleName !== 'undefined' && this.dragDropDualListComponent.selectedModuleName.length > 0) {
+    if (typeof this.dragDropDualListComponent.selectedModuleName !== 'undefined'
+      && this.dragDropDualListComponent.selectedModuleName.length > 0) {
       this.dragDropDualListComponent.selectedModuleName.forEach(value => {
         this.clonedModuleDetails.forEach(value1 => {
           if (value1.moduleName === value) {

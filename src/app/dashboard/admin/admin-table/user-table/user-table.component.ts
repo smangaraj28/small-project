@@ -27,10 +27,11 @@ export class UserTableComponent implements OnInit {
   displayedColumns: string[] = ['branchName', 'branchRole'];
   rightTitleDragDrop = 'Available Branches';
   leftTitleDragDrop = 'Selected Branches';
-  branchRoleTable: BranchRoleTable[];
+  branchRoleTable: BranchRoleTable[] = [];
   entityName: string;
   subCardLabel: string;
   selectedBranchName = [];
+  roleList = [];
 
   constructor(public dialog: MatDialog) {
   }
@@ -44,6 +45,15 @@ export class UserTableComponent implements OnInit {
       'Branch 5',
       'Branch 6',
       'Branch 7'
+    ];
+  }
+
+  static intializeRoleName() {
+    return [
+      'Role 1',
+      'Role 2',
+      'Role 3',
+      'Role 4'
     ];
   }
 
@@ -61,12 +71,12 @@ export class UserTableComponent implements OnInit {
         branchRole: [{
           branchId: 1,
           branchName: 'Branch 4',
-          branchRole: 'Admin'
+          branchRole: 'Role 1'
         },
           {
             branchId: 2,
             branchName: 'Branch 3',
-            branchRole: 'Store Keeper'
+            branchRole: 'Role 2'
           }]
       },
       {
@@ -76,7 +86,7 @@ export class UserTableComponent implements OnInit {
         branchRole: [{
           branchId: 1,
           branchName: 'Branch 7',
-          branchRole: 'Admin'
+          branchRole: 'Role 3'
         }]
       },
       {
@@ -86,11 +96,12 @@ export class UserTableComponent implements OnInit {
         branchRole: [{
           branchId: 1,
           branchName: 'Branch 2',
-          branchRole: 'Store'
+          branchRole: 'Role 4'
         }]
       }
     ];
     this.availableBranchName = UserTableComponent.intializeBranchName();
+    this.roleList = UserTableComponent.intializeRoleName();
   }
 
   arrayRemove(arr, value) {
@@ -100,11 +111,15 @@ export class UserTableComponent implements OnInit {
   }
 
   onStartEditClicked(event) {
+    this.userTableFlag = true;
     this.subCardLabel = 'Edit';
     console.log(event);
+    this.branchRoleTable = [];
     this.userName = event.allRows.userName;
     this.userPassword = event.allRows.userPassword;
     this.selectedBranchName = event.allRows.branchRole.map(value => {
+      const obj = {branchName: value.branchName, branchRole: value.branchRole};
+      this.branchRoleTable.push(obj);
       this.availableBranchName = this.arrayRemove(this.availableBranchName, value.branchName);
       return value.branchName;
     });
