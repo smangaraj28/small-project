@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/co
 import {MatDialog} from '@angular/material/dialog';
 import {User} from './models/user';
 import {DragDropDualListComponent} from '../../../../drag-drop-dual-list/drag-drop-dual-list.component';
+import {UserTableExpandableRowsComponent} from '../../../../user-table-expandable-rows/user-table-expandable-rows.component';
 
 export interface BranchRoleTable {
   branchName: string;
@@ -17,6 +18,8 @@ export interface BranchRoleTable {
 export class UserTableComponent implements OnInit {
   @ViewChild(DragDropDualListComponent, {static: false})
   private dragDropDualListComponent: DragDropDualListComponent;
+  @ViewChild (UserTableExpandableRowsComponent, {static: false})
+  public userTableExpandableRowsComponent: UserTableExpandableRowsComponent;
   newEntryFlag = false;
   userDataSource: User[];
   userName: any;
@@ -90,7 +93,7 @@ export class UserTableComponent implements OnInit {
         }]
       },
       {
-        userId: 1,
+        userId: 3,
         userName: 'Subhendu',
         userPassword: 'subhendu',
         branchRole: [{
@@ -111,9 +114,12 @@ export class UserTableComponent implements OnInit {
   }
 
   onStartEditClicked(event) {
+    this.newEntryFlag = false;
     this.userTableFlag = true;
+    this.proceedClickFlag = true;
     this.subCardLabel = 'Edit';
     console.log(event);
+    this.availableBranchName = UserTableComponent.intializeBranchName();
     this.branchRoleTable = [];
     this.userName = event.allRows.userName;
     this.userPassword = event.allRows.userPassword;
@@ -129,11 +135,13 @@ export class UserTableComponent implements OnInit {
   }
 
   onSave() {
+    this.userTableExpandableRowsComponent.newEntryFlag = false;
     this.newEntryFlag = false;
     console.log(this.branchRoleTable);
   }
 
   onCancel() {
+    this.userTableExpandableRowsComponent.newEntryFlag = false;
     this.newEntryFlag = false;
     this.availableBranchName = UserTableComponent.intializeBranchName();
     this.selectedBranchName = [];

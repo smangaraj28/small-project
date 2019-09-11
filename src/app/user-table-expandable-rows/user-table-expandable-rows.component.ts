@@ -18,12 +18,13 @@ import {User} from '../dashboard/admin/admin-table/user-table/models/user';
 export class UserTableExpandableRowsComponent {
   @Input() moduleData: User[];
   @Output() startEditEmitter = new EventEmitter<any>();
-  displayedModules: string[] = ['userId', 'userName'];
+  displayedModules: string[] = ['userId', 'userName', 'actions'];
   displayedSubModules: string[] = ['branchId', 'branchName', 'branchRole', 'actions'];
   expandedElement: User | null;
-  newEntryFlag: any;
+  newEntryFlag = false;
 
   startEdit(param: any, element: any, row: any) {
+    this.newEntryFlag = true;
     const obj = {
       allRows: element,
       selectedRow: row
@@ -33,5 +34,18 @@ export class UserTableExpandableRowsComponent {
 
   deleteItem(i: any, row: any) {
 
+  }
+
+  deleteMainRow(i: any, row: any) {
+
+  }
+
+  editMainRow(param: any, row: any) {
+    this.newEntryFlag = true;
+    const obj = {
+      allRows: row,
+      selectedRow: row
+    };
+    this.startEditEmitter.emit(obj);
   }
 }
