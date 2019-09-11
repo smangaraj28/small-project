@@ -1,13 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {User} from './models/user';
+import {BranchRole, User} from './models/user';
 import {DragDropDualListComponent} from '../../../../drag-drop-dual-list/drag-drop-dual-list.component';
 import {UserTableExpandableRowsComponent} from '../../../../user-table-expandable-rows/user-table-expandable-rows.component';
 
-export interface BranchRoleTable {
-  branchName: string;
-  branchRole: string;
-}
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,7 +14,7 @@ export interface BranchRoleTable {
 export class UserTableComponent implements OnInit {
   @ViewChild(DragDropDualListComponent, {static: false})
   private dragDropDualListComponent: DragDropDualListComponent;
-  @ViewChild (UserTableExpandableRowsComponent, {static: false})
+  @ViewChild(UserTableExpandableRowsComponent, {static: false})
   public userTableExpandableRowsComponent: UserTableExpandableRowsComponent;
   newEntryFlag = false;
   userDataSource: User[];
@@ -28,20 +24,21 @@ export class UserTableComponent implements OnInit {
   userTableFlag = false;
   availableBranchName = [];
   displayedColumns: string[] = ['branchName', 'branchRole'];
-  rightTitleDragDrop = 'Available Branches';
-  leftTitleDragDrop = 'Selected Branches';
-  branchRoleTable: BranchRoleTable[] = [];
+  rightTitleDragDrop = 'Selected Branches';
+  leftTitleDragDrop = 'Available Branches';
+  branchRoleTable: BranchRole[] = [];
   entityName: string;
   subCardLabel: string;
   selectedBranchName = [];
   roleList = [];
   entityLists = ['E1', 'E2'];
   selectedEntity: any;
+  private userDataSourceSingle: BranchRole;
 
   constructor(public dialog: MatDialog) {
   }
 
-  static intializeBranchName() {
+  static initializeBranchName() {
     return [
       'Branch 1',
       'Branch 2',
@@ -53,7 +50,7 @@ export class UserTableComponent implements OnInit {
     ];
   }
 
-  static intializeRoleName() {
+  static initializeRoleName() {
     return [
       'Role 1',
       'Role 2',
@@ -62,9 +59,27 @@ export class UserTableComponent implements OnInit {
     ];
   }
 
+  // static initializeUserDate() {
+  //   return {
+  //     userId: null,
+  //     userName: null,
+  //     userPassword: null,
+  //     branchRole: null
+  //   };
+  // }
+
   addNew() {
     this.newEntryFlag = true;
+    this.userTableFlag = false;
+    // this.proceedClickFlag = false;
     this.subCardLabel = 'Add';
+    this.branchRoleTable = [];
+    this.entityName = null;
+    this.userName = null;
+    this.userPassword = null;
+    this.availableBranchName = UserTableComponent.initializeBranchName();
+    this.selectedBranchName = [];
+    this.roleList = UserTableComponent.initializeRoleName();
   }
 
   ngOnInit(): void {
@@ -105,8 +120,8 @@ export class UserTableComponent implements OnInit {
         }]
       }
     ];
-    this.availableBranchName = UserTableComponent.intializeBranchName();
-    this.roleList = UserTableComponent.intializeRoleName();
+    this.availableBranchName = UserTableComponent.initializeBranchName();
+    this.roleList = UserTableComponent.initializeRoleName();
   }
 
   arrayRemove(arr, value) {
@@ -121,7 +136,7 @@ export class UserTableComponent implements OnInit {
     this.proceedClickFlag = true;
     this.subCardLabel = 'Edit';
     console.log(event);
-    this.availableBranchName = UserTableComponent.intializeBranchName();
+    this.availableBranchName = UserTableComponent.initializeBranchName();
     this.branchRoleTable = [];
     this.userName = event.allRows.userName;
     this.userPassword = event.allRows.userPassword;
@@ -131,21 +146,40 @@ export class UserTableComponent implements OnInit {
       this.availableBranchName = this.arrayRemove(this.availableBranchName, value.branchName);
       return value.branchName;
     });
-    console.log(this.selectedBranchName);
-    console.log(this.availableBranchName);
     this.newEntryFlag = true;
   }
 
   onSave() {
     this.userTableExpandableRowsComponent.newEntryFlag = false;
     this.newEntryFlag = false;
-    console.log(this.branchRoleTable);
+    let obj: User;
+    switch (this.subCardLabel) {
+      case 'Add':
+        console.log('add');
+        obj = {
+          entityName: this.entityName,
+          userName: this.userName,
+          userPassword: this.userPassword,
+          branchRole: this.branchRoleTable
+        };
+        break;
+      case 'Edit':
+        console.log('edit');
+        obj = {
+          entityName: this.entityName,
+          userName: this.userName,
+          userPassword: this.userPassword,
+          branchRole: this.branchRoleTable
+        };
+        break;
+    }
+    console.log(obj);
   }
 
   onCancel() {
     this.userTableExpandableRowsComponent.newEntryFlag = false;
     this.newEntryFlag = false;
-    this.availableBranchName = UserTableComponent.intializeBranchName();
+    this.availableBranchName = UserTableComponent.initializeBranchName();
     this.selectedBranchName = [];
   }
 

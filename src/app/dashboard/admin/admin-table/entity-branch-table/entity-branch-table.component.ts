@@ -9,7 +9,7 @@ import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject, fromEvent, merge, Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {EntityBranchTableDeleteDialogComponent} from './dialogs/delete/entity-branch-table-delete-dialog.component';
-import {EntityBranch, EntityList} from './models/entity-branch';
+import {EntityBranch} from './models/entity-branch';
 import {FormControl, Validators} from '@angular/forms';
 
 @Component({
