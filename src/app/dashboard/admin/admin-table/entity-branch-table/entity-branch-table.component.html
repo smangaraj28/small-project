@@ -9,7 +9,7 @@
         <mat-form-field>
           <mat-label>Entity Selection</mat-label>
           <mat-select [(ngModel)]="selectedEntity" name="entity">
-            <mat-option>ALL</mat-option>
+            <mat-option value="all">ALL</mat-option>
             <mat-option *ngFor="let entity of entityLists" [value]="entity">
               {{entity}}
             </mat-option>

@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {BranchRole, User} from './models/user';
 import {DragDropDualListComponent} from '../../../../drag-drop-dual-list/drag-drop-dual-list.component';
 import {UserTableExpandableRowsComponent} from '../../../../user-table-expandable-rows/user-table-expandable-rows.component';
+import {MatSelectChange} from '@angular/material/select';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class UserTableComponent implements OnInit {
   public userTableExpandableRowsComponent: UserTableExpandableRowsComponent;
   newEntryFlag = false;
   userDataSource: User[];
+  clonedUserDataSource: User[];
   userName: any;
   userPassword: any;
   proceedClickFlag = false;
@@ -68,23 +70,10 @@ export class UserTableComponent implements OnInit {
   //   };
   // }
 
-  addNew() {
-    this.newEntryFlag = true;
-    this.userTableFlag = false;
-    // this.proceedClickFlag = false;
-    this.subCardLabel = 'Add';
-    this.branchRoleTable = [];
-    this.entityName = null;
-    this.userName = null;
-    this.userPassword = null;
-    this.availableBranchName = UserTableComponent.initializeBranchName();
-    this.selectedBranchName = [];
-    this.roleList = UserTableComponent.initializeRoleName();
-  }
-
-  ngOnInit(): void {
-    this.userDataSource = [
+  static intializeUserDataSource() {
+    return [
       {
+        entityName: 'E1',
         userId: 1,
         userName: 'Soumya',
         userPassword: 'soumya',
@@ -100,9 +89,10 @@ export class UserTableComponent implements OnInit {
           }]
       },
       {
+        entityName: 'E2',
         userId: 2,
         userName: 'Natarayan',
-        userPassword: 'nattarayan',
+        userPassword: 'natarayan',
         branchRole: [{
           branchId: 1,
           branchName: 'Branch 7',
@@ -110,6 +100,7 @@ export class UserTableComponent implements OnInit {
         }]
       },
       {
+        entityName: 'E1',
         userId: 3,
         userName: 'Subhendu',
         userPassword: 'subhendu',
@@ -120,6 +111,25 @@ export class UserTableComponent implements OnInit {
         }]
       }
     ];
+  }
+
+  addNew() {
+    this.newEntryFlag = true;
+    this.userTableFlag = false;
+    // this.proceedClickFlag = false;
+    this.subCardLabel = 'Add';
+    this.branchRoleTable = [];
+    this.entityName = null;
+    this.userName = null;
+    this.userPassword = null;
+    this.availableBranchName = UserTableComponent.initializeBranchName();
+    this.selectedBranchName = [];
+    this.roleList = UserTableComponent.initializeRoleName();
+  }
+
+  ngOnInit(): void {
+    this.userDataSource = UserTableComponent.intializeUserDataSource();
+    this.clonedUserDataSource = UserTableComponent.intializeUserDataSource();
     this.availableBranchName = UserTableComponent.initializeBranchName();
     this.roleList = UserTableComponent.initializeRoleName();
   }
@@ -203,5 +213,16 @@ export class UserTableComponent implements OnInit {
   reset() {
     this.proceedClickFlag = false;
     this.userTableFlag = false;
+  }
+
+  entitySelectionChange($event: MatSelectChange) {
+    if ($event.value !== 'ALL') {
+      this.clonedUserDataSource = this.userDataSource.filter(value => {
+        return value.entityName === $event.value;
+      });
+    } else {
+      this.clonedUserDataSource = this.userDataSource;
+    }
+    // console.log(this.clonedUserDataSource);
   }
 }

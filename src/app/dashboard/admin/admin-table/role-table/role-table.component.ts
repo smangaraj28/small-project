@@ -380,10 +380,8 @@ export class ExampleDataSource extends DataSource<Role> {
       let propertyA: number | string = '';
       let propertyB: number | string = '';
 
-      switch (this.mSort.active) {
-        case 'roleName':
-          [propertyA, propertyB] = [a.roleName, b.roleName];
-          break;
+      if (this.mSort.active === 'roleName') {
+        [propertyA, propertyB] = [a.roleName, b.roleName];
       }
 
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
