@@ -99,58 +99,54 @@
                    fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex="30%">
                   <input matInput [formControl]="pIdFormControl"
-                         type="text" placeholder="Hotel Name" [(ngModel)]="entityBranchData.entityBranchName" name="id"
+                         type="text" placeholder="Branch Name" [(ngModel)]="entityBranchData.entityBranchName" name="id"
                          required>
                   <mat-error *ngIf="!pIdFormControl.hasError('required')">
-                    Hotel Name is <strong>required</strong>
+                    Branch Name is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
                   <input matInput [formControl]="pIdFormControl"
-                         type="text" placeholder="Hotel Short Name" [(ngModel)]="entityBranchData.entityBranchShortName"
+                         type="text" placeholder="Branch Short Name" [(ngModel)]="entityBranchData.entityBranchShortName"
                          name="id" required>
                 </mat-form-field>
-                <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
-                         type="text" placeholder="Hotel Description"
-                         [(ngModel)]="entityBranchData.entityBranchDescription"
-                         name="desc"
-                         required>
-                </mat-form-field>
+                <div fxFlex="30%"></div>
               </div>
               <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
                    fxLayoutGap.lt-md="0px">
-                <mat-form-field fxFlex="50%">
+                <mat-form-field fxFlex="30%">
                   <input matInput [formControl]="pIdFormControl"
                          type="text" placeholder="Status" [(ngModel)]="entityBranchData.entityBranchStatus"
                          name="status"
                          required>
                 </mat-form-field>
-                <mat-form-field fxFlex="50%">
+                <mat-form-field fxFlex="30%">
                   <mat-label>Start Date</mat-label>
                   <input matInput type="date" placeholder="Start Date"
                          [(ngModel)]="entityBranchData.entityBranchStartDate"
                          name="sdate"
                          required>
                 </mat-form-field>
+                <div fxFlex="30%"></div>
               </div>
               <div fxLayout=“row” fxLayoutAlign="start center">
                 <b>Address Details:</b>
               </div>
               <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
                    fxLayoutGap.lt-md="0px">
-                <mat-form-field fxFlex="50%">
+                <mat-form-field fxFlex="30%">
                   <input matInput [formControl]="pIdFormControl"
                          type="text" placeholder="Address Line 1" [(ngModel)]="entityBranchData.entityBranchAddLine1"
                          name="id"
                          required>
                 </mat-form-field>
-                <mat-form-field fxFlex="50%">
+                <mat-form-field fxFlex="30%">
                   <input matInput [formControl]="pIdFormControl"
                          type="text" placeholder="Address Line 2" [(ngModel)]="entityBranchData.entityBranchAddLine2"
                          name="id"
                          required>
                 </mat-form-field>
+                <div fxFlex="30%"></div>
               </div>
               <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
                    fxLayoutGap.lt-md="0px">
@@ -215,7 +211,7 @@
           <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
             <button fxFlex="15%" mat-raised-button color="primary" (click)="onSave()">
               <mat-icon>save</mat-icon>
-              Save Hotels
+              Save Branches
             </button>
             <button fxFlex="15%" mat-raised-button color="warn" (click)="onCancel()">
               <mat-icon>cancel</mat-icon>
