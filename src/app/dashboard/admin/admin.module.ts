@@ -21,6 +21,7 @@ import {RoleTableDeleteDialogComponent} from './admin-table/role-table/dialogs/d
 import {DragDropDualListComponent} from '../../drag-drop-dual-list/drag-drop-dual-list.component';
 import {ModuleTableExpandableRowsComponent} from './admin-table/role-table/module-table-expandable-rows/module-table-expandable-rows.component';
 import {UserTableExpandableRowsComponent} from './admin-table/user-table/user-table-expandable-rows/user-table-expandable-rows.component';
+import {UserTableDeleteDialogComponent} from './admin-table/user-table/dialogs/delete/user-table-delete-dialog.component';
 
 export const DASHBOARD_ROUTES: Routes = [
   {path: '', redirectTo: 'branch', pathMatch: 'full'},
@@ -59,12 +60,14 @@ export const DASHBOARD_ROUTES: Routes = [
     RoleTableDeleteDialogComponent,
     DragDropDualListComponent,
     ModuleTableExpandableRowsComponent,
-    UserTableExpandableRowsComponent
+    UserTableExpandableRowsComponent,
+    UserTableDeleteDialogComponent
   ],
   entryComponents: [
     EntityTableDeleteDialogComponent,
     EntityBranchTableDeleteDialogComponent,
-    RoleTableDeleteDialogComponent
+    RoleTableDeleteDialogComponent,
+    UserTableDeleteDialogComponent
   ]
 })
 export class AdminModule {
