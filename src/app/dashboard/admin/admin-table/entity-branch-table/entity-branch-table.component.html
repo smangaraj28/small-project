@@ -24,12 +24,12 @@
       </div>
     </mat-toolbar>
     <mat-card-content>
-      <div fxLayout="row wrap">
-        <mat-form-field>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between">
+        <mat-form-field fxFlex="25%">
           <mat-label>Filter By Anything</mat-label>
           <input matInput #filter placeholder="Filter issues">
         </mat-form-field>
-        <mat-paginator #paginator
+        <mat-paginator fxFlex="50%" #paginator
                        [length]="dataSource.filteredData.length"
                        [pageIndex]="0" [pageSize]="10" showFirstLastButtons
                        [pageSizeOptions]="[5, 10, 25, 100]">

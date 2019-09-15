@@ -1,6 +1,7 @@
 <div class="top_card">
   <mat-card>
-    <mat-toolbar color="primary" style="position: sticky;top: 0;z-index: 1000;position: -webkit-sticky;" fxLayout="row" fxLayoutAlign="start center">
+    <mat-toolbar color="primary" style="position: sticky;top: 0;z-index: 1000;position: -webkit-sticky;" fxLayout="row"
+                 fxLayoutAlign="start center">
       <div fxFlex="90%" fxFlex.lt-md="70%">
         Entity Maintenance
       </div>
@@ -12,12 +13,12 @@
       </div>
     </mat-toolbar>
     <mat-card-content>
-      <div fxLayout="row wrap">
-        <mat-form-field>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between">
+        <mat-form-field fxFlex="25%">
           <mat-label>Filter By Anything</mat-label>
           <input matInput #filter placeholder="Filter issues">
         </mat-form-field>
-        <mat-paginator #paginator
+        <mat-paginator fxFlex="50%" #paginator
                        [length]="dataSource.filteredData.length"
                        [pageIndex]="0" [pageSize]="10" showFirstLastButtons
                        [pageSizeOptions]="[5, 10, 25, 100]">
@@ -69,7 +70,8 @@
         </div>
       </div>
       <div style="margin-top: 20px" *ngIf="newEntryFlag">
-        <mat-card style="box-shadow: 0 -4px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);">
+        <mat-card
+          style="box-shadow: 0 -4px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);">
           <mat-card-content>
             <div fxLayout="column">
               <div fxLayout=“row” fxLayoutAlign="start center">

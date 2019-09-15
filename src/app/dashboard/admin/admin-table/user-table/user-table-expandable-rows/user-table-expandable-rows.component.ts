@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {User} from '../dashboard/admin/admin-table/user-table/models/user';
+import {User} from '../models/user';
 
 @Component({
   selector: 'app-user-table-expandable-rows',
@@ -18,6 +18,7 @@ import {User} from '../dashboard/admin/admin-table/user-table/models/user';
 export class UserTableExpandableRowsComponent {
   @Input() moduleData: User[];
   @Output() startEditEmitter = new EventEmitter<any>();
+  @Output() startDeleteEmitter = new EventEmitter<any>();
   displayedModules: string[] = ['userId', 'userName', 'actions'];
   displayedSubModules: string[] = ['branchId', 'branchName', 'branchRole', 'actions'];
   expandedElement: User | null;
@@ -37,7 +38,8 @@ export class UserTableExpandableRowsComponent {
   }
 
   deleteMainRow(i: any, row: any) {
-
+    console.log(row);
+    this.startDeleteEmitter.emit(row);
   }
 
   editMainRow(param: any, row: any) {

@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {Modules} from './modules';
 import {MatCheckboxChange} from '@angular/material';
+import {Modules} from '../models/role';
 
 @Component({
   selector: 'app-module-table-expandable-rows',

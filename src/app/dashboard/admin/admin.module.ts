@@ -19,8 +19,8 @@ import {EntityBranchTableComponent} from './admin-table/entity-branch-table/enti
 import {EntityBranchTableDeleteDialogComponent} from './admin-table/entity-branch-table/dialogs/delete/entity-branch-table-delete-dialog.component';
 import {RoleTableDeleteDialogComponent} from './admin-table/role-table/dialogs/delete/role-table-delete-dialog.component';
 import {DragDropDualListComponent} from '../../drag-drop-dual-list/drag-drop-dual-list.component';
-import {ModuleTableExpandableRowsComponent} from '../../module-table-expandable-rows/module-table-expandable-rows.component';
-import {UserTableExpandableRowsComponent} from '../../user-table-expandable-rows/user-table-expandable-rows.component';
+import {ModuleTableExpandableRowsComponent} from './admin-table/role-table/module-table-expandable-rows/module-table-expandable-rows.component';
+import {UserTableExpandableRowsComponent} from './admin-table/user-table/user-table-expandable-rows/user-table-expandable-rows.component';
 
 export const DASHBOARD_ROUTES: Routes = [
   {path: '', redirectTo: 'branch', pathMatch: 'full'},

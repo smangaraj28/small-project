@@ -1,18 +1,16 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelect} from '@angular/material';
 import {DataService} from './services/data.service';
-import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {DataSource} from '@angular/cdk/collections';
-import {BehaviorSubject, fromEvent, merge, Observable, Subject} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 import {FormControl, Validators} from '@angular/forms';
-import {Role} from './models/role';
+import {Modules, RoleTable} from './models/role';
 import {EntityBranchTableDeleteDialogComponent} from '../entity-branch-table/dialogs/delete/entity-branch-table-delete-dialog.component';
 import {DragDropDualListComponent} from '../../../../drag-drop-dual-list/drag-drop-dual-list.component';
-import {Modules} from '../../../../module-table-expandable-rows/modules';
+import {MatSelectChange} from '@angular/material/select';
+import {User} from '../user-table/models/user';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,23 +22,24 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(DragDropDualListComponent, {static: false})
   private dragDropDualListComponent: DragDropDualListComponent;
   public proceedClickFlag = false;
-  private clonedModuleDetails: Modules[];
-  public selectedModuleDetails: Modules[];
-  public moduleName: any[];
+  private clonedModuleDetails: Modules[] = [];
+  public selectedModuleDetails: Modules[] = [];
+  public availableModuleName = [];
+  roleDataSource: RoleTable[];
+  clonedRoleDataSource: RoleTable[];
+  private subCardLabel: string;
+  private entityName: any;
 
-  constructor(public httpClient: HttpClient,
-              public dialog: MatDialog,
-              public dataService: DataService) {
+  constructor(public dialog: MatDialog, public dataService: DataService) {
   }
 
   @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
   private onDestroySubject = new Subject<void>();
   displayedColumns = ['id', 'roleName', 'actions'];
-  exampleDatabase: DataService | null;
-  dataSource: ExampleDataSource | null;
+  // exampleDatabase: DataService | null;
+  // dataSource: ExampleDataSource | null;
   index: number;
-  id: number;
-  entityBranchData: Role;
+  roleId: number;
   pIdFormControl = new FormControl('', [
     Validators.required
   ]);
@@ -61,19 +60,6 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedModuleName = [];
   entityLists = ['E1', 'E2'];
 
-  static initializeData() {
-    return {
-      roleId: null,
-      roleName: null,
-      hotelPOSModule: null,
-      inventoryModule: null,
-      roomBookModule: null,
-      SuperMarketPOSModule: null,
-      reportsModule: null,
-      accountingModule: null
-    };
-  }
-
   static initilizeModulesName() {
     return [
       'Room Book Module',
@@ -82,6 +68,224 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
       'Super Market POS Module',
       'Reports Module',
       'Accounting Module'];
+  }
+
+  static intializeRoleDataSource() {
+    return [
+      {
+        entityName: 'E2',
+        roleId: 1,
+        roleName: 'Accounting Manager',
+        roleDetails: [{
+          moduleId: 1,
+          moduleName: 'Hotel POS Module',
+          selected: true,
+          readAllFlag: true,
+          writeAllFlag: true,
+          moduleDescription: [
+            {subModuleId: 1, subModuleName: 'AVX', readFlag: true, writeFlag: true},
+            {subModuleId: 2, subModuleName: 'POP', readFlag: true, writeFlag: true}
+          ]
+        },
+          {
+            moduleId: 2,
+            moduleName: 'Accounting Module',
+            selected: true,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Role', readFlag: true, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Branch', readFlag: true, writeFlag: true}
+            ]
+          },
+          {
+            moduleId: 3,
+            moduleName: 'Room Book Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 4,
+            moduleName: 'Super Market POS Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 5,
+            moduleName: 'Inventory Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 6,
+            moduleName: 'Reports Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          }]
+      },
+      {
+        entityName: 'E2',
+        roleId: 2,
+        roleName: 'POS Manager',
+        roleDetails: [{
+          moduleId: 1,
+          moduleName: 'Hotel POS Module',
+          selected: true,
+          readAllFlag: false,
+          writeAllFlag: false,
+          moduleDescription: [
+            {subModuleId: 1, subModuleName: 'AVX', readFlag: false, writeFlag: false},
+            {subModuleId: 2, subModuleName: 'POP', readFlag: false, writeFlag: false}
+          ]
+        },
+          {
+            moduleId: 2,
+            moduleName: 'Accounting Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Role', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Branch', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 3,
+            moduleName: 'Room Book Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 4,
+            moduleName: 'Super Market POS Module',
+            selected: true,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 5,
+            moduleName: 'Inventory Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 6,
+            moduleName: 'Reports Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          }]
+      },
+      {
+        entityName: 'E1',
+        roleId: 3,
+        roleName: 'Inventory Manager',
+        roleDetails: [{
+          moduleId: 1,
+          moduleName: 'Hotel POS Module',
+          selected: false,
+          readAllFlag: false,
+          writeAllFlag: false,
+          moduleDescription: [
+            {subModuleId: 1, subModuleName: 'AVX', readFlag: false, writeFlag: false},
+            {subModuleId: 2, subModuleName: 'POP', readFlag: false, writeFlag: false}
+          ]
+        },
+          {
+            moduleId: 2,
+            moduleName: 'Accounting Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Role', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Branch', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 3,
+            moduleName: 'Room Book Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 4,
+            moduleName: 'Super Market POS Module',
+            selected: true,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 5,
+            moduleName: 'Inventory Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          },
+          {
+            moduleId: 6,
+            moduleName: 'Reports Module',
+            selected: false,
+            readAllFlag: false,
+            writeAllFlag: false,
+            moduleDescription: [
+              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
+              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
+            ]
+          }]
+      },
+    ];
   }
 
   static initilizeModuleDetails() {
@@ -156,8 +360,10 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.roleDataSource = RoleTableComponent.intializeRoleDataSource();
+    this.clonedRoleDataSource = RoleTableComponent.intializeRoleDataSource();
     this.moduleDetails = RoleTableComponent.initilizeModuleDetails();
-    this.moduleName = RoleTableComponent.initilizeModulesName();
+    this.availableModuleName = RoleTableComponent.initilizeModulesName();
     this.clonedModuleDetails = this.moduleDetails;
     this.selectUserOrRoleDetails = [
       {
@@ -173,7 +379,6 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
         ]
       }
     ];
-    this.entityBranchData = RoleTableComponent.initializeData();
     this.loadData();
   }
 
@@ -190,39 +395,73 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addNew() {
-    this.id = undefined;
+    this.roleId = undefined;
     this.newEntryFlag = true;
-    this.entityBranchData = RoleTableComponent.initializeData();
     this.roleName = null;
     this.selectedUserOrRole = null;
     this.selectedUserOrRoleName = null;
-    this.moduleName = RoleTableComponent.initilizeModulesName();
+    this.availableModuleName = RoleTableComponent.initilizeModulesName();
     this.moduleDetails = RoleTableComponent.initilizeModuleDetails();
     this.selectedModuleDetails = [];
     this.roleTableFlag = false;
+
+    // this.userTableFlag = false;
+    // this.proceedClickFlag = false;
+    this.subCardLabel = 'Add';
+    this.roleName = null;
+    this.selectedUserOrRole = null;
+    this.selectedUserOrRoleName = null;
+  }
+
+  arrayRemove(arr, value) {
+    return arr.filter((ele) => {
+      return ele !== value;
+    });
   }
 
   startEdit(i: number, row) {
+    this.subCardLabel = 'Edit';
+    const abc = row.roleDetails.filter(value => {
+      return value.selected === true;
+    });
+    // console.log(row);
+    // console.log(abc);
     this.newEntryFlag = true;
-    this.id = row.entityId;
-    console.log(row);
-    this.entityBranchData = row;
-    this.roleName = this.entityBranchData.roleName;
+    this.roleId = row.roleId;
     this.index = i;
-    console.log(this.index);
+
+
+    // this.userTableFlag = true;
+    // this.proceedClickFlag = true;
+    this.availableModuleName = RoleTableComponent.initilizeModulesName();
+    this.selectedModuleName = [];
+    // this.branchRoleTable = [];
+    this.roleName = row.roleName;
+    this.selectedUserOrRole = null;
+    this.selectedUserOrRoleName = null;
+    row.roleDetails.map(value => {
+      const selectedValue = value.selected === true ? value.moduleName : '';
+      if (selectedValue) {
+        this.selectedModuleName.push(selectedValue);
+        this.availableModuleName = this.arrayRemove(this.availableModuleName, selectedValue);
+      }
+    });
+    // console.log(this.selectedModuleName);
+    // console.log(this.availableModuleName);
+    // this.newEntryFlag = true;
   }
 
   deleteItem(i: number, row) {
     this.index = i;
-    this.id = row.entityId;
+    this.roleId = row.roleId;
     const dialogRef = this.dialog.open(EntityBranchTableDeleteDialogComponent, {
       data: row
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.roleId === this.id);
-        this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+        // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.roleId === this.id);
+        // this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
       }
     });
@@ -235,33 +474,62 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   public loadData() {
-    this.exampleDatabase = new DataService(this.httpClient);
-    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-    fromEvent(this.filter.nativeElement, 'keyup')
-    // .debounceTime(150)
-    // .distinctUntilChanged()
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      });
+    // this.exampleDatabase = new DataService(this.httpClient);
+    // this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
+    // fromEvent(this.filter.nativeElement, 'keyup')
+    // // .debounceTime(150)
+    // // .distinctUntilChanged()
+    //   .subscribe(() => {
+    //     if (!this.dataSource) {
+    //       return;
+    //     }
+    //     this.dataSource.filter = this.filter.nativeElement.value;
+    //   });
   }
 
   onSave() {
-    console.log(typeof this.id === 'undefined');
-    if (typeof this.id === 'undefined') {
-      this.entityBranchData.roleName = this.roleName;
-      this.dataService.addIssue(this.entityBranchData);
-      this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+    // console.log(this.selectedModuleDetails);
+    // console.log(typeof this.roleId === 'undefined');
+    if (typeof this.roleId === 'undefined') {
+      // this.entityBranchData.roleName = this.roleName;
+      // this.dataService.addIssue(this.entityBranchData);
+      // this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
     } else {
-      this.dataService.updateIssue(this.entityBranchData);
-      const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.roleId === this.id);
-      this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
-      this.id = undefined;
+      // this.dataService.updateIssue(this.entityBranchData);
+      // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.roleId === this.id);
+      // this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+      this.roleId = undefined;
     }
     this.refreshTable();
     this.newEntryFlag = false;
+
+
+    let obj: RoleTable;
+    let i = 100;
+    switch (this.subCardLabel) {
+      case 'Add':
+        // console.log('add');
+        obj = {
+          roleId: i,
+          entityName: this.entityName,
+          roleName: this.roleName,
+          roleDetails: this.selectedModuleDetails
+        };
+        this.roleDataSource.push(obj);
+        this.clonedRoleDataSource = this.roleDataSource;
+        i = i + 1;
+        break;
+      case 'Edit':
+        // console.log('edit');
+        obj = {
+          roleId: this.roleId,
+          entityName: this.entityName,
+          roleName: this.roleName,
+          roleDetails: this.selectedModuleDetails
+        };
+        break;
+    }
+    console.log(obj);
   }
 
   onCancel() {
@@ -284,7 +552,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   proceed() {
     this.proceedClickFlag = true;
-    console.log(this.dragDropDualListComponent.selectedModuleName);
+    // console.log(this.dragDropDualListComponent.selectedModuleName);
     this.selectedModuleDetails = [];
     this.clonedModuleDetails.forEach(event => {
       event.selected = false;
@@ -305,89 +573,105 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.roleTableFlag = false;
     }
-    console.log(this.selectedModuleDetails);
+    // console.log(this.selectedModuleDetails);
   }
 
   reset() {
     this.proceedClickFlag = false;
     this.roleTableFlag = false;
   }
-}
 
-export class ExampleDataSource extends DataSource<Role> {
-  filterChangeSubject = new BehaviorSubject('');
-
-  get filter(): string {
-    return this.filterChangeSubject.value;
-  }
-
-  set filter(filter: string) {
-    this.filterChangeSubject.next(filter);
-  }
-
-  filteredData: Role[] = [];
-  renderedData: Role[] = [];
-
-  constructor(public exampleDatabase: DataService,
-              public mPaginator: MatPaginator,
-              public mSort: MatSort) {
-    super();
-    // Reset to the first page when the user changes the filter.
-    this.filterChangeSubject.subscribe(() => this.mPaginator.pageIndex = 0);
-  }
-
-  /** Connect function called by the table to retrieve one stream containing the entityBranchData to render. */
-  connect(): Observable<Role[]> {
-    // Listen for any changes in the base entityBranchData, sorting, filtering, or pagination
-    const displayDataChanges = [
-      this.exampleDatabase.dataChange,
-      this.mSort.sortChange,
-      this.filterChangeSubject,
-      this.mPaginator.page
-    ];
-
-    this.exampleDatabase.getAllIssues();
-
-
-    return merge(...displayDataChanges).pipe(map(() => {
-        // Filter entityBranchData
-        this.filteredData = this.exampleDatabase.data.slice().filter((issue: Role) => {
-          const searchStr = (issue.roleName) ?
-            (issue.roleName).toLowerCase() : '';
-          return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-        });
-
-        // Sort filtered entityBranchData
-        const sortedData = this.sortData(this.filteredData.slice());
-
-        // Grab the page's slice of the filtered sorted entityBranchData.
-        const startIndex = this.mPaginator.pageIndex * this.mPaginator.pageSize;
-        this.renderedData = sortedData.splice(startIndex, this.mPaginator.pageSize);
-        return this.renderedData;
-      }
-    ));
-  }
-
-  disconnect() {
-  }
-
-  sortData(data: Role[]): Role[] {
-    if (!this.mSort.active || this.mSort.direction === '') {
-      return data;
+  entitySelectionChange($event: MatSelectChange) {
+    // console.log($event.value);
+    if ($event.value !== 'ALL') {
+      this.clonedRoleDataSource = this.roleDataSource.filter(value => {
+        return value.entityName === $event.value;
+      });
+    } else {
+      this.clonedRoleDataSource = this.roleDataSource;
     }
-
-    return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
-
-      if (this.mSort.active === 'roleName') {
-        [propertyA, propertyB] = [a.roleName, b.roleName];
-      }
-
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
-      return (valueA < valueB ? -1 : 1) * (this.mSort.direction === 'asc' ? 1 : -1);
-    });
+    // this.dataSource.filteredData = this.dataSource.filteredData.filter(value => {
+    //   console.log(value.roleId === 9);
+    //   return value.roleId === 9;
+    // });
+    // console.log(this.dataSource.filteredData);
   }
 }
+
+// export class ExampleDataSource extends DataSource<Role> {
+//   filterChangeSubject = new BehaviorSubject('');
+//
+//   get filter(): string {
+//     return this.filterChangeSubject.value;
+//   }
+//
+//   set filter(filter: string) {
+//     this.filterChangeSubject.next(filter);
+//   }
+//
+//   filteredData: Role[] = [];
+//   renderedData: Role[] = [];
+//
+//   constructor(public exampleDatabase: DataService,
+//               public mPaginator: MatPaginator,
+//               public mSort: MatSort) {
+//     super();
+//     // Reset to the first page when the user changes the filter.
+//     this.filterChangeSubject.subscribe(() => this.mPaginator.pageIndex = 0);
+//   }
+//
+//   /** Connect function called by the table to retrieve one stream containing the entityBranchData to render. */
+//   connect(): Observable<Role[]> {
+//     // Listen for any changes in the base entityBranchData, sorting, filtering, or pagination
+//     const displayDataChanges = [
+//       this.exampleDatabase.dataChange,
+//       this.mSort.sortChange,
+//       this.filterChangeSubject,
+//       this.mPaginator.page
+//     ];
+//
+//     this.exampleDatabase.getAllIssues();
+//
+//
+//     return merge(...displayDataChanges).pipe(map(() => {
+//         // Filter entityBranchData
+//         this.filteredData = this.exampleDatabase.data.slice().filter((issue: Role) => {
+//           const searchStr = (issue.roleName) ?
+//             (issue.roleName).toLowerCase() : '';
+//           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+//         });
+//
+//         // Sort filtered entityBranchData
+//         const sortedData = this.sortData(this.filteredData.slice());
+//
+//         // Grab the page's slice of the filtered sorted entityBranchData.
+//         const startIndex = this.mPaginator.pageIndex * this.mPaginator.pageSize;
+//         this.renderedData = sortedData.splice(startIndex, this.mPaginator.pageSize);
+//         return this.renderedData;
+//       }
+//     ));
+//   }
+//
+//   disconnect() {
+//   }
+//
+//   sortData(data: Role[]): Role[] {
+//     if (!this.mSort.active || this.mSort.direction === '') {
+//       return data;
+//     }
+//
+//     return data.sort((a, b) => {
+//       let propertyA: number | string = '';
+//       let propertyB: number | string = '';
+//
+//       if (this.mSort.active === 'roleName') {
+//         [propertyA, propertyB] = [a.roleName, b.roleName];
+//       }
+//
+//       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+//       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+//
+//       return (valueA < valueB ? -1 : 1) * (this.mSort.direction === 'asc' ? 1 : -1);
+//     });
+//   }
+// }

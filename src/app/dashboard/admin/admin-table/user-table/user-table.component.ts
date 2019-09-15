@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/co
 import {MatDialog} from '@angular/material/dialog';
 import {BranchRole, User} from './models/user';
 import {DragDropDualListComponent} from '../../../../drag-drop-dual-list/drag-drop-dual-list.component';
-import {UserTableExpandableRowsComponent} from '../../../../user-table-expandable-rows/user-table-expandable-rows.component';
+import {UserTableExpandableRowsComponent} from './user-table-expandable-rows/user-table-expandable-rows.component';
 import {MatSelectChange} from '@angular/material/select';
 
 
@@ -36,6 +36,7 @@ export class UserTableComponent implements OnInit {
   entityLists = ['E1', 'E2'];
   selectedEntity: any;
   private userDataSourceSingle: BranchRole;
+  private userId: any;
 
   constructor(public dialog: MatDialog) {
   }
@@ -148,6 +149,7 @@ export class UserTableComponent implements OnInit {
     console.log(event);
     this.availableBranchName = UserTableComponent.initializeBranchName();
     this.branchRoleTable = [];
+    this.userId = event.allRows.userId;
     this.userName = event.allRows.userName;
     this.userPassword = event.allRows.userPassword;
     this.selectedBranchName = event.allRows.branchRole.map(value => {
@@ -163,19 +165,25 @@ export class UserTableComponent implements OnInit {
     this.userTableExpandableRowsComponent.newEntryFlag = false;
     this.newEntryFlag = false;
     let obj: User;
+    let i = 100;
     switch (this.subCardLabel) {
       case 'Add':
         console.log('add');
         obj = {
+          userId: i,
           entityName: this.entityName,
           userName: this.userName,
           userPassword: this.userPassword,
           branchRole: this.branchRoleTable
         };
+        this.userDataSource.push(obj);
+        this.clonedUserDataSource = this.userDataSource;
+        i = i + 1;
         break;
       case 'Edit':
         console.log('edit');
         obj = {
+          userId: this.userId,
           entityName: this.entityName,
           userName: this.userName,
           userPassword: this.userPassword,
