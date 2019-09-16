@@ -27,7 +27,8 @@
       <div fxLayout="row wrap" fxLayoutAlign="space-between">
         <mat-form-field fxFlex="25%">
           <mat-label>Filter By Anything</mat-label>
-          <input matInput #filter placeholder="Filter issues">
+          <input matInput #filter placeholder="Filter issues" [(ngModel)]="filterValue"
+                 (ngModelChange)="filterValueChange($event)">
         </mat-form-field>
         <mat-paginator fxFlex="50%" #paginator
                        [length]="clonedEntityBranchDataSource.length"
@@ -107,7 +108,8 @@
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
                   <input matInput [formControl]="pIdFormControl"
-                         type="text" placeholder="Branch Short Name" [(ngModel)]="entityBranchData.entityBranchShortName"
+                         type="text" placeholder="Branch Short Name"
+                         [(ngModel)]="entityBranchData.entityBranchShortName"
                          name="id" required>
                 </mat-form-field>
                 <div fxFlex="30%"></div>

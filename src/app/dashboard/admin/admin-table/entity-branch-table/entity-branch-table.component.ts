@@ -31,8 +31,6 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
   private onDestroySubject = new Subject<void>();
   displayedColumns = ['id', 'entityBranchName', 'entityBranchCity', 'entityBranchMobile', 'entityBranchStartDate',
     'entityBranchStatus', 'actions'];
-  // exampleDatabase: DataService | null;
-  // dataSource: ExampleDataSource | null;
   index: number;
   entityBranchId: number;
   entityBranchData: EntityBranch;
@@ -47,6 +45,7 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
   selectedEntity: any;
   entityBranchDataSource: EntityBranch[];
   clonedEntityBranchDataSource: EntityBranch[];
+  filterValue: any;
 
   static initializeData() {
     return {
@@ -261,6 +260,14 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
     } else {
       this.clonedEntityBranchDataSource = this.entityBranchDataSource;
     }
+  }
+
+  filterValueChange($event: any) {
+    this.clonedEntityBranchDataSource = this.entityBranchDataSource.slice().filter((value: EntityBranch) => {
+      const searchStr = (value.entityBranchName) ?
+        (value.entityBranchName).toLowerCase() : '';
+      return searchStr.indexOf(this.filterValue.toLowerCase()) !== -1;
+    });
   }
 }
 
