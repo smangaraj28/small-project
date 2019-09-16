@@ -437,13 +437,9 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     const abc = row.roleDetails.filter(value => {
       return value.selected === true;
     });
-    // console.log(row);
-    // console.log(abc);
     this.newEntryFlag = true;
     this.roleId = row.roleId;
     this.index = i;
-
-
     // this.userTableFlag = true;
     // this.proceedClickFlag = true;
     this.availableModuleName = RoleTableComponent.initilizeModulesName();
@@ -603,19 +599,14 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.clonedRoleDataSource = this.roleDataSource;
     }
-    // this.dataSource.filteredData = this.dataSource.filteredData.filter(value => {
-    //   console.log(value.roleId === 9);
-    //   return value.roleId === 9;
-    // });
-    // console.log(this.dataSource.filteredData);
   }
 
   filterValueChange($event: Event) {
     this.clonedRoleDataSource = this.roleDataSource.slice().filter((value: RoleTable) => {
-      const searchStr = (value.roleName) ?
-        (value.roleName).toLowerCase() : '';
-      return searchStr.indexOf(this.filterValue.toLowerCase()) !== -1;
-    });
+          const searchStr = (value.roleName) ?
+            (value.roleName).toLowerCase() : '';
+          return searchStr.indexOf(this.filterValue.toLowerCase()) !== -1;
+        });
   }
 }
 

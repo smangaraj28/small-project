@@ -8,8 +8,8 @@
       <div fxFlex="20%">
         <mat-form-field>
           <mat-label>Entity Selection</mat-label>
-          <mat-select [(ngModel)]="selectedEntity" name="entity">
-            <mat-option value="all">ALL</mat-option>
+          <mat-select [(ngModel)]="selectedEntity" (selectionChange)="entitySelectionChange($event)" name="entity">
+            <mat-option value="ALL">ALL</mat-option>
             <mat-option *ngFor="let entity of entityLists" [value]="entity">
               {{entity}}
             </mat-option>
@@ -30,13 +30,13 @@
           <input matInput #filter placeholder="Filter issues">
         </mat-form-field>
         <mat-paginator fxFlex="50%" #paginator
-                       [length]="dataSource.filteredData.length"
+                       [length]="clonedEntityBranchDataSource.length"
                        [pageIndex]="0" [pageSize]="10" showFirstLastButtons
                        [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
       </div>
       <div>
-        <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+        <mat-table #table [dataSource]="clonedEntityBranchDataSource" matSort class="mat-cell">
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Serial No</mat-header-cell>
             <mat-cell *matCellDef="let row; let i=index;">{{i + 1}}</mat-cell>
@@ -83,7 +83,7 @@
           <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
-        <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+        <div class="no-results" [style.display]="clonedEntityBranchDataSource.length == 0 ? '' : 'none'">
           No Branch
         </div>
       </div>
