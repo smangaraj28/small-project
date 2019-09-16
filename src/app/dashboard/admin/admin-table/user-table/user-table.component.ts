@@ -168,7 +168,6 @@ export class UserTableComponent implements OnInit {
     let i = 100;
     switch (this.subCardLabel) {
       case 'Add':
-        console.log('add');
         obj = {
           userId: i,
           entityName: this.entityName,
@@ -177,11 +176,10 @@ export class UserTableComponent implements OnInit {
           branchRole: this.branchRoleTable
         };
         this.userDataSource.push(obj);
-        this.clonedUserDataSource = this.userDataSource;
+        this.clonedUserDataSource = [...this.userDataSource];
         i = i + 1;
         break;
       case 'Edit':
-        console.log('edit');
         obj = {
           userId: this.userId,
           entityName: this.entityName,
@@ -192,6 +190,7 @@ export class UserTableComponent implements OnInit {
         break;
     }
     console.log(obj);
+    console.log(this.clonedUserDataSource);
   }
 
   onCancel() {

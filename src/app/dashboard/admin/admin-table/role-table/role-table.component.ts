@@ -1,4 +1,13 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {MatSelect} from '@angular/material';
 import {DataService} from './services/data.service';
 import {MatDialog} from '@angular/material/dialog';
@@ -29,8 +38,10 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   clonedRoleDataSource: RoleTable[];
   private subCardLabel: string;
   private entityName: any;
+  public i = 100;
 
-  constructor(public dialog: MatDialog, public dataService: DataService) {
+  constructor(public dialog: MatDialog, public dataService: DataService,
+              private cd: ChangeDetectorRef) {
   }
 
   @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
@@ -401,6 +412,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedUserOrRole = null;
     this.selectedUserOrRoleName = null;
     this.availableModuleName = RoleTableComponent.initilizeModulesName();
+    this.selectedModuleName = [];
     this.moduleDetails = RoleTableComponent.initilizeModuleDetails();
     this.selectedModuleDetails = [];
     this.roleTableFlag = false;
@@ -505,19 +517,18 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     let obj: RoleTable;
-    let i = 100;
     switch (this.subCardLabel) {
       case 'Add':
         // console.log('add');
         obj = {
-          roleId: i,
+          roleId: this.i,
           entityName: this.entityName,
           roleName: this.roleName,
           roleDetails: this.selectedModuleDetails
         };
         this.roleDataSource.push(obj);
-        this.clonedRoleDataSource = this.roleDataSource;
-        i = i + 1;
+        this.clonedRoleDataSource = [...this.roleDataSource];
+        this.i = this.i + 1;
         break;
       case 'Edit':
         // console.log('edit');
@@ -530,6 +541,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
     }
     console.log(obj);
+    console.log(this.clonedRoleDataSource);
   }
 
   onCancel() {
