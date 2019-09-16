@@ -4,8 +4,8 @@
     <input matInput #filter placeholder="Filter issues">
   </mat-form-field>
   <mat-form-field fxFlex="20%">
-    <mat-label>Filter By Module Access</mat-label>
-    <input matInput #filter placeholder="Filter issues">
+    <mat-label>Filter By User Name</mat-label>
+    <input matInput #filter placeholder="Filter issues" [(ngModel)]="filterValue" (ngModelChange)=" filterValueChange($event)">
   </mat-form-field>
   <mat-paginator fxFlex="50%" #paginator
                  [length]="moduleData.length"

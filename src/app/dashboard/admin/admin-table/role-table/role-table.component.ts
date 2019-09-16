@@ -70,6 +70,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   rightTitleDragDrop = 'Selected Modules';
   selectedModuleName = [];
   entityLists = ['E1', 'E2'];
+  filterValue: any;
 
   static initilizeModulesName() {
     return [
@@ -607,6 +608,14 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     //   return value.roleId === 9;
     // });
     // console.log(this.dataSource.filteredData);
+  }
+
+  filterValueChange($event: Event) {
+    this.clonedRoleDataSource = this.roleDataSource.slice().filter((value: RoleTable) => {
+      const searchStr = (value.roleName) ?
+        (value.roleName).toLowerCase() : '';
+      return searchStr.indexOf(this.filterValue.toLowerCase()) !== -1;
+    });
   }
 }
 

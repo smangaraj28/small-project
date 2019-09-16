@@ -19,10 +19,12 @@ export class UserTableExpandableRowsComponent {
   @Input() moduleData: User[];
   @Output() startEditEmitter = new EventEmitter<any>();
   @Output() startDeleteEmitter = new EventEmitter<any>();
+  @Output() startFilterEmitter = new EventEmitter<any>();
   displayedModules: string[] = ['userId', 'userName', 'actions'];
   displayedSubModules: string[] = ['branchId', 'branchName', 'branchRole', 'actions'];
   expandedElement: User | null;
   newEntryFlag = false;
+  private filterValue: any;
 
   startEdit(param: any, element: any, row: any) {
     this.newEntryFlag = true;
@@ -49,5 +51,10 @@ export class UserTableExpandableRowsComponent {
       selectedRow: row
     };
     this.startEditEmitter.emit(obj);
+  }
+
+
+  filterValueChange($event: Event) {
+    this.startFilterEmitter.emit(this.filterValue);
   }
 }

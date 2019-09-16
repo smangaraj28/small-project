@@ -4,6 +4,7 @@ import {BranchRole, User} from './models/user';
 import {DragDropDualListComponent} from '../../../../drag-drop-dual-list/drag-drop-dual-list.component';
 import {UserTableExpandableRowsComponent} from './user-table-expandable-rows/user-table-expandable-rows.component';
 import {MatSelectChange} from '@angular/material/select';
+import {RoleTable} from '../role-table/models/role';
 
 
 @Component({
@@ -231,5 +232,13 @@ export class UserTableComponent implements OnInit {
       this.clonedUserDataSource = this.userDataSource;
     }
     // console.log(this.clonedUserDataSource);
+  }
+
+  onStartFilterClicked($event: any) {
+    this.clonedUserDataSource = this.userDataSource.slice().filter((value: User) => {
+      const searchStr = (value.userName) ?
+        (value.userName).toLowerCase() : '';
+      return searchStr.indexOf($event.toLowerCase()) !== -1;
+    });
   }
 }
