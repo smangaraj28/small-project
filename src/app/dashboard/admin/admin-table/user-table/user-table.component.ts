@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {BranchRole, User} from './models/user';
-import {DragDropDualListComponent} from '../../../../drag-drop-dual-list/drag-drop-dual-list.component';
+import {DragDropDualListComponent} from '../drag-drop-dual-list/drag-drop-dual-list.component';
 import {UserTableExpandableRowsComponent} from './user-table-expandable-rows/user-table-expandable-rows.component';
 import {MatSelectChange} from '@angular/material/select';
 

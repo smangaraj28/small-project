@@ -17,7 +17,7 @@ import {Subject} from 'rxjs';
 import {FormControl, Validators} from '@angular/forms';
 import {Modules, RoleTable} from './models/role';
 import {EntityBranchTableDeleteDialogComponent} from '../entity-branch-table/dialogs/delete/entity-branch-table-delete-dialog.component';
-import {DragDropDualListComponent} from '../../../../drag-drop-dual-list/drag-drop-dual-list.component';
+import {DragDropDualListComponent} from '../drag-drop-dual-list/drag-drop-dual-list.component';
 import {MatSelectChange} from '@angular/material/select';
 import {User} from '../user-table/models/user';
 

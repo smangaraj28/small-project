@@ -36,25 +36,10 @@ export const Menus = [
     'sub': [
       {
         'name': 'Branch',
-        'link': '/admin/branch',
+        'link': '/admin/payment',
         'icon': 'indeterminate_check_box',
         'chip': false,
         'open': false,
-      },
-      {
-        'name': 'Role',
-        'link': '/admin/role',
-        'icon': 'list',
-        'chip': false,
-        'open': false,
-      },
-      {
-        'name': 'User',
-        'link': '/admin/user',
-        'icon': 'view_week',
-        'chip': false,
-        'open': false,
-
       }
     ]
   }

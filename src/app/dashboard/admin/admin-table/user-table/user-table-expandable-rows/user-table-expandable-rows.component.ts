@@ -24,7 +24,7 @@ export class UserTableExpandableRowsComponent {
   displayedSubModules: string[] = ['branchId', 'branchName', 'branchRole', 'actions'];
   expandedElement: User | null;
   newEntryFlag = false;
-  private filterValue: any;
+  public filterValue: any;
 
   startEdit(param: any, element: any, row: any) {
     this.newEntryFlag = true;
