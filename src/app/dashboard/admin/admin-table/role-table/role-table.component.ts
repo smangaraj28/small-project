@@ -497,19 +497,19 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSave() {
-    // console.log(this.selectedModuleDetails);
-    // console.log(typeof this.roleId === 'undefined');
-    if (typeof this.roleId === 'undefined') {
-      // this.entityBranchData.roleName = this.roleName;
-      // this.dataService.addIssue(this.entityBranchData);
-      // this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
-    } else {
-      // this.dataService.updateIssue(this.entityBranchData);
-      // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.roleId === this.id);
-      // this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
-      this.roleId = undefined;
-    }
-    this.refreshTable();
+    // // console.log(this.selectedModuleDetails);
+    // // console.log(typeof this.roleId === 'undefined');
+    // if (typeof this.roleId === 'undefined') {
+    //   // this.entityBranchData.roleName = this.roleName;
+    //   // this.dataService.addIssue(this.entityBranchData);
+    //   // this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+    // } else {
+    //   // this.dataService.updateIssue(this.entityBranchData);
+    //   // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.roleId === this.id);
+    //   // this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+    //   this.roleId = undefined;
+    // }
+    // this.refreshTable();
     this.newEntryFlag = false;
 
 
@@ -535,9 +535,11 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
           roleName: this.roleName,
           roleDetails: this.selectedModuleDetails
         };
+        const foundIndex = this.roleDataSource.findIndex(x => x.roleId === this.roleId);
+        this.roleDataSource[foundIndex] = obj;
+        this.clonedRoleDataSource = [...this.roleDataSource];
         break;
     }
-    console.log(obj);
     console.log(this.clonedRoleDataSource);
   }
 
@@ -603,10 +605,10 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   filterValueChange($event: Event) {
     this.clonedRoleDataSource = this.roleDataSource.slice().filter((value: RoleTable) => {
-          const searchStr = (value.roleName) ?
-            (value.roleName).toLowerCase() : '';
-          return searchStr.indexOf(this.filterValue.toLowerCase()) !== -1;
-        });
+      const searchStr = (value.roleName) ?
+        (value.roleName).toLowerCase() : '';
+      return searchStr.indexOf(this.filterValue.toLowerCase()) !== -1;
+    });
   }
 }
 

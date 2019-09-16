@@ -188,6 +188,9 @@ export class UserTableComponent implements OnInit {
           userPassword: this.userPassword,
           branchRole: this.branchRoleTable
         };
+        const foundIndex = this.userDataSource.findIndex(x => x.userId === this.userId);
+        this.userDataSource[foundIndex] = obj;
+        this.clonedUserDataSource = [...this.userDataSource];
         break;
     }
     console.log(obj);
