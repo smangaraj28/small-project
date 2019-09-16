@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -16,6 +16,7 @@ import {DragDropDualListComponent} from './admin-table/drag-drop-dual-list/drag-
 import {ModuleTableExpandableRowsComponent} from './admin-table/role-table/module-table-expandable-rows/module-table-expandable-rows.component';
 import {UserTableExpandableRowsComponent} from './admin-table/user-table/user-table-expandable-rows/user-table-expandable-rows.component';
 import {UserTableDeleteDialogComponent} from './admin-table/user-table/dialogs/delete/user-table-delete-dialog.component';
+import {PaymentComponent} from './billing/payment/payment.component';
 
 export const DASHBOARD_ROUTES: Routes = [
   {path: '', redirectTo: 'branch', pathMatch: 'full'},
@@ -23,7 +24,7 @@ export const DASHBOARD_ROUTES: Routes = [
   {path: 'branch-table', component: EntityBranchTableComponent},
   {path: 'role-table', component: RoleTableComponent},
   {path: 'user-table', component: UserTableComponent},
-  {path: 'payment', component: UserTableComponent},
+  {path: 'payment', component: PaymentComponent},
 ];
 
 @NgModule({
@@ -47,14 +48,16 @@ export const DASHBOARD_ROUTES: Routes = [
     DragDropDualListComponent,
     ModuleTableExpandableRowsComponent,
     UserTableExpandableRowsComponent,
-    UserTableDeleteDialogComponent
+    UserTableDeleteDialogComponent,
+    PaymentComponent
   ],
   entryComponents: [
     EntityTableDeleteDialogComponent,
     EntityBranchTableDeleteDialogComponent,
     RoleTableDeleteDialogComponent,
     UserTableDeleteDialogComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AdminModule {
 }
