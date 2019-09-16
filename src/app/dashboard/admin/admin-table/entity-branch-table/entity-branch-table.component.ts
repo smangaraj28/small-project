@@ -34,7 +34,7 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
   // exampleDatabase: DataService | null;
   // dataSource: ExampleDataSource | null;
   index: number;
-  id: number;
+  entityBranchId: number;
   entityBranchData: EntityBranch;
   pIdFormControl = new FormControl('', [
     Validators.required
@@ -165,7 +165,7 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
 
   addNew() {
     this.subCardLabel = 'Add';
-    this.id = undefined;
+    this.entityBranchId = undefined;
     this.newEntryFlag = true;
     this.entityBranchData = EntityBranchTableComponent.initializeData();
   }
@@ -173,8 +173,7 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
   startEdit(i: number, row) {
     this.subCardLabel = 'Edit';
     this.newEntryFlag = true;
-    this.id = row.entityId;
-    console.log(row);
+    this.entityBranchId = row.entityBranchId;
     this.entityBranchData = JSON.parse(JSON.stringify(row));
     this.index = i;
     console.log(this.index);
@@ -182,7 +181,7 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
 
   deleteItem(i: number, row) {
     this.index = i;
-    this.id = row.entityId;
+    this.entityBranchId = row.entityBranchId;
     const dialogRef = this.dialog.open(EntityBranchTableDeleteDialogComponent, {
       data: row
     });
@@ -217,30 +216,30 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
   }
 
   onSave() {
-    console.log(typeof this.id === 'undefined');
-    if (typeof this.id === 'undefined') {
-      // this.dataService.addIssue(this.entityBranchData);
-      // this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
-    } else {
-      // this.dataService.updateIssue(this.entityBranchData);
-      // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.entityBranchId === this.id);
-      // this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
-      this.id = undefined;
-    }
-    this.refreshTable();
+    // console.log(typeof this.entityBranchId === 'undefined');
+    // if (typeof this.entityBranchId === 'undefined') {
+    //   // this.dataService.addIssue(this.entityBranchData);
+    //   // this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+    // } else {
+    //   // this.dataService.updateIssue(this.entityBranchData);
+    //   // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.entityBranchId === this.id);
+    //   // this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+    //   this.entityBranchId = undefined;
+    // }
+    // this.refreshTable();
     this.newEntryFlag = false;
 
 
     switch (this.subCardLabel) {
       case 'Add':
-        // console.log('add');
         this.entityBranchDataSource.push(this.entityBranchData);
         this.clonedEntityBranchDataSource = [...this.entityBranchDataSource];
         this.i = this.i + 1;
         break;
       case 'Edit':
-        // console.log('edit');
-        console.log(this.entityBranchData);
+        const foundIndex = this.entityBranchDataSource.findIndex(x => x.entityBranchId === this.entityBranchId);
+        this.entityBranchDataSource[foundIndex] = {...this.entityBranchData};
+        this.clonedEntityBranchDataSource = [...this.entityBranchDataSource];
         break;
     }
     console.log(this.clonedEntityBranchDataSource);
