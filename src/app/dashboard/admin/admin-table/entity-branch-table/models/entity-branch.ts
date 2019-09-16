@@ -20,8 +20,3 @@ export interface EntityBranch {
   entityBranchEmail: string;
   entityBranchStartDate?: string; // 4
 }
-
-export interface EntityList {
-  value: string;
-  viewValue: string;
-}

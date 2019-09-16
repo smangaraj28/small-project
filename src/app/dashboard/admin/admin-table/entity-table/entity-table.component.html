@@ -16,16 +16,17 @@
       <div fxLayout="row wrap" fxLayoutAlign="space-between">
         <mat-form-field fxFlex="25%">
           <mat-label>Filter By Anything</mat-label>
-          <input matInput #filter placeholder="Filter issues">
+          <input matInput #filter placeholder="Filter By Entity Name" [(ngModel)]="filterValue"
+                 (ngModelChange)="filterValueChange($event)">
         </mat-form-field>
         <mat-paginator fxFlex="50%" #paginator
-                       [length]="dataSource.filteredData.length"
+                       [length]="clonedEntityDataSource.length"
                        [pageIndex]="0" [pageSize]="10" showFirstLastButtons
                        [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
       </div>
       <div>
-        <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+        <mat-table #table [dataSource]="clonedEntityDataSource" matSort class="mat-cell">
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Serial No</mat-header-cell>
             <mat-cell *matCellDef="let row; let i=index;">{{i + 1}}</mat-cell>
@@ -65,8 +66,8 @@
           <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
-        <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
-          No Hotel
+        <div class="no-results" [style.display]="clonedEntityDataSource.length == 0 ? '' : 'none'">
+          No Entity
         </div>
       </div>
       <div style="margin-top: 20px" *ngIf="newEntryFlag">

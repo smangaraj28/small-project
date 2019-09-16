@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Entity} from '../models/entity';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 // import { environment } from '../../../../environments/environment';
 // import { Entity } from '../../product';
 
@@ -27,13 +27,13 @@ export class DataService {
 
   /** CRUD METHODS */
   getAllIssues(): void {
-    this.httpClient.get<Entity[]>('/assets/entity.json').subscribe(data => {
-        console.log('data', data);
-        this.dataChange.next(data);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.name + ' ' + error.message);
-      });
+    // this.httpClient.get<Entity[]>('/assets/entity.json').subscribe(data => {
+    //     console.log('data', data);
+    //     this.dataChange.next(data);
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     console.log(error.name + ' ' + error.message);
+    //   });
   }
 
   // DEMO ONLY, you can find working methods below

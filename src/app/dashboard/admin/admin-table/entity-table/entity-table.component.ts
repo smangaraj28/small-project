@@ -5,9 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {DataSource} from '@angular/cdk/collections';
-import {BehaviorSubject, fromEvent, merge, Observable, Subject} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 import {EntityTableDeleteDialogComponent} from './dialogs/delete/entity-table-delete-dialog.component';
 import {Entity} from './models/entity';
 import {FormControl, Validators} from '@angular/forms';
@@ -19,17 +17,20 @@ import {FormControl, Validators} from '@angular/forms';
   styleUrls: ['./entity-table.component.scss']
 })
 export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
+  private entityId: any;
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
               public dataService: DataService) {
   }
 
+  private subCardLabel: string;
+  private i = 100;
   @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
   private onDestroySubject = new Subject<void>();
   displayedColumns = ['id', 'entityName', 'entityCity', 'entityMobile', 'entityStartDate', 'entityStatus', 'actions'];
-  exampleDatabase: DataService | null;
-  dataSource: ExampleDataSource | null;
+  // exampleDatabase: DataService | null;
+  // dataSource: ExampleDataSource | null;
   index: number;
   id: number;
   entityData: Entity;
@@ -37,6 +38,9 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
     Validators.required
   ]);
   newEntryFlag = false;
+  entityDataSource: Entity[];
+  clonedEntityDataSource: Entity[];
+  filterValue: any;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -71,7 +75,118 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
     };
   }
 
+  static intializeEntityDataSource() {
+    return [
+      {
+        entityId: 1,
+        entityName: 'FAA',
+        entityShortName: 'FAA',
+        entityCategory: 'FAA',
+        entityStatus: 'FAA',
+        entityDescription: 'FAA',
+        entityImageUrl: 'FAA',
+        entityLogo: 'FAA',
+        entityIndustry: 'FAA',
+        entityTaxID: 'FAA',
+        entityAddLine1: 'FAA',
+        entityAddLine2: 'FAA',
+        entityCity: 'FAA',
+        entityState: 'FAA',
+        entityCountry: 'FAA',
+        entityPinCode: 123,
+        entityPhone: 'FAA',
+        entityFax: 'FAA',
+        entityMobile: 'FAA',
+        entityWebsite: 'FAA',
+        entityEmail: 'FAA',
+        entityStartDate: 'FAA',
+        entityFiscalYear: 'FAA',
+        entityTimeZone: 'FAA'
+      },
+      {
+        entityId: 2,
+        entityName: 'DAA',
+        entityShortName: 'FAA',
+        entityCategory: 'FAA',
+        entityStatus: 'FAA',
+        entityDescription: 'FAA',
+        entityImageUrl: 'FAA',
+        entityLogo: 'FAA',
+        entityIndustry: 'FAA',
+        entityTaxID: 'FAA',
+        entityAddLine1: 'FAA',
+        entityAddLine2: 'FAA',
+        entityCity: 'FAA',
+        entityState: 'FAA',
+        entityCountry: 'FAA',
+        entityPinCode: 456,
+        entityPhone: 'FAA',
+        entityFax: 'FAA',
+        entityMobile: 'FAA',
+        entityWebsite: 'FAA',
+        entityEmail: 'FAA',
+        entityStartDate: 'FAA',
+        entityFiscalYear: 'FAA',
+        entityTimeZone: 'FAA'
+      },
+      {
+        entityId: 3,
+        entityName: 'BAA',
+        entityShortName: 'FAA',
+        entityCategory: 'FAA',
+        entityStatus: 'FAA',
+        entityDescription: 'FAA',
+        entityImageUrl: 'FAA',
+        entityLogo: 'FAA',
+        entityIndustry: 'FAA',
+        entityTaxID: 'FAA',
+        entityAddLine1: 'FAA',
+        entityAddLine2: 'FAA',
+        entityCity: 'FAA',
+        entityState: 'FAA',
+        entityCountry: 'FAA',
+        entityPinCode: 786,
+        entityPhone: 'FAA',
+        entityFax: 'FAA',
+        entityMobile: 'FAA',
+        entityWebsite: 'FAA',
+        entityEmail: 'FAA',
+        entityStartDate: 'FAA',
+        entityFiscalYear: 'FAA',
+        entityTimeZone: 'FAA'
+      },
+      {
+        entityId: 4,
+        entityName: 'CAA',
+        entityShortName: 'FAA',
+        entityCategory: 'FAA',
+        entityStatus: 'FAA',
+        entityDescription: 'FAA',
+        entityImageUrl: 'FAA',
+        entityLogo: 'FAA',
+        entityIndustry: 'FAA',
+        entityTaxID: 'FAA',
+        entityAddLine1: 'FAA',
+        entityAddLine2: 'FAA',
+        entityCity: 'FAA',
+        entityState: 'FAA',
+        entityCountry: 'FAA',
+        entityPinCode: 909,
+        entityPhone: 'FAA',
+        entityFax: 'FAA',
+        entityMobile: 'FAA',
+        entityWebsite: 'FAA',
+        entityEmail: 'FAA',
+        entityStartDate: 'FAA',
+        entityFiscalYear: 'FAA',
+        entityTimeZone: 'FAA'
+      },
+    ];
+  }
+
   ngOnInit() {
+    this.entityDataSource = EntityTableComponent.intializeEntityDataSource();
+    this.clonedEntityDataSource = EntityTableComponent.intializeEntityDataSource();
     this.entityData = EntityTableComponent.initializeData();
     this.loadData();
   }
@@ -89,31 +204,32 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addNew() {
-    this.id = undefined;
+    this.subCardLabel = 'Add';
+    this.entityId = undefined;
     this.newEntryFlag = true;
     this.entityData = EntityTableComponent.initializeData();
   }
 
   startEdit(i: number, row) {
+    this.subCardLabel = 'Edit';
     this.newEntryFlag = true;
-    this.id = row.entityId;
-    console.log(row);
-    this.entityData = row;
+    this.entityId = row.entityId;
+    this.entityData = JSON.parse(JSON.stringify(row));
     this.index = i;
     console.log(this.index);
   }
 
   deleteItem(i: number, row) {
     this.index = i;
-    this.id = row.entityId;
+    this.entityId = row.entityId;
     const dialogRef = this.dialog.open(EntityTableDeleteDialogComponent, {
       data: row
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.entityId === this.id);
-        this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+        // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.entityBranchId === this.id);
+        // this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();
       }
     });
@@ -126,36 +242,59 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   public loadData() {
-    this.exampleDatabase = new DataService(this.httpClient);
-    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-    fromEvent(this.filter.nativeElement, 'keyup')
-    // .debounceTime(150)
-    // .distinctUntilChanged()
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      });
+    // this.exampleDatabase = new DataService(this.httpClient);
+    // this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
+    // fromEvent(this.filter.nativeElement, 'keyup')
+    // // .debounceTime(150)
+    // // .distinctUntilChanged()
+    //   .subscribe(() => {
+    //     if (!this.dataSource) {
+    //       return;
+    //     }
+    //     this.dataSource.filter = this.filter.nativeElement.value;
+    //   });
   }
 
   onSave() {
-    console.log(typeof this.id === 'undefined');
-    if (typeof this.id === 'undefined') {
-      this.dataService.addIssue(this.entityData);
-      this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
-    } else {
-      this.dataService.updateIssue(this.entityData);
-      const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.entityId === this.id);
-      this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
-      this.id = undefined;
-    }
-    this.refreshTable();
+    // console.log(typeof this.entityBranchId === 'undefined');
+    // if (typeof this.entityBranchId === 'undefined') {
+    //   // this.dataService.addIssue(this.entityBranchData);
+    //   // this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
+    // } else {
+    //   // this.dataService.updateIssue(this.entityBranchData);
+    //   // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.entityBranchId === this.id);
+    //   // this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+    //   this.entityBranchId = undefined;
+    // }
+    // this.refreshTable();
     this.newEntryFlag = false;
+
+
+    switch (this.subCardLabel) {
+      case 'Add':
+        this.entityDataSource.push(this.entityData);
+        this.clonedEntityDataSource = [...this.entityDataSource];
+        this.i = this.i + 1;
+        break;
+      case 'Edit':
+        const foundIndex = this.entityDataSource.findIndex(x => x.entityId === this.entityId);
+        this.entityDataSource[foundIndex] = {...this.entityData};
+        this.clonedEntityDataSource = [...this.entityDataSource];
+        break;
+    }
+    console.log(this.clonedEntityDataSource);
   }
 
   onCancel() {
     this.newEntryFlag = false;
+  }
+
+  filterValueChange($event: any) {
+    this.clonedEntityDataSource = this.entityDataSource.slice().filter((value: Entity) => {
+      const searchStr = (value.entityName) ?
+        (value.entityName).toLowerCase() : '';
+      return searchStr.indexOf(this.filterValue.toLowerCase()) !== -1;
+    });
   }
 
   onFileChanged(event) {
@@ -163,95 +302,95 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 }
 
-export class ExampleDataSource extends DataSource<Entity> {
-  filterChangeSubject = new BehaviorSubject('');
-
-  get filter(): string {
-    return this.filterChangeSubject.value;
-  }
-
-  set filter(filter: string) {
-    this.filterChangeSubject.next(filter);
-  }
-
-  filteredData: Entity[] = [];
-  renderedData: Entity[] = [];
-
-  constructor(public exampleDatabase: DataService,
-              public mPaginator: MatPaginator,
-              public mSort: MatSort) {
-    super();
-    // Reset to the first page when the user changes the filter.
-    this.filterChangeSubject.subscribe(() => this.mPaginator.pageIndex = 0);
-  }
-
-  /** Connect function called by the table to retrieve one stream containing the entityData to render. */
-  connect(): Observable<Entity[]> {
-    // Listen for any changes in the base entityData, sorting, filtering, or pagination
-    const displayDataChanges = [
-      this.exampleDatabase.dataChange,
-      this.mSort.sortChange,
-      this.filterChangeSubject,
-      this.mPaginator.page
-    ];
-
-    this.exampleDatabase.getAllIssues();
-
-
-    return merge(...displayDataChanges).pipe(map(() => {
-        // Filter entityData
-        this.filteredData = this.exampleDatabase.data.slice().filter((issue: Entity) => {
-          const searchStr = (issue.entityId + issue.entityName + issue.entityCategory) ?
-            (issue.entityId + issue.entityName + issue.entityCategory).toLowerCase() : '';
-          return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-        });
-
-        // Sort filtered entityData
-        const sortedData = this.sortData(this.filteredData.slice());
-
-        // Grab the page's slice of the filtered sorted entityData.
-        const startIndex = this.mPaginator.pageIndex * this.mPaginator.pageSize;
-        this.renderedData = sortedData.splice(startIndex, this.mPaginator.pageSize);
-        return this.renderedData;
-      }
-    ));
-  }
-
-  disconnect() {
-  }
-
-  /** Returns a sorted copy of the database entityData. */
-  sortData(data: Entity[]): Entity[] {
-    if (!this.mSort.active || this.mSort.direction === '') {
-      return data;
-    }
-
-    return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
-
-      switch (this.mSort.active) {
-        // case 'id':
-        //   [propertyA, propertyB] = [a.id, b.id];
-        //   break;
-        case 'entityId':
-          [propertyA, propertyB] = [a.entityId, b.entityId];
-          break;
-        case 'entityName':
-          [propertyA, propertyB] = [a.entityName, b.entityName];
-          break;
-        case 'entityCategory':
-          [propertyA, propertyB] = [a.entityCategory, b.entityCategory];
-          break;
-        case 'entityStatus':
-          [propertyA, propertyB] = [a.entityStatus, b.entityStatus];
-          break;
-      }
-
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
-      return (valueA < valueB ? -1 : 1) * (this.mSort.direction === 'asc' ? 1 : -1);
-    });
-  }
-}
+// export class ExampleDataSource extends DataSource<Entity> {
+//   filterChangeSubject = new BehaviorSubject('');
+//
+//   get filter(): string {
+//     return this.filterChangeSubject.value;
+//   }
+//
+//   set filter(filter: string) {
+//     this.filterChangeSubject.next(filter);
+//   }
+//
+//   filteredData: Entity[] = [];
+//   renderedData: Entity[] = [];
+//
+//   constructor(public exampleDatabase: DataService,
+//               public mPaginator: MatPaginator,
+//               public mSort: MatSort) {
+//     super();
+//     // Reset to the first page when the user changes the filter.
+//     this.filterChangeSubject.subscribe(() => this.mPaginator.pageIndex = 0);
+//   }
+//
+//   /** Connect function called by the table to retrieve one stream containing the entityData to render. */
+//   connect(): Observable<Entity[]> {
+//     // Listen for any changes in the base entityData, sorting, filtering, or pagination
+//     const displayDataChanges = [
+//       this.exampleDatabase.dataChange,
+//       this.mSort.sortChange,
+//       this.filterChangeSubject,
+//       this.mPaginator.page
+//     ];
+//
+//     this.exampleDatabase.getAllIssues();
+//
+//
+//     return merge(...displayDataChanges).pipe(map(() => {
+//         // Filter entityData
+//         this.filteredData = this.exampleDatabase.data.slice().filter((issue: Entity) => {
+//           const searchStr = (issue.entityId + issue.entityName + issue.entityCategory) ?
+//             (issue.entityId + issue.entityName + issue.entityCategory).toLowerCase() : '';
+//           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+//         });
+//
+//         // Sort filtered entityData
+//         const sortedData = this.sortData(this.filteredData.slice());
+//
+//         // Grab the page's slice of the filtered sorted entityData.
+//         const startIndex = this.mPaginator.pageIndex * this.mPaginator.pageSize;
+//         this.renderedData = sortedData.splice(startIndex, this.mPaginator.pageSize);
+//         return this.renderedData;
+//       }
+//     ));
+//   }
+//
+//   disconnect() {
+//   }
+//
+//   /** Returns a sorted copy of the database entityData. */
+//   sortData(data: Entity[]): Entity[] {
+//     if (!this.mSort.active || this.mSort.direction === '') {
+//       return data;
+//     }
+//
+//     return data.sort((a, b) => {
+//       let propertyA: number | string = '';
+//       let propertyB: number | string = '';
+//
+//       switch (this.mSort.active) {
+//         // case 'id':
+//         //   [propertyA, propertyB] = [a.id, b.id];
+//         //   break;
+//         case 'entityId':
+//           [propertyA, propertyB] = [a.entityId, b.entityId];
+//           break;
+//         case 'entityName':
+//           [propertyA, propertyB] = [a.entityName, b.entityName];
+//           break;
+//         case 'entityCategory':
+//           [propertyA, propertyB] = [a.entityCategory, b.entityCategory];
+//           break;
+//         case 'entityStatus':
+//           [propertyA, propertyB] = [a.entityStatus, b.entityStatus];
+//           break;
+//       }
+//
+//       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+//       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+//
+//       return (valueA < valueB ? -1 : 1) * (this.mSort.direction === 'asc' ? 1 : -1);
+//     });
+//   }
+// }

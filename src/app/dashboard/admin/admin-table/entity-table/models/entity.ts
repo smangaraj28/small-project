@@ -53,13 +53,13 @@ export interface Address {
 //   entityEmail: string; // 4
 // }
 
-export interface EntityBranch {
-  entityBranchId: number;
-  entityBranchName: string;
-  entityBranchCategory: string;
-  entityBranchDescription?: string;
-  entityBranchImageUrl?: string;
-  entityBranchStatus: string;
-  entityAddress?: Address;
-  entityBranchStartDate?: string;
-}
+// export interface EntityBranch {
+//   entityBranchId: number;
+//   entityBranchName: string;
+//   entityBranchCategory: string;
+//   entityBranchDescription?: string;
+//   entityBranchImageUrl?: string;
+//   entityBranchStatus: string;
+//   entityAddress?: Address;
+//   entityBranchStartDate?: string;
+// }
