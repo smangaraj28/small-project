@@ -35,7 +35,7 @@ export const Menus = [
     'chip': {'value': 17, 'color': 'accent'},
     'sub': [
       {
-        'name': 'Branch',
+        'name': 'Payment Package',
         'link': '/admin/payment',
         'icon': 'indeterminate_check_box',
         'chip': false,
