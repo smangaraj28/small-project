@@ -19,11 +19,11 @@ import {UserTableDeleteDialogComponent} from './admin-table/user-table/dialogs/d
 import {PaymentComponent} from './billing/payment/payment.component';
 
 export const DASHBOARD_ROUTES: Routes = [
-  {path: '', redirectTo: 'branch', pathMatch: 'full'},
-  {path: 'hotel-table', component: EntityTableComponent},
-  {path: 'branch-table', component: EntityBranchTableComponent},
-  {path: 'role-table', component: RoleTableComponent},
-  {path: 'user-table', component: UserTableComponent},
+  {path: '', redirectTo: 'entity', pathMatch: 'full'},
+  {path: 'entity', component: EntityTableComponent},
+  {path: 'branch', component: EntityBranchTableComponent},
+  {path: 'role', component: RoleTableComponent},
+  {path: 'user', component: UserTableComponent},
   {path: 'payment', component: PaymentComponent},
 ];
 

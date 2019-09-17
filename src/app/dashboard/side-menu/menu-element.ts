@@ -1,28 +1,28 @@
 export const Menus = [
   {
     'name': 'Entity',
-    'link': '/admin/hotel-table',
+    'link': '/admin/entity',
     'icon': 'dashboard',
     'chip': false,
     'open': true,
   },
   {
     'name': 'Branch',
-    'link': '/admin/branch-table',
+    'link': '/admin/branch',
     'icon': 'dashboard',
     'chip': false,
     'open': true,
   },
   {
     'name': 'Roles',
-    'link': '/admin/role-table',
+    'link': '/admin/role',
     'icon': 'dashboard',
     'chip': false,
     'open': true,
   },
   {
     'name': 'Users',
-    'link': '/admin/user-table',
+    'link': '/admin/user',
     'icon': 'dashboard',
     'chip': false,
     'open': true,
