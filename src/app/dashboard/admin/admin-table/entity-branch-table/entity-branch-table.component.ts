@@ -1,6 +1,5 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelect} from '@angular/material';
-import {DataService} from './services/data.service';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
@@ -8,7 +7,7 @@ import {MatSort} from '@angular/material/sort';
 import {Subject} from 'rxjs';
 import {EntityBranchTableDeleteDialogComponent} from './dialogs/delete/entity-branch-table-delete-dialog.component';
 import {EntityBranch} from './models/entity-branch';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatSelectChange} from '@angular/material/select';
 import {ActivatedRoute} from '@angular/router';
 
@@ -24,7 +23,6 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
-              public dataService: DataService,
               private activatedRoute: ActivatedRoute) {
   }
 
@@ -48,6 +46,7 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
   entityBranchDataSource: EntityBranch[];
   clonedEntityBranchDataSource: EntityBranch[];
   filterValue: any;
+  entityBranchForm: any;
 
   static initializeData() {
     return {
@@ -74,78 +73,30 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
     };
   }
 
-  static intializeEntityBranchDataSource() {
-    return [
-      {
-        entityName: 'E2',
-        entityBranchId: 1,
-        entityBranchName: 'DEA',
-        entityBranchShortName: 'DEA',
-        entityBranchCategory: 'DEA',
-        entityBranchStatus: 'DEA',
-        entityBranchDescription: 'DEA',
-        entityBranchImageUrl: 'DEA',
-        entityBranchAddLine1: 'DEA',
-        entityBranchAddLine2: 'DEA',
-        entityBranchCity: 'DEA',
-        entityBranchState: 'DEA',
-        entityBranchCountry: 'DEA',
-        entityBranchPinCode: 134,
-        entityBranchPhone: 'DEA',
-        entityBranchFax: 'DEA',
-        entityBranchMobile: 'DEA',
-        entityBranchWebsite: 'DEA',
-        entityBranchEmail: 'DEA',
-        entityBranchStartDate: 'DEA'
-      },
-      {
-        entityName: 'E2',
-        entityBranchId: 2,
-        entityBranchName: 'DEA',
-        entityBranchShortName: 'DEA',
-        entityBranchCategory: 'DEA',
-        entityBranchStatus: 'DEA',
-        entityBranchDescription: 'DEA',
-        entityBranchImageUrl: 'DEA',
-        entityBranchAddLine1: 'DEA',
-        entityBranchAddLine2: 'DEA',
-        entityBranchCity: 'DEA',
-        entityBranchState: 'DEA',
-        entityBranchCountry: 'DEA',
-        entityBranchPinCode: 431,
-        entityBranchPhone: 'DEA',
-        entityBranchFax: 'DEA',
-        entityBranchMobile: 'DEA',
-        entityBranchWebsite: 'DEA',
-        entityBranchEmail: 'DEA',
-        entityBranchStartDate: 'DEA'
-      },
-      {
-        entityName: 'E1',
-        entityBranchId: 1,
-        entityBranchName: 'DEA',
-        entityBranchShortName: 'DEA',
-        entityBranchCategory: 'DEA',
-        entityBranchStatus: 'DEA',
-        entityBranchDescription: 'DEA',
-        entityBranchImageUrl: 'DEA',
-        entityBranchAddLine1: 'DEA',
-        entityBranchAddLine2: 'DEA',
-        entityBranchCity: 'DEA',
-        entityBranchState: 'DEA',
-        entityBranchCountry: 'DEA',
-        entityBranchPinCode: 908,
-        entityBranchPhone: 'DEA',
-        entityBranchFax: 'DEA',
-        entityBranchMobile: 'DEA',
-        entityBranchWebsite: 'DEA',
-        entityBranchEmail: 'DEA',
-        entityBranchStartDate: 'DEA'
-      }
-    ];
-  }
-
   ngOnInit() {
+    this.entityBranchForm = new FormGroup({
+      entityNameFormControl: new FormControl(),
+      entityBranchIdFormControl: new FormControl(),
+      entityBranchNameFormControl: new FormControl(),
+      entityBranchShortNameFormControl: new FormControl(),
+      entityBranchCategoryFormControl: new FormControl(),
+      entityBranchStatusFormControl: new FormControl(),
+      entityBranchDescriptionFormControl: new FormControl(),
+      entityBranchImageUrlFormControl: new FormControl(),
+      entityBranchAddLine1FormControl: new FormControl(),
+      entityBranchAddLine2FormControl: new FormControl(),
+      entityBranchCityFormControl: new FormControl(),
+      entityBranchStateFormControl: new FormControl(),
+      entityBranchCountryFormControl: new FormControl(),
+      entityBranchPinCodeFormControl: new FormControl(),
+      entityBranchPhoneFormControl: new FormControl(),
+      entityBranchFaxFormControl: new FormControl(),
+      entityBranchMobileFormControl: new FormControl(),
+      entityBranchWebsiteFormControl: new FormControl(),
+      entityBranchEmailFormControl: new FormControl(),
+      entityBranchStartDateFormControl: new FormControl()
+
+    });
     const resolvedEntityBranchData = this.activatedRoute.snapshot.data.resolvedEntityBranchData;
     console.log('Resolved Entity Branch Data', resolvedEntityBranchData);
     this.entityBranchDataSource = resolvedEntityBranchData;

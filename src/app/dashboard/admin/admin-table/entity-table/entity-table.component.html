@@ -74,10 +74,10 @@
         <mat-card
           style="box-shadow: 0 -4px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);">
           <mat-card-content>
-            <div fxLayout="column">
+            <div fxLayout="column" [formGroup]="entityForm">
               <div fxLayout=“row” fxLayoutAlign="start center">
                 <div fxFlex="45%">
-                  <b>Hotel Details:</b>
+                  <b style="font-size: x-large">{{subCardLabel}} Entity Details:</b>
                 </div>
                 <div fxLayout=“row” fxLayoutAlign="center center" class="example-small-box mat-elevation-z4">
                   <input style="display: none"
@@ -89,19 +89,19 @@
               <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
                    fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityNameFormControl"
                          type="text" placeholder="Hotel Name" [(ngModel)]="entityData.entityName" name="id" required>
                   <mat-error *ngIf="!pIdFormControl.hasError('required')">
                     Hotel Name is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityShortNameFormControl"
                          type="text" placeholder="Hotel Short Name" [(ngModel)]="entityData.entityShortName" name="id"
                          required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityDescriptionFormControl"
                          type="text" placeholder="Hotel Description" [(ngModel)]="entityData.entityDescription"
                          name="desc"
                          required>
@@ -110,15 +110,15 @@
               <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
                    fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityIndustryFormControl"
                          type="text" placeholder="Industry" [(ngModel)]="entityData.entityIndustry" name="id" required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityTaxIDFormControl"
                          type="text" placeholder="Tax ID" [(ngModel)]="entityData.entityTaxID" name="id" required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityStatusFormControl"
                          type="text" placeholder="Status" [(ngModel)]="entityData.entityStatus" name="status" required>
                 </mat-form-field>
               </div>
@@ -128,12 +128,12 @@
               <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
                    fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex="50%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityAddLine1FormControl"
                          type="text" placeholder="Address Line 1" [(ngModel)]="entityData.entityAddLine1" name="id"
                          required>
                 </mat-form-field>
                 <mat-form-field fxFlex="50%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityAddLine2FormControl"
                          type="text" placeholder="Address Line 2" [(ngModel)]="entityData.entityAddLine2" name="id"
                          required>
                 </mat-form-field>
@@ -141,45 +141,45 @@
               <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
                    fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityCityFormControl"
                          type="text" placeholder="City" [(ngModel)]="entityData.entityCity" name="id" required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityStateFormControl"
                          type="text" placeholder="State" [(ngModel)]="entityData.entityState" name="id" required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityCountryFormControl"
                          type="text" placeholder="Country" [(ngModel)]="entityData.entityCountry" name="id" required>
                 </mat-form-field>
               </div>
               <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
                    fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityPinCodeFormControl"
                          type="text" placeholder="Pin Code" [(ngModel)]="entityData.entityPinCode" name="id" required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityPhoneFormControl"
                          type="text" placeholder="Phone" [(ngModel)]="entityData.entityPhone" name="id" required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityFaxFormControl"
                          type="text" placeholder="Fax" [(ngModel)]="entityData.entityFax" name="id" required>
                 </mat-form-field>
               </div>
               <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
                    fxLayoutGap.lt-md="0px">
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityWebsiteFormControl"
                          type="text" placeholder="Website" [(ngModel)]="entityData.entityWebsite" name="id" required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityEmailFormControl"
                          type="text" placeholder="Email" [(ngModel)]="entityData.entityEmail" name="id" required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
-                  <input matInput [formControl]="pIdFormControl"
+                  <input matInput formControlName="entityMobileFormControl"
                          type="text" placeholder="Mobile" [(ngModel)]="entityData.entityMobile" name="id" required>
                 </mat-form-field>
               </div>
@@ -191,19 +191,17 @@
                 <mat-form-field fxFlex="30%">
                   <mat-label>Start Date</mat-label>
                   <input matInput type="date" placeholder="Start Date" [(ngModel)]="entityData.entityStartDate"
-                         name="sdate"
-                         required>
+                         name="sdate" formControlName="entityStartDateFormControl" required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
                   <mat-label>Fiscal Year</mat-label>
                   <input matInput type="number" placeholder="Fiscal Year" [(ngModel)]="entityData.entityFiscalYear"
-                         name="fyear"
-                         required>
+                         name="fyear" formControlName="entityFiscalYearFormControl" required>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
                   <mat-label>Time Zone</mat-label>
                   <input matInput type="text" placeholder="Time Zone" [(ngModel)]="entityData.entityTimeZone"
-                         name="tzone">
+                         formControlName="entityTimeZoneFormControl" name="tzone">
                 </mat-form-field>
               </div>
             </div>

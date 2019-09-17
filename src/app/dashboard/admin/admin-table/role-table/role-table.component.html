@@ -27,7 +27,8 @@
       <div fxLayout="row wrap" fxLayoutAlign="space-between">
         <mat-form-field fxFlex="25%">
           <mat-label>Filter By Anything</mat-label>
-          <input matInput #filter placeholder="Filter issues" [(ngModel)]="filterValue" (ngModelChange)="filterValueChange($event)">
+          <input matInput #filter placeholder="Filter issues" [(ngModel)]="filterValue"
+                 (ngModelChange)="filterValueChange($event)">
         </mat-form-field>
         <mat-paginator fxFlex="50%" #paginator
                        [length]="clonedRoleDataSource.length"
@@ -74,7 +75,7 @@
           style="box-shadow: 0 -4px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);">
           <mat-card-content>
             <div fxLayout=“row” fxLayoutAlign="space-between center">
-              <div fxFlex="23%"><b>Role Details:</b></div>
+              <div fxFlex="23%"><b style="font-size: x-large"> {{subCardLabel}} Role Details:</b></div>
               <div fxFlex="23%">
                 <mat-form-field>
                   <mat-label>Role Name</mat-label>

@@ -1,6 +1,5 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSelect} from '@angular/material';
-import {DataService} from './services/data.service';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
@@ -8,7 +7,7 @@ import {MatSort} from '@angular/material/sort';
 import {Subject} from 'rxjs';
 import {EntityTableDeleteDialogComponent} from './dialogs/delete/entity-table-delete-dialog.component';
 import {Entity} from './models/entity';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -22,7 +21,6 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
-              public dataService: DataService,
               private activatedRoute: ActivatedRoute) {
   }
 
@@ -31,8 +29,6 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
   private onDestroySubject = new Subject<void>();
   displayedColumns = ['id', 'entityName', 'entityCity', 'entityMobile', 'entityStartDate', 'entityStatus', 'actions'];
-  // exampleDatabase: DataService | null;
-  // dataSource: ExampleDataSource | null;
   index: number;
   id: number;
   entityData: Entity;
@@ -47,6 +43,7 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild('filter', {static: true}) filter: ElementRef;
+  entityForm: any;
 
   static initializeData() {
     return {
@@ -77,116 +74,34 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
     };
   }
 
-  static intializeEntityDataSource() {
-    return [
-      {
-        entityId: 1,
-        entityName: 'FAA',
-        entityShortName: 'FAA',
-        entityCategory: 'FAA',
-        entityStatus: 'FAA',
-        entityDescription: 'FAA',
-        entityImageUrl: 'FAA',
-        entityLogo: 'FAA',
-        entityIndustry: 'FAA',
-        entityTaxID: 'FAA',
-        entityAddLine1: 'FAA',
-        entityAddLine2: 'FAA',
-        entityCity: 'FAA',
-        entityState: 'FAA',
-        entityCountry: 'FAA',
-        entityPinCode: 123,
-        entityPhone: 'FAA',
-        entityFax: 'FAA',
-        entityMobile: 'FAA',
-        entityWebsite: 'FAA',
-        entityEmail: 'FAA',
-        entityStartDate: 'FAA',
-        entityFiscalYear: 'FAA',
-        entityTimeZone: 'FAA'
-      },
-      {
-        entityId: 2,
-        entityName: 'DAA',
-        entityShortName: 'FAA',
-        entityCategory: 'FAA',
-        entityStatus: 'FAA',
-        entityDescription: 'FAA',
-        entityImageUrl: 'FAA',
-        entityLogo: 'FAA',
-        entityIndustry: 'FAA',
-        entityTaxID: 'FAA',
-        entityAddLine1: 'FAA',
-        entityAddLine2: 'FAA',
-        entityCity: 'FAA',
-        entityState: 'FAA',
-        entityCountry: 'FAA',
-        entityPinCode: 456,
-        entityPhone: 'FAA',
-        entityFax: 'FAA',
-        entityMobile: 'FAA',
-        entityWebsite: 'FAA',
-        entityEmail: 'FAA',
-        entityStartDate: 'FAA',
-        entityFiscalYear: 'FAA',
-        entityTimeZone: 'FAA'
-      },
-      {
-        entityId: 3,
-        entityName: 'BAA',
-        entityShortName: 'FAA',
-        entityCategory: 'FAA',
-        entityStatus: 'FAA',
-        entityDescription: 'FAA',
-        entityImageUrl: 'FAA',
-        entityLogo: 'FAA',
-        entityIndustry: 'FAA',
-        entityTaxID: 'FAA',
-        entityAddLine1: 'FAA',
-        entityAddLine2: 'FAA',
-        entityCity: 'FAA',
-        entityState: 'FAA',
-        entityCountry: 'FAA',
-        entityPinCode: 786,
-        entityPhone: 'FAA',
-        entityFax: 'FAA',
-        entityMobile: 'FAA',
-        entityWebsite: 'FAA',
-        entityEmail: 'FAA',
-        entityStartDate: 'FAA',
-        entityFiscalYear: 'FAA',
-        entityTimeZone: 'FAA'
-      },
-      {
-        entityId: 4,
-        entityName: 'CAA',
-        entityShortName: 'FAA',
-        entityCategory: 'FAA',
-        entityStatus: 'FAA',
-        entityDescription: 'FAA',
-        entityImageUrl: 'FAA',
-        entityLogo: 'FAA',
-        entityIndustry: 'FAA',
-        entityTaxID: 'FAA',
-        entityAddLine1: 'FAA',
-        entityAddLine2: 'FAA',
-        entityCity: 'FAA',
-        entityState: 'FAA',
-        entityCountry: 'FAA',
-        entityPinCode: 909,
-        entityPhone: 'FAA',
-        entityFax: 'FAA',
-        entityMobile: 'FAA',
-        entityWebsite: 'FAA',
-        entityEmail: 'FAA',
-        entityStartDate: 'FAA',
-        entityFiscalYear: 'FAA',
-        entityTimeZone: 'FAA'
-      },
-    ];
-  }
-
   ngOnInit() {
+    this.entityForm = new FormGroup({
+      entityIdFormControl: new FormControl(),
+      entityNameFormControl: new FormControl(),
+      entityShortNameFormControl: new FormControl(),
+      entityCategoryFormControl: new FormControl(),
+      entityStatusFormControl: new FormControl(),
+      entityDescriptionFormControl: new FormControl(),
+      entityImageUrlFormControl: new FormControl(),
+      entityLogoFormControl: new FormControl(),
+      entityIndustryFormControl: new FormControl(),
+      entityTaxIDFormControl: new FormControl(),
+      entityAddLine1FormControl: new FormControl(),
+      entityAddLine2FormControl: new FormControl(),
+      entityCityFormControl: new FormControl(),
+      entityStateFormControl: new FormControl(),
+      entityCountryFormControl: new FormControl(),
+      entityPinCodeFormControl: new FormControl(),
+      entityPhoneFormControl: new FormControl(),
+      entityFaxFormControl: new FormControl(),
+      entityMobileFormControl: new FormControl(),
+      entityWebsiteFormControl: new FormControl(),
+      entityEmailFormControl: new FormControl(),
+      entityStartDateFormControl: new FormControl(),
+      entityFiscalYearFormControl: new FormControl(),
+      entityTimeZoneFormControl: new FormControl()
+
+    });
     const resolvedEntityData = this.activatedRoute.snapshot.data.resolvedEntityData;
     console.log('Resolved Entity Data', resolvedEntityData);
     this.entityDataSource = resolvedEntityData;
@@ -287,10 +202,12 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
     }
     console.log(this.clonedEntityDataSource);
+    this.entityData = EntityTableComponent.initializeData();
   }
 
   onCancel() {
     this.newEntryFlag = false;
+    this.entityData = EntityTableComponent.initializeData();
   }
 
   filterValueChange($event: any) {
