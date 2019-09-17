@@ -86,3 +86,6 @@
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
+<div class="no-results" [style.display]="moduleData.length == 0 ? '' : 'none'">
+  No User
+</div>

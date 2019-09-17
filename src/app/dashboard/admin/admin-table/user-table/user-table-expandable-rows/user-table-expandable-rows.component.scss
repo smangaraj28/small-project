@@ -30,3 +30,11 @@ tr.example-element-row:not(.example-expanded-row):active {
   flex-grow: 1;
   margin-top: 8px;
 }
+// NO result in Table
+.no-results {
+  display: flex;
+  justify-content: center;
+  padding: 14px;
+  font-size: 14px;
+  font-style: italic;
+}
