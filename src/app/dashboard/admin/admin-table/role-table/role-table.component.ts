@@ -438,6 +438,8 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startEdit(i: number, row) {
+    this.roleTableFlag = true;
+    console.log(row);
     this.subCardLabel = 'Edit';
     const abc = row.roleDetails.filter(value => {
       return value.selected === true;
