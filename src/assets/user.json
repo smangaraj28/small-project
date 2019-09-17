@@ -1,0 +1,46 @@
+[
+  {
+    "entityName": "E1",
+    "userId": 1,
+    "userName": "Soumya",
+    "userPassword": "soumya",
+    "branchRole": [
+      {
+        "branchId": 1,
+        "branchName": "Branch 4",
+        "branchRole": "Role 1"
+      },
+      {
+        "branchId": 2,
+        "branchName": "Branch 3",
+        "branchRole": "Role 2"
+      }
+    ]
+  },
+  {
+    "entityName": "E2",
+    "userId": 2,
+    "userName": "Natarayan",
+    "userPassword": "natarayan",
+    "branchRole": [
+      {
+        "branchId": 1,
+        "branchName": "Branch 7",
+        "branchRole": "Role 3"
+      }
+    ]
+  },
+  {
+    "entityName": "E1",
+    "userId": 3,
+    "userName": "Subhendu",
+    "userPassword": "subhendu",
+    "branchRole": [
+      {
+        "branchId": 1,
+        "branchName": "Branch 2",
+        "branchRole": "Role 4"
+      }
+    ]
+  }
+]
