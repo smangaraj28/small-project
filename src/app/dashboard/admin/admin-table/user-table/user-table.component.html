@@ -17,7 +17,7 @@
         </mat-form-field>
       </div>
       <div fxFlex="10%" fxFlex.lt-md="10%">
-        <button mat-button [disabled]="newEntryFlag" (click)="addNew()">
+        <button mat-button [class.disabled-button]="newEntryFlag" (click)="addNew()">
           Add User
           <mat-icon>add_circle</mat-icon>
         </button>

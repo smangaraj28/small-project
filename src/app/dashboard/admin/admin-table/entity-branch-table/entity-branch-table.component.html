@@ -17,7 +17,7 @@
         </mat-form-field>
       </div>
       <div fxFlex="10%" fxFlex.lt-md="10%">
-        <button mat-icon-button [disabled]="newEntryFlag" (click)="addNew()">
+        <button mat-icon-button [class.disabled-button]="newEntryFlag" (click)="addNew()">
           Add Branch
           <mat-icon>add_circle</mat-icon>
         </button>
