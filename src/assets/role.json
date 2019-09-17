@@ -1,32 +1,401 @@
 [
   {
-    "roleId": 12,
+    "entityName": "E2",
+    "roleId": 1,
+    "roleName": "Accounting Manager",
+    "roleDetails": [
+      {
+        "moduleId": 1,
+        "moduleName": "Hotel POS Module",
+        "selected": true,
+        "readAllFlag": true,
+        "writeAllFlag": true,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "AVX",
+            "readFlag": true,
+            "writeFlag": true
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "POP",
+            "readFlag": true,
+            "writeFlag": true
+          }
+        ]
+      },
+      {
+        "moduleId": 2,
+        "moduleName": "Accounting Module",
+        "selected": true,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Role",
+            "readFlag": true,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Branch",
+            "readFlag": true,
+            "writeFlag": true
+          }
+        ]
+      },
+      {
+        "moduleId": 3,
+        "moduleName": "Room Book Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 4,
+        "moduleName": "Super Market POS Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 5,
+        "moduleName": "Inventory Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 6,
+        "moduleName": "Reports Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entityName": "E2",
+    "roleId": 2,
+    "roleName": "POS Manager",
+    "roleDetails": [
+      {
+        "moduleId": 1,
+        "moduleName": "Hotel POS Module",
+        "selected": true,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "AVX",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "POP",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 2,
+        "moduleName": "Accounting Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Role",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Branch",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 3,
+        "moduleName": "Room Book Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 4,
+        "moduleName": "Super Market POS Module",
+        "selected": true,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 5,
+        "moduleName": "Inventory Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 6,
+        "moduleName": "Reports Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entityName": "E1",
+    "roleId": 3,
     "roleName": "Inventory Manager",
-    "hotelPOSModule": false,
-    "inventoryModule": true,
-    "roomBookModule": true,
-    "SuperMarketPOSModule": false,
-    "reportsModule": true,
-    "accountingModule": true
-  },
-  {
-    "roleId": 9,
-    "roleName": "Store Manager",
-    "hotelPOSModule": false,
-    "inventoryModule": true,
-    "roomBookModule": true,
-    "SuperMarketPOSModule": true,
-    "reportsModule": false,
-    "accountingModule": false
-  },
-  {
-    "roleId": 23,
-    "roleName": "Billing Person",
-    "hotelPOSModule": true,
-    "inventoryModule": false,
-    "roomBookModule": false,
-    "SuperMarketPOSModule": true,
-    "reportsModule": false,
-    "accountingModule": false
+    "roleDetails": [
+      {
+        "moduleId": 1,
+        "moduleName": "Hotel POS Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "AVX",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "POP",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 2,
+        "moduleName": "Accounting Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Role",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Branch",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 3,
+        "moduleName": "Room Book Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 4,
+        "moduleName": "Super Market POS Module",
+        "selected": true,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 5,
+        "moduleName": "Inventory Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      },
+      {
+        "moduleId": 6,
+        "moduleName": "Reports Module",
+        "selected": false,
+        "readAllFlag": false,
+        "writeAllFlag": false,
+        "moduleDescription": [
+          {
+            "subModuleId": 1,
+            "subModuleName": "Room",
+            "readFlag": false,
+            "writeFlag": false
+          },
+          {
+            "subModuleId": 2,
+            "subModuleName": "Rest",
+            "readFlag": false,
+            "writeFlag": false
+          }
+        ]
+      }
+    ]
   }
 ]

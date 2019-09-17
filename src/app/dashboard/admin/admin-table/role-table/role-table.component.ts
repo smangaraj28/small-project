@@ -20,6 +20,7 @@ import {EntityBranchTableDeleteDialogComponent} from '../entity-branch-table/dia
 import {DragDropDualListComponent} from '../drag-drop-dual-list/drag-drop-dual-list.component';
 import {MatSelectChange} from '@angular/material/select';
 import {User} from '../user-table/models/user';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,8 +41,10 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   private entityName: any;
   public i = 100;
 
-  constructor(public dialog: MatDialog, public dataService: DataService,
-              private cd: ChangeDetectorRef) {
+  constructor(public dialog: MatDialog,
+              public dataService: DataService,
+              private cd: ChangeDetectorRef,
+              private activatedRoute: ActivatedRoute) {
   }
 
   @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
@@ -372,8 +375,10 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.roleDataSource = RoleTableComponent.intializeRoleDataSource();
-    this.clonedRoleDataSource = RoleTableComponent.intializeRoleDataSource();
+    const resolvedRoleData = this.activatedRoute.snapshot.data.resolvedRoleData;
+    console.log('Resolved Role Data', resolvedRoleData);
+    this.roleDataSource = resolvedRoleData;
+    this.clonedRoleDataSource = resolvedRoleData;
     this.moduleDetails = RoleTableComponent.initilizeModuleDetails();
     this.availableModuleName = RoleTableComponent.initilizeModulesName();
     this.clonedModuleDetails = this.moduleDetails;

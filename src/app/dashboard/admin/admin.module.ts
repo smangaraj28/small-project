@@ -17,14 +17,37 @@ import {ModuleTableExpandableRowsComponent} from './admin-table/role-table/modul
 import {UserTableExpandableRowsComponent} from './admin-table/user-table/user-table-expandable-rows/user-table-expandable-rows.component';
 import {UserTableDeleteDialogComponent} from './admin-table/user-table/dialogs/delete/user-table-delete-dialog.component';
 import {PaymentComponent} from './billing/payment/payment.component';
+import {EntityResolver} from './admin-table/entity-table/services/entity.resolver';
+import {EntityBranchResolver} from './admin-table/entity-branch-table/services/entity-branch.resolver';
+import {RoleResolver} from './admin-table/role-table/services/role.resolver';
+import {UserResolver} from './admin-table/user-table/services/user.resolver';
 
 export const DASHBOARD_ROUTES: Routes = [
   {path: '', redirectTo: 'entity', pathMatch: 'full'},
-  {path: 'entity', component: EntityTableComponent},
-  {path: 'branch', component: EntityBranchTableComponent},
-  {path: 'role', component: RoleTableComponent},
-  {path: 'user', component: UserTableComponent},
-  {path: 'payment', component: PaymentComponent},
+  {
+    path: 'entity',
+    component: EntityTableComponent,
+    resolve: {resolvedEntityData: EntityResolver}
+  },
+  {
+    path: 'branch',
+    component: EntityBranchTableComponent,
+    resolve: {resolvedEntityBranchData: EntityBranchResolver}
+  },
+  {
+    path: 'role',
+    component: RoleTableComponent,
+    resolve: {resolvedRoleData: RoleResolver}
+  },
+  {
+    path: 'user',
+    component: UserTableComponent,
+    resolve: {resolvedUserData: UserResolver}
+  },
+  {
+    path: 'payment',
+    component: PaymentComponent
+  },
 ];
 
 @NgModule({

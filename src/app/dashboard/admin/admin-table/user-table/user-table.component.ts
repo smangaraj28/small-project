@@ -4,6 +4,7 @@ import {BranchRole, User} from './models/user';
 import {DragDropDualListComponent} from '../drag-drop-dual-list/drag-drop-dual-list.component';
 import {UserTableExpandableRowsComponent} from './user-table-expandable-rows/user-table-expandable-rows.component';
 import {MatSelectChange} from '@angular/material/select';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class UserTableComponent implements OnInit {
   private userDataSourceSingle: BranchRole;
   private userId: any;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog,
+              private activatedRoute: ActivatedRoute) {
   }
 
   static initializeBranchName() {
@@ -129,8 +131,10 @@ export class UserTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userDataSource = UserTableComponent.intializeUserDataSource();
-    this.clonedUserDataSource = UserTableComponent.intializeUserDataSource();
+    const resolvedUserData = this.activatedRoute.snapshot.data.resolvedUserData;
+    console.log('Resolved User Data', resolvedUserData);
+    this.userDataSource = resolvedUserData;
+    this.clonedUserDataSource = resolvedUserData;
     this.availableBranchName = UserTableComponent.initializeBranchName();
     this.roleList = UserTableComponent.initializeRoleName();
   }

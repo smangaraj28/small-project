@@ -10,6 +10,7 @@ import {EntityBranchTableDeleteDialogComponent} from './dialogs/delete/entity-br
 import {EntityBranch} from './models/entity-branch';
 import {FormControl, Validators} from '@angular/forms';
 import {MatSelectChange} from '@angular/material/select';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,7 +24,8 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
-              public dataService: DataService) {
+              public dataService: DataService,
+              private activatedRoute: ActivatedRoute) {
   }
 
   entityLists = ['E1', 'E2'];
@@ -144,8 +146,10 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngOnInit() {
-    this.entityBranchDataSource = EntityBranchTableComponent.intializeEntityBranchDataSource();
-    this.clonedEntityBranchDataSource = EntityBranchTableComponent.intializeEntityBranchDataSource();
+    const resolvedEntityBranchData = this.activatedRoute.snapshot.data.resolvedEntityBranchData;
+    console.log('Resolved Entity Branch Data', resolvedEntityBranchData);
+    this.entityBranchDataSource = resolvedEntityBranchData;
+    this.clonedEntityBranchDataSource = resolvedEntityBranchData;
     this.entityBranchData = EntityBranchTableComponent.initializeData();
     this.loadData();
   }

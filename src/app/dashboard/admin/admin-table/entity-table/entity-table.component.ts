@@ -9,6 +9,7 @@ import {Subject} from 'rxjs';
 import {EntityTableDeleteDialogComponent} from './dialogs/delete/entity-table-delete-dialog.component';
 import {Entity} from './models/entity';
 import {FormControl, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,7 +22,8 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
-              public dataService: DataService) {
+              public dataService: DataService,
+              private activatedRoute: ActivatedRoute) {
   }
 
   private subCardLabel: string;
@@ -185,8 +187,10 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.entityDataSource = EntityTableComponent.intializeEntityDataSource();
-    this.clonedEntityDataSource = EntityTableComponent.intializeEntityDataSource();
+    const resolvedEntityData = this.activatedRoute.snapshot.data.resolvedEntityData;
+    console.log('Resolved Entity Data', resolvedEntityData);
+    this.entityDataSource = resolvedEntityData;
+    this.clonedEntityDataSource = resolvedEntityData;
     this.entityData = EntityTableComponent.initializeData();
     this.loadData();
   }
