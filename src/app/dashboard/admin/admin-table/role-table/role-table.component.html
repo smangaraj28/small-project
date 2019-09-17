@@ -110,8 +110,8 @@
                                          [availableModuleName]="availableModuleName"></app-drag-drop-dual-list>
               </div>
               <div fxFlex="10%" fxLayoutAlign="center center">
-                <button *ngIf="!proceedClickFlag" mat-raised-button (click)="proceed()">Proceed ></button>
-                <button *ngIf="proceedClickFlag" mat-raised-button (click)="reset()">< Reset</button>
+                <button *ngIf="!proceedClickFlag" color="accent" mat-raised-button [disabled]="selectedModuleName.length === 0" (click)="proceed()">Proceed ></button>
+                <button *ngIf="proceedClickFlag" color="warn" mat-raised-button (click)="reset()">< Reset</button>
               </div>
               <div *ngIf="roleTableFlag" fxFlex="45%">
                 <h2>Select SubModules</h2>

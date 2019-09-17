@@ -412,6 +412,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addNew() {
+    this.proceedClickFlag = false;
     this.roleId = undefined;
     this.newEntryFlag = true;
     this.roleName = null;
@@ -439,6 +440,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   startEdit(i: number, row) {
     this.roleTableFlag = true;
+    this.proceedClickFlag = true;
     console.log(row);
     this.subCardLabel = 'Edit';
     const abc = row.roleDetails.filter(value => {
@@ -461,6 +463,9 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
         this.selectedModuleName.push(selectedValue);
         this.availableModuleName = this.arrayRemove(this.availableModuleName, selectedValue);
       }
+    });
+    this.selectedModuleDetails = row.roleDetails.filter(event => {
+      return event.selected === true;
     });
     // console.log(this.selectedModuleName);
     // console.log(this.availableModuleName);
@@ -552,6 +557,9 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onCancel() {
     this.newEntryFlag = false;
+    this.selectedModuleDetails = [];
+    this.availableModuleName = [];
+    this.selectedModuleName = [];
   }
 
   onFileChanged(event) {

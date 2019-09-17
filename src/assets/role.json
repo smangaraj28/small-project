@@ -147,8 +147,8 @@
           {
             "subModuleId": 1,
             "subModuleName": "AVX",
-            "readFlag": false,
-            "writeFlag": false
+            "readFlag": true,
+            "writeFlag": true
           },
           {
             "subModuleId": 2,

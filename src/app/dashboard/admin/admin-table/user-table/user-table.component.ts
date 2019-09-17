@@ -117,6 +117,7 @@ export class UserTableComponent implements OnInit {
   }
 
   addNew() {
+    this.proceedClickFlag = false;
     this.newEntryFlag = true;
     this.userTableFlag = false;
     // this.proceedClickFlag = false;
