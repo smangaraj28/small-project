@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {BranchRole, User} from './models/user';
 import {DragDropDualListComponent} from '../drag-drop-dual-list/drag-drop-dual-list.component';
 import {UserTableExpandableRowsComponent} from './user-table-expandable-rows/user-table-expandable-rows.component';
 import {MatSelectChange} from '@angular/material/select';
 import {ActivatedRoute} from '@angular/router';
+import {UserTableDeleteDialogComponent} from './dialogs/delete/user-table-delete-dialog.component';
 
 
 @Component({
@@ -36,11 +37,13 @@ export class UserTableComponent implements OnInit {
   roleList = [];
   entityLists = ['E1', 'E2'];
   selectedEntity: any;
-  private userDataSourceSingle: BranchRole;
   private userId: any;
 
+  // public userObservable: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
+
   constructor(public dialog: MatDialog,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private cd: ChangeDetectorRef) {
   }
 
   static initializeBranchName() {
@@ -247,4 +250,23 @@ export class UserTableComponent implements OnInit {
       return searchStr.indexOf($event.toLowerCase()) !== -1;
     });
   }
+
+  onStartDeleteClicked(row: any) {
+    console.log(row);
+    this.userId = row.userId;
+    const dialogRef = this.dialog.open(UserTableDeleteDialogComponent, {
+      data: row
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        const foundIndex = this.userDataSource.findIndex(x => x.userId === this.userId);
+        this.userDataSource.splice(foundIndex, 1);
+        this.clonedUserDataSource = [...this.userDataSource];
+        this.cd.detectChanges();
+        // this.refreshTable();
+      }
+    });
+  }
+
 }

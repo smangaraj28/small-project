@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {User} from '../models/user';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-user-table-expandable-rows',
   templateUrl: './user-table-expandable-rows.component.html',
   styleUrls: ['./user-table-expandable-rows.component.scss'],
@@ -26,6 +27,10 @@ export class UserTableExpandableRowsComponent {
   newEntryFlag = false;
   public filterValue: any;
 
+  constructor(private cd: ChangeDetectorRef) {
+
+  }
+
   startEdit(param: any, element: any, row: any) {
     this.newEntryFlag = true;
     const obj = {
@@ -42,6 +47,7 @@ export class UserTableExpandableRowsComponent {
   deleteMainRow(i: any, row: any) {
     console.log(row);
     this.startDeleteEmitter.emit(row);
+    this.cd.detectChanges();
   }
 
   editMainRow(param: any, row: any) {

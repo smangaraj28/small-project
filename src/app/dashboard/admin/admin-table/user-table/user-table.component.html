@@ -26,6 +26,7 @@
     <mat-card-content>
       <div>
         <app-user-table-expandable-rows (startEditEmitter)="onStartEditClicked($event)"
+                                        (startDeleteEmitter)="onStartDeleteClicked($event)"
                                         (startFilterEmitter)="onStartFilterClicked($event)"
                                         [moduleData]="clonedUserDataSource"></app-user-table-expandable-rows>
       </div>

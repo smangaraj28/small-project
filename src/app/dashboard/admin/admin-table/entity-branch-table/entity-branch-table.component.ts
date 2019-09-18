@@ -142,8 +142,9 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.entityBranchId === this.id);
-        // this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+        const foundIndex = this.entityBranchDataSource.findIndex(x => x.entityBranchId === this.entityBranchId);
+        this.entityBranchDataSource.splice(foundIndex, 1);
+        this.clonedEntityBranchDataSource = [...this.entityBranchDataSource];
         this.refreshTable();
       }
     });

@@ -16,11 +16,11 @@ import {MatSort} from '@angular/material/sort';
 import {Subject} from 'rxjs';
 import {FormControl, Validators} from '@angular/forms';
 import {Modules, RoleTable} from './models/role';
-import {EntityBranchTableDeleteDialogComponent} from '../entity-branch-table/dialogs/delete/entity-branch-table-delete-dialog.component';
 import {DragDropDualListComponent} from '../drag-drop-dual-list/drag-drop-dual-list.component';
 import {MatSelectChange} from '@angular/material/select';
 import {User} from '../user-table/models/user';
 import {ActivatedRoute} from '@angular/router';
+import {RoleTableDeleteDialogComponent} from './dialogs/delete/role-table-delete-dialog.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -475,12 +475,15 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   deleteItem(i: number, row) {
     this.index = i;
     this.roleId = row.roleId;
-    const dialogRef = this.dialog.open(EntityBranchTableDeleteDialogComponent, {
+    const dialogRef = this.dialog.open(RoleTableDeleteDialogComponent, {
       data: row
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
+        const foundIndex = this.roleDataSource.findIndex(x => x.roleId === this.roleId);
+        this.roleDataSource.splice(foundIndex, 1);
+        this.clonedRoleDataSource = [...this.roleDataSource];
         // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.roleId === this.id);
         // this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refreshTable();

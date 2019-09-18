@@ -147,8 +147,9 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.entityBranchId === this.id);
-        // this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
+        const foundIndex = this.entityDataSource.findIndex(x => x.entityId === this.entityId);
+        this.entityDataSource.splice(foundIndex, 1);
+        this.clonedEntityDataSource = [...this.entityDataSource];
         this.refreshTable();
       }
     });
