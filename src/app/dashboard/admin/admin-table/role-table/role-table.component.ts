@@ -14,7 +14,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Subject} from 'rxjs';
-import {FormControl, Validators} from '@angular/forms';
 import {Modules, RoleTable} from './models/role';
 import {DragDropDualListComponent} from '../drag-drop-dual-list/drag-drop-dual-list.component';
 import {MatSelectChange} from '@angular/material/select';
@@ -29,39 +28,24 @@ import {RoleTableDeleteDialogComponent} from './dialogs/delete/role-table-delete
   styleUrls: ['./role-table.component.scss']
 })
 export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild(DragDropDualListComponent, {static: false})
-  private dragDropDualListComponent: DragDropDualListComponent;
-  public proceedClickFlag = false;
-  private clonedModuleDetails: Modules[] = [];
-  public selectedModuleDetails: Modules[] = [];
-  public availableModuleName = [];
-  roleDataSource: RoleTable[];
-  clonedRoleDataSource: RoleTable[];
-  private subCardLabel: string;
-  private entityName: any;
-  public i = 100;
 
-  constructor(public dialog: MatDialog,
-              public dataService: DataService,
-              private cd: ChangeDetectorRef,
-              private activatedRoute: ActivatedRoute) {
-  }
-
-  @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
-  private onDestroySubject = new Subject<void>();
-  displayedColumns = ['id', 'roleName', 'actions'];
-  // exampleDatabase: DataService | null;
-  // dataSource: ExampleDataSource | null;
-  index: number;
-  roleId: number;
-  pIdFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  newEntryFlag = false;
-  moduleDetails: Modules[];
+  @ViewChild(DragDropDualListComponent, {static: false})   private dragDropDualListComponent: DragDropDualListComponent;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild('filter', {static: true}) filter: ElementRef;
+  @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
+  private onDestroySubject = new Subject<void>();
+  displayedColumns = ['id', 'roleName', 'actions'];
+  entityLists = ['E1', 'E2'];
+  clonedModuleDetails: Modules[] = [];
+  selectedModuleDetails: Modules[] = [];
+  roleDataSource: RoleTable[];
+  clonedRoleDataSource: RoleTable[];
+  moduleDetails: Modules[];
+  leftTitleDragDrop = 'Available Modules';
+  rightTitleDragDrop = 'Selected Modules';
+  availableModuleName = [];
+  newEntryFlag = false;
   selectedEntity: any;
   selectedUserOrRole: any;
   selectedUserOrRoleName: any;
@@ -69,11 +53,19 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   selectUserOrRoleDetails = [];
   roleTableFlag = false;
   roleName: any;
-  leftTitleDragDrop = 'Available Modules';
-  rightTitleDragDrop = 'Selected Modules';
   selectedModuleName = [];
-  entityLists = ['E1', 'E2'];
   filterValue: any;
+  proceedClickFlag = false;
+  subCardLabel: string;
+  entityName: any;
+  roleId: number;
+  private i = 100;
+
+  constructor(public dialog: MatDialog,
+              public dataService: DataService,
+              private cd: ChangeDetectorRef,
+              private activatedRoute: ActivatedRoute) {
+  }
 
   static initilizeModulesName() {
     return [
@@ -83,224 +75,6 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
       'Super Market POS Module',
       'Reports Module',
       'Accounting Module'];
-  }
-
-  static intializeRoleDataSource() {
-    return [
-      {
-        entityName: 'E2',
-        roleId: 1,
-        roleName: 'Accounting Manager',
-        roleDetails: [{
-          moduleId: 1,
-          moduleName: 'Hotel POS Module',
-          selected: true,
-          readAllFlag: true,
-          writeAllFlag: true,
-          moduleDescription: [
-            {subModuleId: 1, subModuleName: 'AVX', readFlag: true, writeFlag: true},
-            {subModuleId: 2, subModuleName: 'POP', readFlag: true, writeFlag: true}
-          ]
-        },
-          {
-            moduleId: 2,
-            moduleName: 'Accounting Module',
-            selected: true,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Role', readFlag: true, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Branch', readFlag: true, writeFlag: true}
-            ]
-          },
-          {
-            moduleId: 3,
-            moduleName: 'Room Book Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 4,
-            moduleName: 'Super Market POS Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 5,
-            moduleName: 'Inventory Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 6,
-            moduleName: 'Reports Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          }]
-      },
-      {
-        entityName: 'E2',
-        roleId: 2,
-        roleName: 'POS Manager',
-        roleDetails: [{
-          moduleId: 1,
-          moduleName: 'Hotel POS Module',
-          selected: true,
-          readAllFlag: false,
-          writeAllFlag: false,
-          moduleDescription: [
-            {subModuleId: 1, subModuleName: 'AVX', readFlag: false, writeFlag: false},
-            {subModuleId: 2, subModuleName: 'POP', readFlag: false, writeFlag: false}
-          ]
-        },
-          {
-            moduleId: 2,
-            moduleName: 'Accounting Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Role', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Branch', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 3,
-            moduleName: 'Room Book Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 4,
-            moduleName: 'Super Market POS Module',
-            selected: true,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 5,
-            moduleName: 'Inventory Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 6,
-            moduleName: 'Reports Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          }]
-      },
-      {
-        entityName: 'E1',
-        roleId: 3,
-        roleName: 'Inventory Manager',
-        roleDetails: [{
-          moduleId: 1,
-          moduleName: 'Hotel POS Module',
-          selected: false,
-          readAllFlag: false,
-          writeAllFlag: false,
-          moduleDescription: [
-            {subModuleId: 1, subModuleName: 'AVX', readFlag: false, writeFlag: false},
-            {subModuleId: 2, subModuleName: 'POP', readFlag: false, writeFlag: false}
-          ]
-        },
-          {
-            moduleId: 2,
-            moduleName: 'Accounting Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Role', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Branch', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 3,
-            moduleName: 'Room Book Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 4,
-            moduleName: 'Super Market POS Module',
-            selected: true,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 5,
-            moduleName: 'Inventory Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          },
-          {
-            moduleId: 6,
-            moduleName: 'Reports Module',
-            selected: false,
-            readAllFlag: false,
-            writeAllFlag: false,
-            moduleDescription: [
-              {subModuleId: 1, subModuleName: 'Room', readFlag: false, writeFlag: false},
-              {subModuleId: 2, subModuleName: 'Rest', readFlag: false, writeFlag: false}
-            ]
-          }]
-      },
-    ];
   }
 
   static initilizeModuleDetails() {
@@ -448,7 +222,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.newEntryFlag = true;
     this.roleId = row.roleId;
-    this.index = i;
+
     // this.userTableFlag = true;
     // this.proceedClickFlag = true;
     this.availableModuleName = RoleTableComponent.initilizeModulesName();
@@ -473,7 +247,6 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deleteItem(i: number, row) {
-    this.index = i;
     this.roleId = row.roleId;
     const dialogRef = this.dialog.open(RoleTableDeleteDialogComponent, {
       data: row

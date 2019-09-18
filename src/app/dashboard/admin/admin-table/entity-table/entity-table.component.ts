@@ -7,7 +7,7 @@ import {MatSort} from '@angular/material/sort';
 import {Subject} from 'rxjs';
 import {EntityTableDeleteDialogComponent} from './dialogs/delete/entity-table-delete-dialog.component';
 import {Entity} from './models/entity';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -17,33 +17,27 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./entity-table.component.scss']
 })
 export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
-  private entityId: any;
+
+  @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild('filter', {static: true}) filter: ElementRef;
+  private onDestroySubject = new Subject<void>();
+  displayedColumns = ['id', 'entityName', 'entityCity', 'entityMobile', 'entityStartDate', 'entityStatus', 'actions'];
+  entityDataSource: Entity[];
+  clonedEntityDataSource: Entity[];
+  entityData: Entity;
+  newEntryFlag = false;
+  subCardLabel: string;
+  entityId: any;
+  filterValue: any;
+  entityForm: any;
+  private i = 100;
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
               private activatedRoute: ActivatedRoute) {
   }
-
-  private subCardLabel: string;
-  private i = 100;
-  @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
-  private onDestroySubject = new Subject<void>();
-  displayedColumns = ['id', 'entityName', 'entityCity', 'entityMobile', 'entityStartDate', 'entityStatus', 'actions'];
-  index: number;
-  id: number;
-  entityData: Entity;
-  pIdFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  newEntryFlag = false;
-  entityDataSource: Entity[];
-  clonedEntityDataSource: Entity[];
-  filterValue: any;
-
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild('filter', {static: true}) filter: ElementRef;
-  entityForm: any;
 
   static initializeData() {
     return {
@@ -134,12 +128,9 @@ export class EntityTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.newEntryFlag = true;
     this.entityId = row.entityId;
     this.entityData = JSON.parse(JSON.stringify(row));
-    this.index = i;
-    console.log(this.index);
   }
 
   deleteItem(i: number, row) {
-    this.index = i;
     this.entityId = row.entityId;
     const dialogRef = this.dialog.open(EntityTableDeleteDialogComponent, {
       data: row

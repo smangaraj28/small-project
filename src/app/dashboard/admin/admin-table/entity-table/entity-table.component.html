@@ -91,9 +91,6 @@
                 <mat-form-field fxFlex="30%">
                   <input matInput formControlName="entityNameFormControl"
                          type="text" placeholder="Hotel Name" [(ngModel)]="entityData.entityName" name="id" required>
-                  <mat-error *ngIf="!pIdFormControl.hasError('required')">
-                    Hotel Name is <strong>required</strong>
-                  </mat-error>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
                   <input matInput formControlName="entityShortNameFormControl"

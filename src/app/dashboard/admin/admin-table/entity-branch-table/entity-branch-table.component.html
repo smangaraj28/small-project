@@ -102,9 +102,6 @@
                   <input matInput formControlName="entityBranchNameFormControl"
                          type="text" placeholder="Branch Name" [(ngModel)]="entityBranchData.entityBranchName" name="id"
                          required>
-                  <mat-error *ngIf="!pIdFormControl.hasError('required')">
-                    Branch Name is <strong>required</strong>
-                  </mat-error>
                 </mat-form-field>
                 <mat-form-field fxFlex="30%">
                   <input matInput formControlName="entityBranchShortNameFormControl"

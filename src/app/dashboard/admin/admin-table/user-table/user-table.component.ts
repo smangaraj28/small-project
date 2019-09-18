@@ -15,31 +15,28 @@ import {UserTableDeleteDialogComponent} from './dialogs/delete/user-table-delete
   styleUrls: ['./user-table.component.scss']
 })
 export class UserTableComponent implements OnInit {
-  @ViewChild(DragDropDualListComponent, {static: false})
-  private dragDropDualListComponent: DragDropDualListComponent;
-  @ViewChild(UserTableExpandableRowsComponent, {static: false})
-  public userTableExpandableRowsComponent: UserTableExpandableRowsComponent;
-  newEntryFlag = false;
-  userDataSource: User[];
+
+  @ViewChild(DragDropDualListComponent, {static: false}) private dragDropDualListComponent: DragDropDualListComponent;
+  @ViewChild(UserTableExpandableRowsComponent, {static: false}) public userTableExpandableRowsComponent: UserTableExpandableRowsComponent;
+  entityLists = ['E1', 'E2'];
+  displayedColumns: string[] = ['branchName', 'branchRole'];
   clonedUserDataSource: User[];
+  userDataSource: User[];
+  branchRoleTable: BranchRole[] = [];
+  rightTitleDragDrop = 'Selected Branches';
+  leftTitleDragDrop = 'Available Branches';
+  availableBranchName = [];
+  selectedBranchName = [];
+  roleList = [];
+  newEntryFlag = false;
   userName: any;
   userPassword: any;
   proceedClickFlag = false;
   userTableFlag = false;
-  availableBranchName = [];
-  displayedColumns: string[] = ['branchName', 'branchRole'];
-  rightTitleDragDrop = 'Selected Branches';
-  leftTitleDragDrop = 'Available Branches';
-  branchRoleTable: BranchRole[] = [];
   entityName: string;
   subCardLabel: string;
-  selectedBranchName = [];
-  roleList = [];
-  entityLists = ['E1', 'E2'];
   selectedEntity: any;
-  private userId: any;
-
-  // public userObservable: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
+  userId: any;
 
   constructor(public dialog: MatDialog,
               private activatedRoute: ActivatedRoute,
@@ -67,63 +64,10 @@ export class UserTableComponent implements OnInit {
     ];
   }
 
-  // static initializeUserDate() {
-  //   return {
-  //     userId: null,
-  //     userName: null,
-  //     userPassword: null,
-  //     branchRole: null
-  //   };
-  // }
-
-  static intializeUserDataSource() {
-    return [
-      {
-        entityName: 'E1',
-        userId: 1,
-        userName: 'Soumya',
-        userPassword: 'soumya',
-        branchRole: [{
-          branchId: 1,
-          branchName: 'Branch 4',
-          branchRole: 'Role 1'
-        },
-          {
-            branchId: 2,
-            branchName: 'Branch 3',
-            branchRole: 'Role 2'
-          }]
-      },
-      {
-        entityName: 'E2',
-        userId: 2,
-        userName: 'Natarayan',
-        userPassword: 'natarayan',
-        branchRole: [{
-          branchId: 1,
-          branchName: 'Branch 7',
-          branchRole: 'Role 3'
-        }]
-      },
-      {
-        entityName: 'E1',
-        userId: 3,
-        userName: 'Subhendu',
-        userPassword: 'subhendu',
-        branchRole: [{
-          branchId: 1,
-          branchName: 'Branch 2',
-          branchRole: 'Role 4'
-        }]
-      }
-    ];
-  }
-
   addNew() {
     this.proceedClickFlag = false;
     this.newEntryFlag = true;
     this.userTableFlag = false;
-    // this.proceedClickFlag = false;
     this.subCardLabel = 'Add';
     this.branchRoleTable = [];
     this.entityName = null;

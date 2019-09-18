@@ -7,7 +7,7 @@ import {MatSort} from '@angular/material/sort';
 import {Subject} from 'rxjs';
 import {EntityBranchTableDeleteDialogComponent} from './dialogs/delete/entity-branch-table-delete-dialog.component';
 import {EntityBranch} from './models/entity-branch';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {MatSelectChange} from '@angular/material/select';
 import {ActivatedRoute} from '@angular/router';
 
@@ -18,35 +18,30 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./entity-branch-table.component.scss']
 })
 export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDestroy {
-  private subCardLabel: string;
+
+  @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild('filter', {static: true}) filter: ElementRef;
+  private onDestroySubject = new Subject<void>();
+  entityLists = ['E1', 'E2'];
+  displayedColumns = ['id', 'entityBranchName', 'entityBranchCity', 'entityBranchMobile', 'entityBranchStartDate',
+    'entityBranchStatus', 'actions'];
+  entityBranchDataSource: EntityBranch[];
+  clonedEntityBranchDataSource: EntityBranch[];
+  entityBranchData: EntityBranch;
+  subCardLabel: string;
+  entityBranchId: number;
+  newEntryFlag = false;
+  selectedEntity: any;
+  filterValue: any;
+  entityBranchForm: any;
   private i = 100;
 
   constructor(public httpClient: HttpClient,
               public dialog: MatDialog,
               private activatedRoute: ActivatedRoute) {
   }
-
-  entityLists = ['E1', 'E2'];
-  @ViewChild('singleSelect', {static: false}) singleSelect: MatSelect;
-  private onDestroySubject = new Subject<void>();
-  displayedColumns = ['id', 'entityBranchName', 'entityBranchCity', 'entityBranchMobile', 'entityBranchStartDate',
-    'entityBranchStatus', 'actions'];
-  index: number;
-  entityBranchId: number;
-  entityBranchData: EntityBranch;
-  pIdFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  newEntryFlag = false;
-
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild('filter', {static: true}) filter: ElementRef;
-  selectedEntity: any;
-  entityBranchDataSource: EntityBranch[];
-  clonedEntityBranchDataSource: EntityBranch[];
-  filterValue: any;
-  entityBranchForm: any;
 
   static initializeData() {
     return {
@@ -129,12 +124,9 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
     this.newEntryFlag = true;
     this.entityBranchId = row.entityBranchId;
     this.entityBranchData = JSON.parse(JSON.stringify(row));
-    this.index = i;
-    console.log(this.index);
   }
 
   deleteItem(i: number, row) {
-    this.index = i;
     this.entityBranchId = row.entityBranchId;
     const dialogRef = this.dialog.open(EntityBranchTableDeleteDialogComponent, {
       data: row
