@@ -17,10 +17,14 @@ import {Modules} from '../models/role';
 })
 
 export class ModuleTableExpandableRowsComponent {
+
   @Input() moduleData: Modules[];
   displayedModules: string[] = ['moduleName', 'readAllFlag', 'writeAllFlag'];
   displayedSubModules: string[] = ['subModuleId', 'subModuleName', 'read', 'write'];
   expandedElement: Modules | null;
+
+  constructor() {
+  }
 
   onReadChange(event: MatCheckboxChange, element: any) {
     if (element.readAllFlag === true) {

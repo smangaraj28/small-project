@@ -17,6 +17,7 @@ import {User} from '../models/user';
 })
 
 export class UserTableExpandableRowsComponent {
+
   @Input() moduleData: User[];
   @Output() startEditEmitter = new EventEmitter<any>();
   @Output() startDeleteEmitter = new EventEmitter<any>();
@@ -25,10 +26,9 @@ export class UserTableExpandableRowsComponent {
   displayedSubModules: string[] = ['branchId', 'branchName', 'branchRole', 'actions'];
   expandedElement: User | null;
   newEntryFlag = false;
-  public filterValue: any;
+  filterValue: any;
 
   constructor() {
-
   }
 
   startEdit(param: any, element: any, row: any) {
