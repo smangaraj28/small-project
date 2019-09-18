@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {User} from '../models/user';
 
@@ -27,7 +27,7 @@ export class UserTableExpandableRowsComponent {
   newEntryFlag = false;
   public filterValue: any;
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor() {
 
   }
 
@@ -47,7 +47,6 @@ export class UserTableExpandableRowsComponent {
   deleteMainRow(i: any, row: any) {
     console.log(row);
     this.startDeleteEmitter.emit(row);
-    this.cd.detectChanges();
   }
 
   editMainRow(param: any, row: any) {
