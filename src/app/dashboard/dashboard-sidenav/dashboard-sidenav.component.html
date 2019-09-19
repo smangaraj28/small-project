@@ -28,7 +28,11 @@
                       [sidebar]="sidenav2" [matDrawerShow]="matDrawerShow" style="z-index: 500"></app-tool-bar>
         <!--perfect-scrollbar  style="height: calc(100% - 33px);" -->
         <div class="content-scrollbar">
-          <router-outlet></router-outlet>
+          <router-outlet *ngIf="!loading"></router-outlet>
+          <div fxLayoutAlign="center center" style="padding-top: 20%">
+            <mat-progress-spinner *ngIf="loading" color="accent"
+                                  mode="indeterminate"></mat-progress-spinner>
+          </div>
           <!--/perfect-scrollbar-->
         </div>
       </mat-drawer-content>

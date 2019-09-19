@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -30,6 +29,7 @@ import {
   MatTreeModule
 } from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -60,7 +60,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatMenuModule,
     MatChipsModule,
     MatTreeModule,
-    DragDropModule
+    DragDropModule,
+    MatProgressBarModule
   ],
   exports: [
     MatTableModule,
@@ -90,7 +91,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatMenuModule,
     MatChipsModule,
     MatTreeModule,
-    DragDropModule
+    DragDropModule,
+    MatProgressBarModule
   ]
 })
 export class MaterialModule {

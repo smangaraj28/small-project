@@ -10,5 +10,4 @@ export class DashboardViewComponent {
 
   sidenavRequired = true;
   sidebarRequired = true;
-
 }

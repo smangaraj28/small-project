@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {MediaChange, MediaObserver} from '@angular/flex-layout';
 import {Subscription} from 'rxjs';
+import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-sidenav',
@@ -22,12 +23,32 @@ export class DashboardSidenavComponent implements OnChanges, OnInit, OnDestroy {
   matDrawerOpened = false;
   matDrawerShow = true;
   sideNavMode = 'side';
+  loading = false;
 
   ngOnChanges() {
     this.visibility = this.isVisible ? 'shown' : 'hidden';
   }
 
-  constructor(private mediaObserver: MediaObserver) {
+  constructor(private mediaObserver: MediaObserver,
+              private router: Router) {
+    this.router.events.subscribe((event) => {
+      switch (true) {
+        case event instanceof NavigationStart: {
+          this.loading = true;
+          break;
+        }
+        case event instanceof NavigationEnd:
+        case event instanceof NavigationCancel:
+        case event instanceof NavigationError: {
+          this.loading = false;
+          break;
+        }
+        default: {
+          break;
+        }
+
+      }
+    });
   }
 
   ngOnInit() {
