@@ -5,7 +5,7 @@
       <div fxFlex="70%" fxFlex.lt-md="70%">
         Role Maintenance
       </div>
-      <div fxFlex="20%">
+      <div fxFlex="20%" [class.disabled-button]="newEntryFlag">
         <mat-form-field>
           <mat-label>Entity Selection</mat-label>
           <mat-select (selectionChange)="entitySelectionChange($event)" [(ngModel)]="selectedEntity" name="entity">
@@ -74,17 +74,28 @@
         <mat-card
           style="box-shadow: 0 -4px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);">
           <mat-card-content>
-            <div fxLayout=“row” fxLayoutAlign="space-between center">
-              <div fxFlex="23%"><b style="font-size: x-large"> {{subCardLabel}} Role Details:</b></div>
-              <div fxFlex="23%">
+            <div fxLayout=“row” fxLayoutAlign="space-between center" [formGroup]="roleForm">
+              <div fxFlex="20%"><b style="font-size: x-large"> {{subCardLabel}} Role Details:</b></div>
+              <div fxFlex="20%">
                 <mat-form-field>
-                  <mat-label>Role Name</mat-label>
-                  <input matInput placeholder="Role Name" [(ngModel)]="roleName">
+                  <mat-label>Entity Selection</mat-label>
+                  <mat-select [(ngModel)]="entityName"
+                              formControlName="entityNameFormControl" name="entityname">
+                    <mat-option *ngFor="let entity of entityLists" [value]="entity">
+                      {{entity}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
-              <div fxFlex="23%">
+              <div fxFlex="20%">
                 <mat-form-field>
-                  <mat-select placeholder="Select User/Role" name="userrrole"
+                  <mat-label>Role Name</mat-label>
+                  <input matInput placeholder="Role Name" formControlName="roleNameFormControl" [(ngModel)]="roleName">
+                </mat-form-field>
+              </div>
+              <div fxFlex="20%">
+                <mat-form-field>
+                  <mat-select placeholder="Select User/Role" name="userrrole" formControlName="UserOrRoleFormControl"
                               (selectionChange)="UserOrRoleChangeAction(selectedUserOrRole)"
                               [(ngModel)]="selectedUserOrRole">
                     <mat-option>None</mat-option>
@@ -93,10 +104,10 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-              <div fxFlex="23%">
+              <div fxFlex="20%">
                 <mat-form-field *ngIf="selectedUserOrRole">
                   <mat-select placeholder="Select User/Role Name" name="userroledetails"
-                              [(ngModel)]="selectedUserOrRoleName">
+                              formControlName="SelectedUserOrRoleNameFormControl" [(ngModel)]="selectedUserOrRoleName">
                     <mat-option *ngFor="let i of userOrRoleNameList"
                                 [value]="i">{{ i }}</mat-option>
                   </mat-select>
@@ -110,7 +121,9 @@
                                          [availableModuleName]="availableModuleName"></app-drag-drop-dual-list>
               </div>
               <div fxFlex="10%" fxLayoutAlign="center center">
-                <button *ngIf="!proceedClickFlag" color="accent" mat-raised-button [disabled]="selectedModuleName.length === 0" (click)="proceed()">Proceed ></button>
+                <button *ngIf="!proceedClickFlag" color="accent" mat-raised-button
+                        [disabled]="selectedModuleName.length === 0" (click)="proceed()">Proceed >
+                </button>
                 <button *ngIf="proceedClickFlag" color="warn" mat-raised-button (click)="reset()">< Reset</button>
               </div>
               <div *ngIf="roleTableFlag" fxFlex="45%">

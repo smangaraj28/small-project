@@ -5,7 +5,7 @@
       <div fxFlex="70%" fxFlex.lt-md="70%">
         Branch Maintenance
       </div>
-      <div fxFlex="20%">
+      <div fxFlex="20%" [class.disabled-button]="newEntryFlag">
         <mat-form-field>
           <mat-label>Entity Selection</mat-label>
           <mat-select [(ngModel)]="selectedEntity" (selectionChange)="entitySelectionChange($event)" name="entity">
@@ -94,7 +94,20 @@
           <mat-card-content>
             <div fxLayout="column" [formGroup]="entityBranchForm">
               <div fxLayout=“row” fxLayoutAlign="start center">
-                <b style="font-size: x-large">{{subCardLabel}} Branch Details:</b>
+                <div fxFlex="40%">
+                  <b style="font-size: x-large">{{subCardLabel}} Branch Details:</b>
+                </div>
+                <div fxFlex="60%">
+                  <mat-form-field>
+                    <mat-label>Entity Selection</mat-label>
+                    <mat-select [(ngModel)]="entityBranchData.entityName"
+                                formControlName="entityNameFormControl" name="entityname">
+                      <mat-option *ngFor="let entity of entityLists" [value]="entity">
+                        {{entity}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
               </div>
               <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="20px"
                    fxLayoutGap.lt-md="0px">

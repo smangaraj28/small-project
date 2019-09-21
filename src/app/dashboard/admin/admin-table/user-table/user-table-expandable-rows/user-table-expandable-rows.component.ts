@@ -18,21 +18,21 @@ import {User} from '../models/user';
 
 export class UserTableExpandableRowsComponent {
 
+  @Input() startDisableToggle: boolean;
   @Input() moduleData: User[];
   @Output() startEditEmitter = new EventEmitter<any>();
   @Output() startDeleteEmitter = new EventEmitter<any>();
   @Output() startFilterEmitter = new EventEmitter<any>();
   displayedModules: string[] = ['userId', 'userName', 'actions'];
-  displayedSubModules: string[] = ['branchId', 'branchName', 'branchRole', 'actions'];
+  displayedSubModules: string[] = ['branchId', 'branchName', 'branchRole'];
   expandedElement: User | null;
-  newEntryFlag = false;
   filterValue: any;
 
   constructor() {
   }
 
   startEdit(param: any, element: any, row: any) {
-    this.newEntryFlag = true;
+    this.startDisableToggle = false;
     const obj = {
       allRows: element,
       selectedRow: row
@@ -50,7 +50,7 @@ export class UserTableExpandableRowsComponent {
   }
 
   editMainRow(param: any, row: any) {
-    this.newEntryFlag = true;
+    this.startDisableToggle = false;
     const obj = {
       allRows: row,
       selectedRow: row

@@ -33,7 +33,7 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
   subCardLabel: string;
   entityBranchId: number;
   newEntryFlag = false;
-  selectedEntity: any;
+  selectedEntity = 'ALL';
   filterValue: any;
   entityBranchForm: any;
   private i = 100;
@@ -90,7 +90,6 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
       entityBranchWebsiteFormControl: new FormControl(),
       entityBranchEmailFormControl: new FormControl(),
       entityBranchStartDateFormControl: new FormControl()
-
     });
     const resolvedEntityBranchData = this.activatedRoute.snapshot.data.resolvedEntityBranchData;
     console.log('Resolved Entity Branch Data', resolvedEntityBranchData);
@@ -113,13 +112,20 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
   }
 
   addNew() {
+    if (this.selectedEntity && this.selectedEntity !== 'ALL') {
+      this.entityBranchData.entityName = this.selectedEntity;
+      this.entityBranchForm.controls.entityNameFormControl.disable();
+    }
     this.subCardLabel = 'Add';
     this.entityBranchId = undefined;
     this.newEntryFlag = true;
+    const entityNameDemo = this.entityBranchData.entityName;
     this.entityBranchData = EntityBranchTableComponent.initializeData();
+    this.entityBranchData.entityName = entityNameDemo;
   }
 
   startEdit(i: number, row) {
+    this.entityBranchForm.controls.entityNameFormControl.disable();
     this.subCardLabel = 'Edit';
     this.newEntryFlag = true;
     this.entityBranchId = row.entityBranchId;
@@ -175,8 +181,7 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
     // }
     // this.refreshTable();
     this.newEntryFlag = false;
-
-
+    this.entityBranchForm.controls.entityNameFormControl.enable();
     switch (this.subCardLabel) {
       case 'Add':
         this.entityBranchDataSource.push(this.entityBranchData);
@@ -194,6 +199,8 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
 
   onCancel() {
     this.newEntryFlag = false;
+    this.entityBranchData = EntityBranchTableComponent.initializeData();
+    this.entityBranchForm.controls.entityNameFormControl.enable();
   }
 
   onFileChanged(event) {
@@ -202,10 +209,14 @@ export class EntityBranchTableComponent implements OnInit, AfterViewInit, OnDest
 
   entitySelectionChange($event: MatSelectChange) {
     if ($event.value !== 'ALL') {
+      this.entityBranchData.entityName = $event.value;
+      this.entityBranchForm.controls.entityNameFormControl.disable();
       this.clonedEntityBranchDataSource = this.entityBranchDataSource.filter(value => {
         return value.entityName === $event.value;
       });
     } else {
+      this.entityBranchForm.controls.entityNameFormControl.enable();
+      this.entityBranchData.entityName = null;
       this.clonedEntityBranchDataSource = this.entityBranchDataSource;
     }
   }

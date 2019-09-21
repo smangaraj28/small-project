@@ -2,10 +2,10 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild
 import {MatDialog} from '@angular/material/dialog';
 import {BranchRole, User} from './models/user';
 import {DragDropDualListComponent} from '../drag-drop-dual-list/drag-drop-dual-list.component';
-import {UserTableExpandableRowsComponent} from './user-table-expandable-rows/user-table-expandable-rows.component';
 import {MatSelectChange} from '@angular/material/select';
 import {ActivatedRoute} from '@angular/router';
 import {UserTableDeleteDialogComponent} from './dialogs/delete/user-table-delete-dialog.component';
+import {FormControl, FormGroup} from '@angular/forms';
 
 
 @Component({
@@ -17,7 +17,6 @@ import {UserTableDeleteDialogComponent} from './dialogs/delete/user-table-delete
 export class UserTableComponent implements OnInit {
 
   @ViewChild(DragDropDualListComponent, {static: false}) private dragDropDualListComponent: DragDropDualListComponent;
-  @ViewChild(UserTableExpandableRowsComponent, {static: false}) public userTableExpandableRowsComponent: UserTableExpandableRowsComponent;
   entityLists = ['E1', 'E2'];
   displayedColumns: string[] = ['branchName', 'branchRole'];
   clonedUserDataSource: User[];
@@ -37,6 +36,7 @@ export class UserTableComponent implements OnInit {
   subCardLabel: string;
   selectedEntity: any;
   userId: any;
+  userForm: FormGroup;
 
   constructor(public dialog: MatDialog,
               private activatedRoute: ActivatedRoute,
@@ -65,12 +65,16 @@ export class UserTableComponent implements OnInit {
   }
 
   addNew() {
+    this.entityName = null;
+    if (this.selectedEntity && this.selectedEntity !== 'ALL') {
+      this.entityName = this.selectedEntity;
+      this.userForm.controls.entityNameFormControl.disable();
+    }
     this.proceedClickFlag = false;
     this.newEntryFlag = true;
     this.userTableFlag = false;
     this.subCardLabel = 'Add';
     this.branchRoleTable = [];
-    this.entityName = null;
     this.userName = null;
     this.userPassword = null;
     this.availableBranchName = UserTableComponent.initializeBranchName();
@@ -79,6 +83,11 @@ export class UserTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userForm = new FormGroup({
+      entityNameFormControl: new FormControl(),
+      userNameFormControl: new FormControl(),
+      userPasswordFormControl: new FormControl()
+    });
     const resolvedUserData = this.activatedRoute.snapshot.data.resolvedUserData;
     console.log('Resolved User Data', resolvedUserData);
     this.userDataSource = resolvedUserData;
@@ -94,6 +103,8 @@ export class UserTableComponent implements OnInit {
   }
 
   onStartEditClicked(event) {
+    this.entityName = event.allRows.entityName;
+    this.userForm.controls.entityNameFormControl.disable();
     this.newEntryFlag = false;
     this.userTableFlag = true;
     this.proceedClickFlag = true;
@@ -114,8 +125,9 @@ export class UserTableComponent implements OnInit {
   }
 
   onSave() {
-    this.userTableExpandableRowsComponent.newEntryFlag = false;
+    // this.userTableExpandableRowsComponent.newEntryFlag = false;
     this.newEntryFlag = false;
+    this.userForm.controls.entityNameFormControl.enable();
     let obj: User;
     let i = 100;
     switch (this.subCardLabel) {
@@ -148,10 +160,12 @@ export class UserTableComponent implements OnInit {
   }
 
   onCancel() {
-    this.userTableExpandableRowsComponent.newEntryFlag = false;
+    // this.userTableExpandableRowsComponent.newEntryFlag = false;
     this.newEntryFlag = false;
     this.availableBranchName = UserTableComponent.initializeBranchName();
     this.selectedBranchName = [];
+    this.entityName = null;
+    this.userForm.controls.entityNameFormControl.enable();
   }
 
   proceed() {
@@ -178,10 +192,14 @@ export class UserTableComponent implements OnInit {
 
   entitySelectionChange($event: MatSelectChange) {
     if ($event.value !== 'ALL') {
+      this.entityName = $event.value;
+      this.userForm.controls.entityNameFormControl.disable();
       this.clonedUserDataSource = this.userDataSource.filter(value => {
         return value.entityName === $event.value;
       });
     } else {
+      this.entityName = null;
+      this.userForm.controls.entityNameFormControl.enable();
       this.clonedUserDataSource = this.userDataSource;
     }
     // console.log(this.clonedUserDataSource);

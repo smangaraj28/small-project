@@ -20,6 +20,7 @@ import {MatSelectChange} from '@angular/material/select';
 import {User} from '../user-table/models/user';
 import {ActivatedRoute} from '@angular/router';
 import {RoleTableDeleteDialogComponent} from './dialogs/delete/role-table-delete-dialog.component';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,7 +30,7 @@ import {RoleTableDeleteDialogComponent} from './dialogs/delete/role-table-delete
 })
 export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild(DragDropDualListComponent, {static: false})   private dragDropDualListComponent: DragDropDualListComponent;
+  @ViewChild(DragDropDualListComponent, {static: false}) private dragDropDualListComponent: DragDropDualListComponent;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild('filter', {static: true}) filter: ElementRef;
@@ -46,7 +47,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   rightTitleDragDrop = 'Selected Modules';
   availableModuleName = [];
   newEntryFlag = false;
-  selectedEntity: any;
+  selectedEntity = 'ALL';
   selectedUserOrRole: any;
   selectedUserOrRoleName: any;
   userOrRoleNameList = [];
@@ -60,6 +61,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   entityName: any;
   roleId: number;
   private i = 100;
+  roleForm: FormGroup;
 
   constructor(public dialog: MatDialog,
               public dataService: DataService,
@@ -149,6 +151,12 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.roleForm = new FormGroup({
+      entityNameFormControl: new FormControl(),
+      roleNameFormControl: new FormControl(),
+      UserOrRoleFormControl: new FormControl(),
+      SelectedUserOrRoleNameFormControl: new FormControl()
+    });
     const resolvedRoleData = this.activatedRoute.snapshot.data.resolvedRoleData;
     console.log('Resolved Role Data', resolvedRoleData);
     this.roleDataSource = resolvedRoleData;
@@ -186,6 +194,10 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addNew() {
+    if (this.selectedEntity && this.selectedEntity !== 'ALL') {
+      this.entityName = this.selectedEntity;
+      this.roleForm.controls.entityNameFormControl.disable();
+    }
     this.proceedClickFlag = false;
     this.roleId = undefined;
     this.newEntryFlag = true;
@@ -213,6 +225,8 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startEdit(i: number, row) {
+    this.entityName = row.entityName;
+    this.roleForm.controls.entityNameFormControl.disable();
     this.roleTableFlag = true;
     this.proceedClickFlag = true;
     console.log(row);
@@ -299,8 +313,7 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     // }
     // this.refreshTable();
     this.newEntryFlag = false;
-
-
+    this.roleForm.controls.entityNameFormControl.enable();
     let obj: RoleTable;
     switch (this.subCardLabel) {
       case 'Add':
@@ -336,6 +349,8 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedModuleDetails = [];
     this.availableModuleName = [];
     this.selectedModuleName = [];
+    this.entityName = null;
+    this.roleForm.controls.entityNameFormControl.enable();
   }
 
   onFileChanged(event) {
@@ -386,10 +401,14 @@ export class RoleTableComponent implements OnInit, AfterViewInit, OnDestroy {
   entitySelectionChange($event: MatSelectChange) {
     // console.log($event.value);
     if ($event.value !== 'ALL') {
+      this.entityName = $event.value;
+      this.roleForm.controls.entityNameFormControl.disable();
       this.clonedRoleDataSource = this.roleDataSource.filter(value => {
         return value.entityName === $event.value;
       });
     } else {
+      this.roleForm.controls.entityNameFormControl.enable();
+      this.entityName = null;
       this.clonedRoleDataSource = this.roleDataSource;
     }
   }
